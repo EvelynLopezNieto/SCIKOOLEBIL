@@ -1418,6 +1418,9 @@ public class Principal extends javax.swing.JFrame {
                 }
                 tablaExistsNuevo.addRow(datosTabla);
             }
+            
+            this.txtCodigoSalidas.setText("");
+            this.txtCantidadSalidas.setText("");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "No se pudo realizar la salida del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
