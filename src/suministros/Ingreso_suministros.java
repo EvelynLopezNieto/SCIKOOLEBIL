@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Ingreso_suministros extends javax.swing.JDialog {
 
-    Formulario_suministros suministros = new Formulario_suministros();
+    Form_sumiNuevos suministros = new Form_sumiNuevos();
     Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
 
     public Ingreso_suministros(java.awt.Frame parent, boolean modal) {
@@ -28,7 +28,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.jPanel1.setVisible(false);
-
+        
         cerrarFormulario();
     }
 
@@ -101,7 +101,11 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jScrollPane5 = new javax.swing.JScrollPane();
         tblUnidadM = new javax.swing.JTable();
         btnLimpiar = new RSMaterialComponent.RSButtonFormaIcon();
+        txtStockMin = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        rbtnInsumoN = new javax.swing.JRadioButton();
+        rbtnAgregarInsumo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -115,17 +119,17 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Área de destino del insumo");
-        pnlIngresarSumi.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, -1, -1));
+        pnlIngresarSumi.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 0, -1, -1));
 
         cbArea.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
-        cbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitaciones", "Mantenimiento", "Recepción", "Otros" }));
-        cbArea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitacion", "Mantenimiento", "Recepcion", "Otros" }));
+        cbArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         cbArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbAreaActionPerformed(evt);
             }
         });
-        pnlIngresarSumi.add(cbArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 25, 160, 30));
+        pnlIngresarSumi.add(cbArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 25, 160, 30));
 
         jPanel1.setBackground(new java.awt.Color(153, 51, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -142,7 +146,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("* Nombre del insumo");
+        jLabel4.setText("*Nombre del insumo");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 75, -1, -1));
 
         txtNombreInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
@@ -152,7 +156,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jLabel5.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("* Tipo de insumo");
+        jLabel5.setText("*Tipo de insumo");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 135, -1, -1));
 
         lblDescripcion.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -178,7 +182,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jLabel7.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("* Precio total del insumo");
+        jLabel7.setText("*Precio total del insumo");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 325, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -193,7 +197,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("* Precio unitario del insumo");
+        jLabel9.setText("*Precio unitario del insumo");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 325, -1, -1));
 
         txtPrecioUnitarioInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
@@ -203,7 +207,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jLabel10.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("* Cantidad entregada");
+        jLabel10.setText("*Cantidad entregada");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
 
         txtCantEntregadaInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
@@ -229,17 +233,17 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("* Cantidad final");
+        jLabel12.setText("*Cantidad final");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("* Unidad de medida");
+        jLabel13.setText("*Unidad de medida");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("* Fecha de caducidad");
+        jLabel14.setText("*Fecha de caducidad");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, -1, -1));
 
         dachoosCaduInsuSumi.setBackground(new java.awt.Color(0, 0, 0));
@@ -273,7 +277,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         lblPorciones.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         lblPorciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblPorciones.setText("* Porciones");
+        lblPorciones.setText("*Porciones");
         jPanel1.add(lblPorciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, -1, -1));
 
         txtPorciones.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
@@ -283,7 +287,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jLabel17.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("* Responsable de este movimiento");
+        jLabel17.setText("*Responsable de este movimiento");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, -1, -1));
 
         cbIDpersonal.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
@@ -374,12 +378,39 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         });
         jPanel1.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 550, -1, -1));
 
+        txtStockMin.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        txtStockMin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel1.add(txtStockMin, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, 80, 30));
+
+        jLabel6.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("*Stock min.");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 390, -1, -1));
+
         pnlIngresarSumi.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 59, 1060, 600));
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("¡CAMPOS OBLIGATORIOS! : *");
         pnlIngresarSumi.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
+
+        rbtnInsumoN.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        rbtnInsumoN.setText("Nuevo insumo");
+        rbtnInsumoN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnInsumoNMouseClicked(evt);
+            }
+        });
+        pnlIngresarSumi.add(rbtnInsumoN, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 25, -1, -1));
+
+        rbtnAgregarInsumo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        rbtnAgregarInsumo.setText("Agregar a insumo existente");
+        rbtnAgregarInsumo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnAgregarInsumoMouseClicked(evt);
+            }
+        });
+        pnlIngresarSumi.add(rbtnAgregarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 25, -1, -1));
 
         getContentPane().add(pnlIngresarSumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 660));
 
@@ -389,29 +420,37 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     private void cbAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAreaActionPerformed
 
         String areaSeleccionada = this.cbArea.getSelectedItem().toString();
+        int area = this.cbArea.getSelectedIndex();
 
         try {
 
+            if (area == 1 || area == 2 || area == 3 || area == 4 || area == 5 || area == 6 || area == 7
+                   || area == 8 || area == 9) {
+                this.jPanel1.setVisible(false);
+            } else if(area == 0) {
+                this.jPanel1.setVisible(false);
+                if(this.rbtnInsumoN.isSelected()) {
+                    this.jPanel1.setVisible(false);
+                } else if(this.rbtnAgregarInsumo.isSelected()) {
+                    this.jPanel1.setVisible(false);
+                }
+            }
+
             if ((areaSeleccionada.equals("Restaurante")) || (areaSeleccionada.equals("Personal")) || (areaSeleccionada.equals("Habitaciones"))
                    || (areaSeleccionada.equals("Mantenimiento")) || (areaSeleccionada.equals("Recepción")) || (areaSeleccionada.equals("Otros"))) {
-                this.jPanel1.setVisible(true);
                 this.txtPorciones.setEnabled(false);
-
                 suministros.cargarcbUM(cbIDunidadM);
-
                 suministros.cargarIDper(cbIDpersonal);
 
             } else if (areaSeleccionada.equals("Seleccione área")) {
                 this.jPanel1.setVisible(false);
             } else {
-                this.jPanel1.setVisible(true);
                 this.txtPorciones.setEnabled(true);
-
                 suministros.cargarcbUM(cbIDunidadM);
-
                 suministros.cargarIDper(cbIDpersonal);
             }
-
+            this.rbtnInsumoN.setSelected(false);
+            this.rbtnAgregarInsumo.setSelected(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
@@ -605,6 +644,31 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         this.cbIDpersonal.setSelectedIndex(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void rbtnInsumoNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnInsumoNMouseClicked
+        
+        this.rbtnAgregarInsumo.setSelected(false);
+        if(this.cbArea.getSelectedIndex()==0) {
+            this.jPanel1.setVisible(false);
+        }else{
+            this.jPanel1.setVisible(true);
+            this.spnDiaInsumo.setEnabled(true);
+            this.spnMesInsumo.setEnabled(true);
+            this.cbInicialArea.setEnabled(true);
+        }        
+    }//GEN-LAST:event_rbtnInsumoNMouseClicked
+
+    private void rbtnAgregarInsumoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnAgregarInsumoMouseClicked
+        this.rbtnInsumoN.setSelected(false);
+        if(this.cbArea.getSelectedIndex()==0) {
+            this.jPanel1.setVisible(false);
+        } else{
+            this.jPanel1.setVisible(true);
+            this.spnDiaInsumo.setEnabled(false);
+            this.spnMesInsumo.setEnabled(false);
+            this.cbInicialArea.setEnabled(false);
+        }
+    }//GEN-LAST:event_rbtnAgregarInsumoMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -664,6 +728,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -676,6 +741,8 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblPorciones;
     private javax.swing.JPanel pnlIngresarSumi;
+    private javax.swing.JRadioButton rbtnAgregarInsumo;
+    private javax.swing.JRadioButton rbtnInsumoN;
     private javax.swing.JSpinner spnDiaInsumo;
     private javax.swing.JSpinner spnMesInsumo;
     private javax.swing.JTable tblPersonalSumi;
@@ -690,5 +757,6 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     private javax.swing.JTextField txtPorciones;
     private javax.swing.JTextField txtPrecioTotalInsu;
     private javax.swing.JTextField txtPrecioUnitarioInsu;
+    private javax.swing.JTextField txtStockMin;
     // End of variables declaration//GEN-END:variables
 }
