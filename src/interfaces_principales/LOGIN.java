@@ -6,20 +6,20 @@ import java.sql.ResultSet;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import otras_operaciones.Consulta_datosAccesoBD;
+import Usuarios_sistema.Operaciones_usuarios;
 
 /*
  * @author Evelyn López Nieto
  */
 public class LOGIN extends javax.swing.JFrame {
-    Consulta_datosAccesoBD consulta = new Consulta_datosAccesoBD();
+    Operaciones_usuarios consulta = new Operaciones_usuarios();
     Icon denegado = new ImageIcon (getClass().getResource("/recursos_graficos/2.png"));
     Icon error = new ImageIcon (getClass().getResource("/recursos_graficos/6.png"));
     
     public LOGIN() {
         initComponents();
         this.setLocationRelativeTo(null);
-        consulta.cargaUsuario(cbUsuarios);
+        consulta.cargaUsuarioLogin(cbUsuarios);
     }
     
     @SuppressWarnings("unchecked")
@@ -48,7 +48,7 @@ public class LOGIN extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 158, 15));
+        jPanel1.setBackground(new java.awt.Color(153, 204, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -77,7 +77,7 @@ public class LOGIN extends javax.swing.JFrame {
         });
         jPanel1.add(cbUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 25, 180, -1));
 
-        txtPass.setBackground(new java.awt.Color(0, 158, 15));
+        txtPass.setBackground(new java.awt.Color(153, 204, 0));
         txtPass.setForeground(new java.awt.Color(255, 255, 0));
         txtPass.setBorderColor(new java.awt.Color(255, 255, 255));
         txtPass.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -110,7 +110,7 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel6.setText("Contraseña");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 310, -1, -1));
 
-        txtUser.setBackground(new java.awt.Color(0, 158, 15));
+        txtUser.setBackground(new java.awt.Color(153, 204, 0));
         txtUser.setForeground(new java.awt.Color(255, 255, 0));
         txtUser.setBorderColor(new java.awt.Color(255, 255, 255));
         txtUser.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -173,7 +173,7 @@ public class LOGIN extends javax.swing.JFrame {
         String nombre = this.cbUsuarios.getSelectedItem().toString();
         
         try {
-            ResultSet re = consulta.consultaUser(nombre);
+            ResultSet re = consulta.consultaUserLogin(nombre);
             ResultSetMetaData rsMD = (ResultSetMetaData) re.getMetaData();
             int cantColumnas = rsMD.getColumnCount();
             Object[] datosUser = new Object[cantColumnas];
@@ -185,7 +185,7 @@ public class LOGIN extends javax.swing.JFrame {
             
             if(usuario.equals(datosUser[0])&&contraseña.equals(datosUser[1])){
             this.repaint();
-            Principal menuP = new Principal();
+            Panel_principal menuP = new Panel_principal();
             menuP.setVisible(true);
             this.dispose();
         } else {
@@ -206,8 +206,6 @@ public class LOGIN extends javax.swing.JFrame {
         } else {
             this.lblSaludoUser.setText("¡Hola "+nombre+"!");
         }
-        
-        
         
     }//GEN-LAST:event_cbUsuariosActionPerformed
 

@@ -16,6 +16,8 @@
  */
 package suministros;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import otras_operaciones.ConexionBD;
@@ -32,6 +34,53 @@ public class Form_adicionSumiExistentes {
         try {
             Statement actualizar = conexion.crearSentencia();
             return actualizar.executeUpdate(sentencia);
+        } catch (SQLException e) {
+            return -1;
+        }
+    }
+    //implementar la actualización de descripcion, comentarios y nueva fecha de caducidad
+    //para aquellos insumos existentes donde se agregan nuevas existencias por el ingreso de requisiciones
+    
+    //implementar también el almacenamiento del insumo existente a la tabla de suministros
+    //para poder sacar las estadísticas de uso
+    public int registroTablaSuministroExistente(String IDinsumo, String nombreInsumo, String tipoInsumo,
+           String descripcion, Double precioInsUnitario, Double precioInsTotal, Double cantEntreg, Double perdidas, Double cantFinal,
+           int IDunidadM, String comentarios) {
+
+        //String IDinsumo = IDdia + IDmes + IDnombre + IDinicial;
+        String sentencia = "INSERT INTO tbl_suministros VALUES (NULL,'" + IDinsumo + "','" + nombreInsumo + "','" + tipoInsumo + "','" + descripcion + "'," + precioInsUnitario + ","
+               + "" + precioInsTotal + "," + cantEntreg + "," + perdidas + ", " + cantFinal + "," + IDunidadM + ",(SELECT curdate()),'" + comentarios + "')";
+
+        try {
+            Statement insertar = conexion.crearSentencia();
+            return insertar.executeUpdate(sentencia);
+        } catch (SQLException e) {
+            return -1;
+        }
+    }
+    
+    //implementar la visualización del registro del insumo existente en los campos del formulario
+    //combinando consultas de las 3 tablas que conforman el registro de ingreso de suministro:
+    //insumo, stock y unidad de medida
+    public ResultSet cargaInsumoForm() {
+        String sentencia = "select * from tbl_";
+        try {
+            Connection con = conexion.obConexion();
+            Statement verR = conexion.crearSentencia();
+            return verR.executeQuery(sentencia);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    //REGISTRO DE MOVIMIENTO DEL USUARIO
+    public int registroTablaAccesosP(int IDpersonal) {
+
+        String sentencia = "INSERT INTO tbl_accesosP VALUES (NULL," + IDpersonal + ",(SELECT CURDATE()),(SELECT CURTIME()),'Ingreso datos nuevos a insumo existente');";
+
+        try {
+            Statement insertar = conexion.crearSentencia();
+            return insertar.executeUpdate(sentencia);
         } catch (SQLException e) {
             return -1;
         }

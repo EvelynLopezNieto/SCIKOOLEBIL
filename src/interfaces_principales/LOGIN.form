@@ -30,7 +30,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="f" green="9e" red="0" type="rgb"/>
+          <Color blue="0" green="cc" red="99" type="rgb"/>
         </Property>
       </Properties>
       <Constraints>
@@ -103,7 +103,7 @@
         <Component class="RSMaterialComponent.RSPasswordTwo" name="txtPass">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f" green="9e" red="0" type="rgb"/>
+              <Color blue="0" green="cc" red="99" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="ff" red="ff" type="rgb"/>
@@ -210,7 +210,7 @@
         <Component class="RSMaterialComponent.RSTextFieldTwo" name="txtUser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f" green="9e" red="0" type="rgb"/>
+              <Color blue="0" green="cc" red="99" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="ff" red="ff" type="rgb"/>

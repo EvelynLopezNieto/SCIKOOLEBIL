@@ -144,7 +144,7 @@ public class Panel_perecederos {
             return null;
         }
     }
-
+    //corregir sentencia. Es para eliminar, no es consulta
     public ResultSet eliminarCaducos(int mesNegativo) {
         String sentencia = "SELECT * FROM tbl_insumo WHERE fecha_caducidad BETWEEN ADDDATE(CURDATE(),INTERVAL -" + mesNegativo + " MONTH) and CURDATE()";
 

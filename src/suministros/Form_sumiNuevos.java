@@ -37,7 +37,6 @@ public class Form_sumiNuevos {
            int IDunidadM, String comentarios) {
 
         String IDinsumo = IDdia + IDmes + IDnombre + IDinicial;
-        //completar cadena de la sentencia
         String sentencia = "INSERT INTO tbl_suministros VALUES (NULL,'" + IDinsumo + "','" + nombreInsumo + "','" + tipoInsumo + "','" + descripcion + "'," + precioInsUnitario + ","
                + "" + precioInsTotal + "," + cantEntreg + "," + perdidas + ", " + cantFinal + "," + IDunidadM + ",(SELECT curdate()),'" + comentarios + "')";
 
@@ -51,13 +50,13 @@ public class Form_sumiNuevos {
 
     //ENVÍO DE REGISTROS DE INSUMOS A LOS STOCKS DE LAS ÁREAS
     public int registroTablaStockServicio(String IDdiaS, String IDmesS, String IDnombreS, String IDinicialS, Double cantFinalS,
-           int IDunidadMS, Double porcionS) {
+           Double stockMinS, int IDunidadMS, Double porcionS) {
 
         String IDinsumoS = IDdiaS + IDmesS + IDnombreS + IDinicialS;
 
         try {
             Statement insertar = conexion.crearSentencia();
-            String sentencia = "INSERT INTO tbl_stockServicio VALUES (NULL,'" + IDinsumoS + "'," + cantFinalS + "," + IDunidadMS + "," + porcionS + ");";
+            String sentencia = "INSERT INTO tbl_stockServicio VALUES (NULL,'" + IDinsumoS + "'," + cantFinalS + ","+stockMinS+"," + IDunidadMS + "," + porcionS + ");";
             return insertar.executeUpdate(sentencia);
         } catch (SQLException e) {
             return -1;
@@ -65,10 +64,10 @@ public class Form_sumiNuevos {
     }
     
     public int registroTablaStockRestaurante(String IDdiaR, String IDmesR, String IDnombreR, String IDinicialR,
-           Double cantFinalR, int IDunidadMR) {
+           Double cantFinalR, Double stockMinR, int IDunidadMR) {
 
         String IDinsumoR = IDdiaR + IDmesR + IDnombreR + IDinicialR;
-        String sentencia = "INSERT INTO tbl_stockRestaurante VALUES (NULL,'" + IDinsumoR + "'," + cantFinalR + "," + IDunidadMR + ");";
+        String sentencia = "INSERT INTO tbl_stockRestaurante VALUES (NULL,'" + IDinsumoR + "'," + cantFinalR + ","+stockMinR+"," + IDunidadMR + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
@@ -79,10 +78,10 @@ public class Form_sumiNuevos {
     }
 
     public int registroTablaStockPersonal(String IDdiaP, String IDmesP, String IDnombreP, String IDinicialP,
-           Double cantFinalP, int IDunidadMP) {
+           Double cantFinalP, Double stockMinP, int IDunidadMP) {
 
         String IDinsumoP = IDdiaP + IDmesP + IDnombreP + IDinicialP;
-        String sentencia = "INSERT INTO tbl_stockPersonal VALUES (NULL,'" + IDinsumoP + "'," + cantFinalP + "," + IDunidadMP + ");";
+        String sentencia = "INSERT INTO tbl_stockPersonal VALUES (NULL,'" + IDinsumoP + "'," + cantFinalP + ","+stockMinP+"," + IDunidadMP + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
@@ -93,10 +92,10 @@ public class Form_sumiNuevos {
     }
 
     public int registroTablaStockBar(String IDdiaB, String IDmesB, String IDnombreB, String IDinicialB, Double cantFinalB,
-           int IDunidadMB, Double porcionB) {
+           Double stockMinB, int IDunidadMB, Double porcionB) {
 
         String IDinsumoB = IDdiaB + IDmesB + IDnombreB + IDinicialB;
-        String sentencia = "INSERT INTO tbl_stockBar VALUES (NULL,'" + IDinsumoB + "'," + cantFinalB + "," + IDunidadMB + "," + porcionB + ");";
+        String sentencia = "INSERT INTO tbl_stockBar VALUES (NULL,'" + IDinsumoB + "'," + cantFinalB + ","+stockMinB+"," + IDunidadMB + "," + porcionB + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
@@ -107,10 +106,10 @@ public class Form_sumiNuevos {
     }
 
     public int registroTablaStockHabitacion(String IDdiaH, String IDmesH, String IDnombreH, String IDinicialH,
-           Double cantFinalH, int IDunidadMH) {
+           Double cantFinalH, Double stockMinH, int IDunidadMH) {
 
         String IDinsumoH = IDdiaH + IDmesH + IDnombreH + IDinicialH;
-        String sentencia = "INSERT INTO tbl_stockHabitacion VALUES (NULL,'" + IDinsumoH + "'," + cantFinalH + "," + IDunidadMH + ");";
+        String sentencia = "INSERT INTO tbl_stockHabitacion VALUES (NULL,'" + IDinsumoH + "'," + cantFinalH + ","+stockMinH+"," + IDunidadMH + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
@@ -121,10 +120,10 @@ public class Form_sumiNuevos {
     }
 
     public int registroTablaStockMantenimiento(String IDdiaM, String IDmesM, String IDnombreM, String IDinicialM,
-           Double cantFinalM, int IDunidadMM) {
+           Double cantFinalM, Double stockMinM, int IDunidadMM) {
 
         String IDinsumoM = IDdiaM + IDmesM + IDnombreM + IDinicialM;
-        String sentencia = "INSERT INTO tbl_stockMantenimiento VALUES (NULL,'" + IDinsumoM + "'," + cantFinalM + "," + IDunidadMM + ");";
+        String sentencia = "INSERT INTO tbl_stockMantenimiento VALUES (NULL,'" + IDinsumoM + "'," + cantFinalM + ","+stockMinM+"," + IDunidadMM + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
@@ -135,10 +134,10 @@ public class Form_sumiNuevos {
     }
 
     public int registroTablaStockRecepcion(String IDdiaRE, String IDmesRE, String IDnombreRE, String IDinicialRE,
-           Double cantFinalRE, int IDunidadMRE) {
+           Double cantFinalRE, Double stockMinRE, int IDunidadMRE) {
 
         String IDinsumoRE = IDdiaRE + IDmesRE + IDnombreRE + IDinicialRE;
-        String sentencia = "INSERT INTO tbl_stockRecepcion VALUES (NULL,'" + IDinsumoRE + "'," + cantFinalRE + "," + IDunidadMRE + ");";
+        String sentencia = "INSERT INTO tbl_stockRecepcion VALUES (NULL,'" + IDinsumoRE + "'," + cantFinalRE + ","+stockMinRE+"," + IDunidadMRE + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
@@ -149,10 +148,10 @@ public class Form_sumiNuevos {
     }
 
     public int registroTablaStockOtros(String IDdiaO, String IDmesO, String IDnombreO, String IDinicialO,
-           Double cantFinalO, int IDunidadMO) {
+           Double cantFinalO, Double stockMinO, int IDunidadMO) {
 
         String IDinsumoO = IDdiaO + IDmesO + IDnombreO + IDinicialO;
-        String sentencia = "INSERT INTO tbl_stockOtros VALUES (NULL,'" + IDinsumoO + "'," + cantFinalO + "," + IDunidadMO + ");";
+        String sentencia = "INSERT INTO tbl_stockOtros VALUES (NULL,'" + IDinsumoO + "'," + cantFinalO + ","+stockMinO+"," + IDunidadMO + ");";
 
         try {
             Statement insertar = conexion.crearSentencia();
