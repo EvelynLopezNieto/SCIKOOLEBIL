@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StockMin_recepcion" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1fe7b9d-5418-4c8b-89ab-d7bbb61ce73f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM tbl_stockRecepcion WHERE existenciaRe = stock_minimoRe;]]>
+	</queryString>
+	<field name="ID_stockRe" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_insumoRe" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="existenciaRe" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stock_minimoRe" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_unidadMRe" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="15" width="70" height="70" uuid="c3e2a264-ad70-4c06-b51f-97b4dd2bbaac"/>
+				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="70" height="20" forecolor="#0033CC" uuid="54966a1d-b02a-4f2e-9e6e-a59700118bdd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Ko'olebil]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="460" y="15" width="112" height="20" uuid="18cd2b2d-90dd-45fc-ad1f-927d1af292e4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="147" y="35" width="289" height="20" uuid="96c33db5-939a-4a6a-8ea7-2c31ccf9487e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="14"/>
+				</textElement>
+				<text><![CDATA[REPORTES DE INVENTARIO KO'OLEBIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="65" width="289" height="20" uuid="70e88b41-ddb0-4c9f-b494-66023bf731dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXISTENCIAS MÍNIMAS EN RECEPCIÓN]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-18" y="0" width="609" height="5" backcolor="#99CC00" uuid="026cae57-d2f3-4429-9890-cd26f3c218b9"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="36" backcolor="#99CC00" uuid="c06d2d15-00bc-4981-aa24-3e92158c22f2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="790d73e1-52c9-45a5-8897-b4e1282c48e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID STOCK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="0" width="100" height="20" uuid="f6857742-ae39-4747-87e0-503bac769de6"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID INSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="0" width="100" height="20" uuid="4b36efb1-0673-477e-9fe2-e997058cf328"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXISTENCIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="0" width="100" height="20" uuid="37f7171a-01f9-4a46-ab4c-ffa46039d448"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK MÍNIMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="112" height="20" uuid="f12c9fad-cc6d-4fd1-8694-a5eedd7672ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID UNIDAD MEDIDA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="22" uuid="77bc6280-436e-4d89-ae44-9c54158ea530"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="8cd3611e-5df4-4873-95a4-a8189272402b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_stockRe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="0" width="100" height="20" uuid="c37491ce-ac2e-4b50-8ee3-76885edf95cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_insumoRe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="0" width="100" height="20" uuid="6f40a75c-20b1-4e59-8288-62430cf16f19"/>
+				<textFieldExpression><![CDATA[$F{existenciaRe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="346" y="0" width="100" height="20" uuid="6934ad70-f5bd-4406-873d-e973c0ed6de2"/>
+				<textFieldExpression><![CDATA[$F{stock_minimoRe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="112" height="20" uuid="9915eae9-97ec-488d-8ee3-a65cfb4277f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_unidadMRe}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="107" y="0" width="1" height="22" uuid="cd6e328b-08ad-4c0b-bff5-e18db7f5b892"/>
+			</line>
+			<line>
+				<reportElement x="222" y="0" width="1" height="22" uuid="e381ace4-87f1-486d-9310-d31ccfbfc656"/>
+			</line>
+			<line>
+				<reportElement x="337" y="0" width="1" height="22" uuid="1389bbec-60c7-4d25-884a-31a840de78c2"/>
+			</line>
+			<line>
+				<reportElement x="453" y="0" width="1" height="22" uuid="6b043867-a12b-43db-bc45-e51dc3e69c5b"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="215" y="14" width="80" height="20" uuid="f8394d5a-b44c-4321-87ab-51f58886e1cb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="295" y="14" width="40" height="20" uuid="9d77fbb0-2e32-4b99-8a2d-950b81d94b53"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-18" y="49" width="609" height="5" backcolor="#99CC00" uuid="32931872-6844-49b8-ac4b-8ba12e48b424"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

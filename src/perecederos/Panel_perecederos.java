@@ -14,6 +14,7 @@ public class Panel_perecederos {
     ConexionBD conexion = new ConexionBD();
 
     //CARGA TOTAL DE REGISTROS DE PERECEDEROS
+    //A REPORTE
     public ResultSet cargaPerecederos() {
         String sentencia = "select ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad from tbl_insumo";
         try {
@@ -38,6 +39,7 @@ public class Panel_perecederos {
     }
 
     //FILTRO DE CARGA DE CADUCADOS EN UNA CANTIDAD DE DÍAS
+    //A REPORTE
     public ResultSet caducadosDias(int diaPositivo) {
         String sentencia = "SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and ADDDATE(CURDATE(),INTERVAL " + diaPositivo + " DAY);";
 
@@ -50,6 +52,7 @@ public class Panel_perecederos {
     }
 
     //FILTRO DE CARGA DE CADUCADOS POR ÁREA DE ACUERDO A LA CANTIDAD DE DÍAS
+    //A REPORTE
     public ResultSet caducadosDiasXarea(int diaPositivo, String iArea) {
         String sentencia = "SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and ADDDATE(CURDATE(),INTERVAL " + diaPositivo + " DAY) AND ID_insumo LIKE '%" + iArea + "'";
 
@@ -74,6 +77,7 @@ public class Panel_perecederos {
     }
 
     //FILTRO DE CARGA DE CADUCADOS EN UNA CANTIDAD DE MESES
+    //A REPORTE
     public ResultSet caducadosMeses(int mesPositivo) {
         String sentencia = "SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and ADDDATE(CURDATE(),INTERVAL " + mesPositivo + " MONTH);";
 
@@ -86,6 +90,7 @@ public class Panel_perecederos {
     }
 
     //FILTRO DE CARGA DE CADUCADOS POR ÁREA DE ACUERDO A LA CANTIDAD DE MESES
+    //A REPORTE
     public ResultSet caducadosMesesXarea(int mesPositivo, String iArea) {
         String sentencia = "SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and ADDDATE(CURDATE(),INTERVAL " + mesPositivo + " MONTH) AND ID_insumo LIKE '%" + iArea + "'";
 
@@ -110,6 +115,7 @@ public class Panel_perecederos {
     }
 
     //FILTRO DE CARGA DE CADUCADOS EN UNA FECHA ESPECÍFICA
+    //A REPORTE
     public ResultSet caducadosFechaEspecific(String fechaEspecific) {
         String sentencia = "SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and '" + fechaEspecific + "'";
 
@@ -122,6 +128,7 @@ public class Panel_perecederos {
     }
 
     //FILTRO DE CARGA DE CADUCADOS POR ÁREA DE ACUERDO A LA FECHA INGRESADA
+    //A REPORTE
     public ResultSet caducadosFechaEspecificXarea(String fechaEspecific, String iArea) {
         String sentencia = "SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and '" + fechaEspecific + "' AND ID_insumo LIKE '%" + iArea + "'";
 

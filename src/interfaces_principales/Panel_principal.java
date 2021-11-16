@@ -4,12 +4,28 @@ import com.mysql.jdbc.ResultSetMetaData;
 import ds.desktop.notify.DesktopNotify;
 import existencias.Panel_existencias;
 import java.awt.HeadlessException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import otras_operaciones.ConexionBD;
 import perecederos.Panel_perecederos;
 import rojerusan.RSPanelsSlider;
 import salidas.Panel_salidas;
@@ -20,6 +36,8 @@ import suministros.Panel_suministros;
  * @author Evelyn López Nieto
  */
 public class Panel_principal extends javax.swing.JFrame {
+
+    ConexionBD conexion = new ConexionBD();
 
     Panel_suministros sumi = new Panel_suministros();
     Panel_perecederos pere = new Panel_perecederos();
@@ -113,6 +131,7 @@ public class Panel_principal extends javax.swing.JFrame {
         btnBuscarInsuExistencias = new RSMaterialComponent.RSButtonIconOne();
         jScrollPane7 = new javax.swing.JScrollPane();
         tblInfoInsumoExistencia = new javax.swing.JTable();
+        btnGenerarRepExist = new RSMaterialComponent.RSButtonFormaIcon();
         pnlSalidas = new javax.swing.JPanel();
         cbAreaSalidas = new RSMaterialComponent.RSComboBox();
         txtCodigoSalidas = new RSMaterialComponent.RSTextFieldOne();
@@ -354,6 +373,11 @@ public class Panel_principal extends javax.swing.JFrame {
         btnGenerarRepCaducos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGenerarRepCaducos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnGenerarRepCaducos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
+        btnGenerarRepCaducos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarRepCaducosActionPerformed(evt);
+            }
+        });
         pnlCaducidades.add(btnGenerarRepCaducos, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 185, -1, 35));
 
         txtFechaDisCaduco.setForeground(new java.awt.Color(0, 0, 0));
@@ -487,6 +511,18 @@ public class Panel_principal extends javax.swing.JFrame {
         jScrollPane7.setViewportView(tblInfoInsumoExistencia);
 
         pnlExistencias.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 610, 810, 50));
+
+        btnGenerarRepExist.setBackground(new java.awt.Color(153, 204, 0));
+        btnGenerarRepExist.setText("Generar reporte");
+        btnGenerarRepExist.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        btnGenerarRepExist.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
+        btnGenerarRepExist.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
+        btnGenerarRepExist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarRepExistActionPerformed(evt);
+            }
+        });
+        pnlExistencias.add(btnGenerarRepExist, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 185, -1, 35));
 
         rSPanelsSlider1.add(pnlExistencias, "card4");
 
@@ -1581,30 +1617,30 @@ public class Panel_principal extends javax.swing.JFrame {
             };
             try {
                 if ((area == 1) || (area == 4)) {
-                        this.tblExistencias.setModel(tablaExistPorci);
-                        re = existencia.cargaRegExistencias(nomArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaExistPorci.addRow(datosTabla);
+                    this.tblExistencias.setModel(tablaExistPorci);
+                    re = existencia.cargaRegExistencias(nomArea);
+                    rM = (ResultSetMetaData) re.getMetaData();
+                    nColumnas = rM.getColumnCount();
+                    datosTabla = new Object[nColumnas];
+                    while (re.next()) {
+                        for (int i = 0; i < nColumnas; i++) {
+                            datosTabla[i] = re.getObject(i + 1);
                         }
-                    } else {
-                        this.tblExistencias.setModel(tablaExist);
-                        re = existencia.cargaRegExistencias(nomArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaExist.addRow(datosTabla);
-                        }
+                        tablaExistPorci.addRow(datosTabla);
                     }
+                } else {
+                    this.tblExistencias.setModel(tablaExist);
+                    re = existencia.cargaRegExistencias(nomArea);
+                    rM = (ResultSetMetaData) re.getMetaData();
+                    nColumnas = rM.getColumnCount();
+                    datosTabla = new Object[nColumnas];
+                    while (re.next()) {
+                        for (int i = 0; i < nColumnas; i++) {
+                            datosTabla[i] = re.getObject(i + 1);
+                        }
+                        tablaExist.addRow(datosTabla);
+                    }
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "No se pudo cargar la información a la tabla..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
             }
@@ -1871,6 +1907,228 @@ public class Panel_principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblExistenciasMouseClicked
 
+    private void btnGenerarRepCaducosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarRepCaducosActionPerformed
+
+        try {
+
+            if (!(this.txtCaducosDias.getText().isEmpty())) {
+                int dia = Integer.parseInt(this.txtCaducosDias.getText());
+                //JOptionPane.showMessageDialog(this, "Esta parte funciona: "+dia);
+                Connection con = conexion.obConexion2();
+                Map parametroDia = new HashMap();
+                parametroDia.put("dia", dia);
+                JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_perecederos\\CaducadosDias.jasper");
+                JasperPrint jp = JasperFillManager.fillReport(jr, parametroDia, con);
+                JasperViewer view = new JasperViewer(jp, false);
+                view.setVisible(true);
+            } else if ((!this.txtCaducosMeses.getText().isEmpty())) {
+                int mesPositivo = Integer.parseInt(this.txtCaducosMeses.getText());
+                Connection con = conexion.obConexion2();
+                Map parametroMes = new HashMap();
+                parametroMes.put("mesPositivo", mesPositivo);
+                JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_perecederos\\CaducadosMeses.jasper");
+                JasperPrint jp = JasperFillManager.fillReport(jr, parametroMes, con);
+                JasperViewer view = new JasperViewer(jp, false);
+                view.setVisible(true);
+            } else {
+                Connection con = conexion.obConexion2();
+                JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_perecederos\\TodoReg_perecederos.jasper");
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
+                JasperViewer view = new JasperViewer(jp, false);
+                view.setVisible(true);
+            }
+
+        } catch (NumberFormatException | JRException e) {
+
+        }
+
+    }//GEN-LAST:event_btnGenerarRepCaducosActionPerformed
+
+    private void btnGenerarRepExistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarRepExistActionPerformed
+
+        try {
+            Connection con;
+            JasperReport jr;
+            JasperPrint jp;
+            JasperViewer view;
+            int area = this.cbAreaExistencias.getSelectedIndex();
+            int stock = this.cbBuscarStock.getSelectedIndex();
+
+            switch (area) {
+                case 1:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_servicio.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_servicio.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_restaurante.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_restaurante.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_personal.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_personal.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_bar.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_bar.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(null, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_habitaciones.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_habitaciones.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 6:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_mantenimiento.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_mantenimiento.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 7:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_recepcion.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_recepcion.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+                case 8:
+                    switch (stock) {
+                        case 0:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_otros.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 1:
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_otros.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            break;
+                        case 2:
+                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            break;
+                    }
+                    break;
+            }
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+        }
+    }//GEN-LAST:event_btnGenerarRepExistActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1914,6 +2172,7 @@ public class Panel_principal extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne btnEscanerCodigo;
     private RSMaterialComponent.RSButtonFormaIcon btnExistencias;
     private RSMaterialComponent.RSButtonFormaIcon btnGenerarRepCaducos;
+    private RSMaterialComponent.RSButtonFormaIcon btnGenerarRepExist;
     private rojeru_san.rsbutton.RSButtonForma btnGuardarSalidas;
     private RSMaterialComponent.RSButtonFormaIcon btnIngresarSumi;
     private RSMaterialComponent.RSButtonFormaIcon btnInsumos;

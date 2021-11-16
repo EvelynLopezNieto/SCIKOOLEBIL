@@ -29,6 +29,7 @@ import otras_operaciones.ConexionBD;
 public class Panel_existencias {
     ConexionBD conexion = new ConexionBD();
     
+    //A REPORTE
     public ResultSet cargaRegExistencias(String area) {
         String sentencia = "SELECT * FROM tbl_stock"+area;
 
@@ -53,6 +54,7 @@ public class Panel_existencias {
         }
     }
     
+    //A REPORTE
     public ResultSet busquedaStockMinExist(String area,String iniArea) {
         String sentencia = "SELECT * FROM tbl_stock"+area+" WHERE existencia"+iniArea+" = stock_minimo"+iniArea+"";
 
@@ -65,6 +67,7 @@ public class Panel_existencias {
         }
     }
     
+    //A REPORTE
     public ResultSet busquedaExistActiva(String area,String iniArea) {
         String sentencia = "SELECT * FROM tbl_stock"+area+" WHERE existencia"+iniArea+" > stock_minimo"+iniArea+"";
 

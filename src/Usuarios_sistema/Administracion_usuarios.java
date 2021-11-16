@@ -167,11 +167,21 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         rbtnMatutino.setBackground(new java.awt.Color(153, 204, 0));
         rbtnMatutino.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         rbtnMatutino.setText("Matutino");
+        rbtnMatutino.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnMatutinoMouseClicked(evt);
+            }
+        });
         pnlPerfiles.add(rbtnMatutino, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 155, -1, -1));
 
         rbtnVespertino.setBackground(new java.awt.Color(153, 204, 0));
         rbtnVespertino.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         rbtnVespertino.setText("Vespertino");
+        rbtnVespertino.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnVespertinoMouseClicked(evt);
+            }
+        });
         pnlPerfiles.add(rbtnVespertino, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 155, -1, -1));
 
         lblIDuser.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
@@ -216,6 +226,11 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         btnGuardarNUser.setToolTipText("Insertar nuevo perfil");
         btnGuardarNUser.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
         btnGuardarNUser.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
+        btnGuardarNUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarNUserActionPerformed(evt);
+            }
+        });
         pnlPerfiles.add(btnGuardarNUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 395, -1, -1));
 
         btnHistorialUser.setBackground(new java.awt.Color(0, 0, 153));
@@ -227,11 +242,21 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         rbtnAdmin.setBackground(new java.awt.Color(153, 204, 0));
         rbtnAdmin.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         rbtnAdmin.setText("Administrador");
+        rbtnAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnAdminMouseClicked(evt);
+            }
+        });
         pnlPerfiles.add(rbtnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 205, -1, -1));
 
         rbtnUser.setBackground(new java.awt.Color(153, 204, 0));
         rbtnUser.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         rbtnUser.setText("Usuario");
+        rbtnUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnUserMouseClicked(evt);
+            }
+        });
         pnlPerfiles.add(rbtnUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 205, -1, -1));
 
         btnActualizarInfUser.setBackground(new java.awt.Color(0, 0, 153));
@@ -520,6 +545,51 @@ public class Administracion_usuarios extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No se pudo actualizar el registro..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnActualizarInfUserActionPerformed
+
+    private void rbtnMatutinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMatutinoMouseClicked
+        this.rbtnVespertino.setSelected(false);
+    }//GEN-LAST:event_rbtnMatutinoMouseClicked
+
+    private void rbtnVespertinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnVespertinoMouseClicked
+        this.rbtnMatutino.setSelected(false);
+    }//GEN-LAST:event_rbtnVespertinoMouseClicked
+
+    private void rbtnAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnAdminMouseClicked
+        this.rbtnUser.setSelected(false);
+    }//GEN-LAST:event_rbtnAdminMouseClicked
+
+    private void rbtnUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnUserMouseClicked
+        this.rbtnAdmin.setSelected(false);
+    }//GEN-LAST:event_rbtnUserMouseClicked
+
+    private void btnGuardarNUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNUserActionPerformed
+        String nombre = this.txtNombreUser.getText();
+        String paterno = this.txtPaternoUser.getText();
+        String materno = this.txtMaternoUser.getText();
+        String telefono = this.txtTelefonoUser.getText();
+        String puesto = this.txtPuestoUser.getText();
+        String turno = null;
+        if(this.rbtnMatutino.isSelected()) {
+            turno = this.rbtnMatutino.getText();
+        } else if(this.rbtnVespertino.isSelected()) {
+            turno = this.rbtnVespertino.getText();
+        }
+        String privilegio = null;
+        if(this.rbtnAdmin.isSelected()) {
+            privilegio = this.rbtnAdmin.getText();
+        } else if(this.rbtnUser.isSelected()) {
+            privilegio = this.rbtnUser.getText();
+        }
+        String user = this.txtUsuario.getText();
+        String pass = this.txtPasswordUser.getText();
+        
+        try {
+            usuario.agregarPerfiles(nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
+            JOptionPane.showMessageDialog(this, "Perfil agregado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el registro..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarNUserActionPerformed
 
     /**
      * @param args the command line arguments

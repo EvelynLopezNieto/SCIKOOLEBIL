@@ -48,6 +48,7 @@ public class Operaciones_usuarios {
                + "'" + turno + "','" + privilegios + "','" + usuario + "','" + password + "')";
 
         try {
+            Connection con = conexion.obConexion();
             Statement insertar = conexion.crearSentencia();
             return insertar.executeUpdate(sentencia);
         } catch (SQLException e) {

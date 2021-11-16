@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StockMin_personal" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="37cefd34-e8cb-4bc5-b2e7-53c32d9c5264">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM tbl_stockPersonal WHERE existenciaP = stock_minimoP;]]>
+	</queryString>
+	<field name="ID_stockP" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_insumoP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="existenciaP" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stock_minimoP" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_unidadMP" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="15" width="70" height="70" uuid="fad38ef7-1c4e-4eb9-8105-bd403f2ec183"/>
+				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="ce354311-399a-40aa-8d21-9737379148f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Ko'olebil]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="457" y="15" width="115" height="20" uuid="57f2e9b2-25a8-4d81-9516-c8d4295a9871"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="152" y="35" width="295" height="20" uuid="6fba2a32-3dc5-4191-8525-ffbc48582ca4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="14"/>
+				</textElement>
+				<text><![CDATA[REPORTES DE INVENTARIO KO'OLEBIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="65" width="295" height="20" uuid="152cbe7f-773a-4b7f-8fb4-3e93a7cfe727"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXISTENCIAS MÍNIMAS DEL PERSONAL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-18" y="0" width="609" height="5" backcolor="#99CC00" uuid="a7246051-db6f-4566-9c00-3299f5be5be5"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="36" backcolor="#99CC00" uuid="01c79434-c004-4fbc-9280-d5e891a0fd00"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f8f50878-4961-4ba4-81d9-b06f9104a674"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID STOCK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="0" width="100" height="20" uuid="ec5e2334-7ef2-4436-a525-b15d5ac4deaa"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID INSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="0" width="100" height="20" uuid="153dcc4d-17c6-424a-963c-04e7c2b1ab1f"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXISTENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="100" height="20" uuid="1a0b8cfa-b83e-4737-acba-fec71b1b453c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK MÍNIMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="117" height="20" uuid="c1fc64bf-6081-4cf9-ba46-4ecfa20528c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID UNIDAD DE MEDIDA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="22" uuid="37c20573-673a-4b2e-9af4-5f65d3cd8c06"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="925011e9-aa33-4345-855b-bc6b3ac20eca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_stockP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="0" width="100" height="20" uuid="c65c1f73-637f-4c12-9fee-14c1ae7d00df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_insumoP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="0" width="100" height="20" uuid="d604d90e-9892-4e6e-af41-e9b487a9e2f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{existenciaP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="100" height="20" uuid="da4dfa21-35d3-42fe-864b-ec64e1612e24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{stock_minimoP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="0" width="115" height="20" uuid="e0a17979-4013-4ea4-b17b-7a352e1dccfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_unidadMP}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="108" y="0" width="1" height="22" uuid="9d6f33c0-007b-4dbc-9236-edae767865f2"/>
+			</line>
+			<line>
+				<reportElement x="224" y="0" width="1" height="22" uuid="5812a9b2-8b2c-419f-b7b4-9a1646792302"/>
+			</line>
+			<line>
+				<reportElement x="337" y="0" width="1" height="22" uuid="1937c2ce-f037-4c64-aed2-ec35b4234454"/>
+			</line>
+			<line>
+				<reportElement x="450" y="0" width="1" height="22" uuid="e0fa221b-c548-4d62-b153-6897e8415649"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="212" y="14" width="80" height="20" uuid="387bfb5e-4306-4448-b058-ac4b3746fecd"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="292" y="14" width="40" height="20" uuid="30880e6a-399a-45c9-b160-db54f1de5219"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-18" y="49" width="609" height="5" backcolor="#99CC00" uuid="8b043838-f0d0-478d-bef1-47bf1f177200"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

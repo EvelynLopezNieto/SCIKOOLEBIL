@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CaducadosMeses" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcb7d01e-85ab-47f7-bca6-0b955b05313f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="mesPositivo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() and ADDDATE(CURDATE(),INTERVAL $P{mesPositivo} MONTH);]]>
+	</queryString>
+	<field name="ID_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_entrega" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_caducidad" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="15" width="70" height="70" uuid="b3f8defd-d0c7-4da8-8972-ba2fa05103c6"/>
+				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="70" height="20" forecolor="#0033CC" uuid="71df3dec-e14c-4448-a413-dc2bfe8f076d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Ko'olebil]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="422" y="15" width="150" height="20" uuid="528e28b0-93cb-439b-acd7-2acc502e5bcd"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="162" y="31" width="260" height="20" uuid="9f10a8ab-5968-4d45-b2fe-6e1f9db1dfb9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<text><![CDATA[REPORTES DE INVENTARIO kO'OLEBIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="64" width="142" height="26" uuid="e65f0f1a-9d23-4dfc-a409-ab4b7f6b6055"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ CADUCADOS EN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="64" width="50" height="26" uuid="5a4a419b-1973-4f0c-9611-3093d0219b8f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MESES]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="328" y="64" width="37" height="26" uuid="077be24c-d242-4c48-b320-75261b1e74ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mesPositivo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-19" y="0" width="610" height="5" backcolor="#99CC00" uuid="7e752ea4-897b-430d-8ef1-93a8c233acbd"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="36" backcolor="#99CC00" uuid="20b31597-c1dd-496e-a7f2-e2975ab6b167"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="2" width="114" height="20" uuid="29075894-dbc7-4554-8ac1-c4772110c26e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID INSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="2" width="120" height="20" uuid="492065f7-508e-467b-b3e6-4078c8162326"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE INSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="2" width="118" height="20" uuid="e288abb0-4c23-4e5d-95c2-dfaf2b3d9296"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO INSUMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="0" width="110" height="20" uuid="f24bd468-13bc-4540-b2c4-ea249bcf198d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA ENTREGA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="0" width="110" height="20" uuid="6637b38c-0aac-4f9d-badf-efb5d02b024d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA CADUCIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="22" backcolor="#FFFFFF" uuid="f758c884-7ca9-4b00-93e8-96c71002ad7d"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="114" height="20" uuid="336a5d7f-dcbb-4eab-81c8-c2da478bc374"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="0" width="120" height="20" uuid="fec630d7-3463-402d-abfe-88bddf518a81"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="0" width="118" height="20" uuid="b8da942d-3435-4bfd-aab9-05a8c3e51c31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="352" y="0" width="110" height="20" uuid="dfc86200-9a8c-4e95-8d43-829ffd050a56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_entrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="462" y="0" width="110" height="20" uuid="9f27b8ee-0d11-4db7-8c2c-e6534901d8f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_caducidad}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="114" y="0" width="1" height="22" uuid="a0b2fd72-af7e-4a56-9d9b-f2d4838200ee"/>
+			</line>
+			<line>
+				<reportElement x="233" y="1" width="1" height="21" uuid="64e7ba72-69cf-427b-8b8a-f137f5bb9e58"/>
+			</line>
+			<line>
+				<reportElement x="352" y="1" width="1" height="21" uuid="1c14ab31-02ed-4230-83fe-8b653870257c"/>
+			</line>
+			<line>
+				<reportElement x="462" y="1" width="1" height="21" uuid="bf7e2ff5-8b24-4b3b-8bb1-97c04c9bd45f"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="208" y="14" width="80" height="20" uuid="5029eff4-0117-4f1f-82b9-ea6a9a07a8e4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="288" y="14" width="40" height="20" uuid="8bce94d1-f0f9-44d5-8f27-4b81a2dd2a49"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-19" y="49" width="610" height="5" backcolor="#99CC00" uuid="db0a5cd2-acd1-43f9-af09-e22229e652ed"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -14,8 +14,9 @@ public class Panel_suministros {
     ConexionBD conexion = new ConexionBD();
 
     //CARGA DE REGISTROS A LA TABLA DEL PANEL SUMINISTROS
+    //A REPORTE
     public ResultSet cargaSuministros() {
-        String sentencia = "select * from tbl_suministros";
+        String sentencia = "SELECT * FROM tbl_suministros";
         try {
             Connection con = conexion.obConexion();
             Statement verR = conexion.crearSentencia();
@@ -65,6 +66,7 @@ public class Panel_suministros {
     }
 
     //CARGA DE REGISTROS A LA TABLA CON FILTRO DE BÚSQUEDA POR EL TIPO DE INSUMO
+    //A REPORTE
     public ResultSet busquedaTinsu(String tipoInsu) {
         String sentencia = "SELECT * FROM tbl_suministros WHERE tipo_insumoN = '" + tipoInsu + "'";
 
@@ -78,6 +80,7 @@ public class Panel_suministros {
     }
 
     //CARGA DE REGISTROS A LA TABLA CON FILTRO DE BÚSQUEDA POR LA FECHA DE ENTREGA
+    //A REPORTE
     public ResultSet busquedaFechaEntinsu(String fechaInsu) {
         String sentencia = "SELECT * FROM tbl_suministros WHERE fecha_entregaN = '" + fechaInsu + "'";
 
@@ -91,6 +94,7 @@ public class Panel_suministros {
     }
 
     //CARGA DE REGISTROS A LA TABLA QUE INVOLUCRA DOS FILTROS DE BÚSQUEDA: NOMBRE DE INSUMO Y FECHA DE ENTREGA
+    //A REPORTE
     public ResultSet busqued2FILTROnomFECH(String nInsu, String fInsu) {
         String sentencia = "SELECT * FROM tbl_suministros WHERE nombre_insumoN = '" + nInsu + "' AND fecha_entregaN = '" + fInsu + "'";
 
@@ -104,6 +108,7 @@ public class Panel_suministros {
     }
 
     //CARGA DE REGISTROS A LA TABLA QUE INVOLUCRA DOS FILTROS DE BÚSQUEDA: TIPO DE INSUMO Y FECHA DE ENTREGA
+    //A REPORTE
     public ResultSet busqueda2FILTROtipoFECH(String tInsu, String fInsu) {
         String sentencia = "SELECT * FROM tbl_suministros WHERE tipo_insumoN = '" + tInsu + "' AND fecha_entregaN = '" + fInsu + "'";
 
