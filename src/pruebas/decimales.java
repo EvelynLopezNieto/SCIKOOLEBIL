@@ -10,7 +10,7 @@ package pruebas;
  * @author evelo
  */
 public class decimales extends javax.swing.JFrame {
-
+foto f = new foto();
     /**
      * Creates new form decimales
      */
@@ -31,6 +31,8 @@ public class decimales extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        abrirventana1 = new javax.swing.JButton();
+        cerrarventana2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,6 +42,20 @@ public class decimales extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        abrirventana1.setText("abrir ventana");
+        abrirventana1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirventana1ActionPerformed(evt);
+            }
+        });
+
+        cerrarventana2.setText("cerrar ventana 2");
+        cerrarventana2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarventana2ActionPerformed(evt);
             }
         });
 
@@ -57,8 +73,13 @@ public class decimales extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                             .addComponent(jTextField1)
-                            .addComponent(jTextField2))))
-                .addContainerGap(133, Short.MAX_VALUE))
+                            .addComponent(jTextField2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(abrirventana1)
+                        .addGap(34, 34, 34)
+                        .addComponent(cerrarventana2)))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,7 +92,11 @@ public class decimales extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(abrirventana1)
+                    .addComponent(cerrarventana2))
+                .addGap(49, 49, 49))
         );
 
         pack();
@@ -83,6 +108,16 @@ public class decimales extends javax.swing.JFrame {
         Double res = n1-n2;
         this.jLabel1.setText(res.toString());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void abrirventana1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirventana1ActionPerformed
+        
+        f.setVisible(true);
+    }//GEN-LAST:event_abrirventana1ActionPerformed
+
+    private void cerrarventana2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarventana2ActionPerformed
+        
+        f.dispose();
+    }//GEN-LAST:event_cerrarventana2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,6 +155,8 @@ public class decimales extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton abrirventana1;
+    private javax.swing.JButton cerrarventana2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;

@@ -1,5 +1,6 @@
 package suministros;
 
+import Usuarios_sistema.Operaciones_usuarios;
 import com.mysql.jdbc.ResultSetMetaData;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
@@ -19,20 +20,21 @@ import javax.swing.table.DefaultTableModel;
  * @author Evelyn López Nieto
  */
 public class Ingreso_suministros extends javax.swing.JDialog {
-
+    
     Form_sumiNuevos suministros = new Form_sumiNuevos();
     Form_adicionSumiExistentes adiSumi = new Form_adicionSumiExistentes();
+    Operaciones_usuarios operaciones = new Operaciones_usuarios();
     Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-
+    
     public Ingreso_suministros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.jPanel1.setVisible(false);
-
+        
         cerrarFormulario();
     }
-
+    
     public void cerrarFormulario() {
         try {
             this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -46,14 +48,14 @@ public class Ingreso_suministros extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }
-
+    
     public void confirmSalida() {
         int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de salir del formulario?", "Advertencia", JOptionPane.YES_NO_OPTION);
         if (valor == JOptionPane.YES_OPTION) {
             this.dispose();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -136,10 +138,9 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtNameInsumoID.setBackground(new java.awt.Color(255, 204, 204));
         txtNameInsumoID.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtNameInsumoID.setToolTipText("Ingrese nombre de insumo resumido");
-        txtNameInsumoID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtNameInsumoID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtNameInsumoID, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 160, 30));
 
         jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -150,10 +151,9 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jLabel4.setText("*Nombre del insumo");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 75, -1, -1));
 
-        txtNombreInsumo.setBackground(new java.awt.Color(255, 204, 204));
         txtNombreInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtNombreInsumo.setToolTipText("Ingrese el nombre del insumo");
-        txtNombreInsumo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtNombreInsumo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtNombreInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 250, 30));
 
         jLabel5.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -166,12 +166,11 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jScrollPane1.setToolTipText("Ingrese una descripción del insumo");
 
-        txtAdescripcion.setBackground(new java.awt.Color(255, 204, 204));
         txtAdescripcion.setColumns(20);
         txtAdescripcion.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         txtAdescripcion.setLineWrap(true);
         txtAdescripcion.setRows(5);
-        txtAdescripcion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtAdescripcion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtAdescripcion.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtAdescripcionCaretUpdate(evt);
@@ -189,46 +188,41 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jLabel8.setText("$");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
 
-        txtPrecioTotalInsu.setBackground(new java.awt.Color(255, 204, 204));
         txtPrecioTotalInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtPrecioTotalInsu.setToolTipText("Ingrese el precio total del insumo");
-        txtPrecioTotalInsu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtPrecioTotalInsu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtPrecioTotalInsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 80, 30));
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel9.setText("*Precio unitario del insumo");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 325, -1, -1));
 
-        txtPrecioUnitarioInsu.setBackground(new java.awt.Color(255, 204, 204));
         txtPrecioUnitarioInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtPrecioUnitarioInsu.setToolTipText("Ingrese el precio unitario del insumo");
-        txtPrecioUnitarioInsu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtPrecioUnitarioInsu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtPrecioUnitarioInsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 80, 30));
 
         jLabel10.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel10.setText("*Cantidad entregada");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, -1, -1));
 
-        txtCantEntregadaInsu.setBackground(new java.awt.Color(255, 204, 204));
         txtCantEntregadaInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtCantEntregadaInsu.setToolTipText("Ingrese la cantidad entregada del insumo");
-        txtCantEntregadaInsu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtCantEntregadaInsu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtCantEntregadaInsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 80, 30));
 
-        txtPerdidasInsu.setBackground(new java.awt.Color(255, 204, 204));
         txtPerdidasInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtPerdidasInsu.setToolTipText("Ingrese la cantidad de pérdidas, si existen");
-        txtPerdidasInsu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtPerdidasInsu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtPerdidasInsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 80, 30));
 
         jLabel11.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel11.setText("Pérdidas");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, -1, -1));
 
-        txtCantFinalInsu.setBackground(new java.awt.Color(255, 204, 204));
         txtCantFinalInsu.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtCantFinalInsu.setToolTipText("Ingrese la cantidad final del insumo");
-        txtCantFinalInsu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtCantFinalInsu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtCantFinalInsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 80, 30));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
@@ -258,12 +252,11 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
         jScrollPane3.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
 
-        txtAComentarios.setBackground(new java.awt.Color(255, 204, 204));
         txtAComentarios.setColumns(20);
         txtAComentarios.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         txtAComentarios.setLineWrap(true);
         txtAComentarios.setRows(5);
-        txtAComentarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtAComentarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtAComentarios.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtAComentariosCaretUpdate(evt);
@@ -277,10 +270,9 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         lblPorciones.setText("*Porciones");
         jPanel1.add(lblPorciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, -1, -1));
 
-        txtPorciones.setBackground(new java.awt.Color(255, 204, 204));
         txtPorciones.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
         txtPorciones.setToolTipText("Ingrese porción de uso total");
-        txtPorciones.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtPorciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtPorciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 50, 30));
 
         jLabel17.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -375,9 +367,8 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         });
         jPanel1.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, -1, -1));
 
-        txtStockMin.setBackground(new java.awt.Color(255, 204, 204));
         txtStockMin.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
-        txtStockMin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtStockMin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtStockMin, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, 80, 30));
 
         jLabel6.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -429,12 +420,12 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAreaActionPerformed
-
+        
         String areaSeleccionada = this.cbArea.getSelectedItem().toString();
         int area = this.cbArea.getSelectedIndex();
-
+        
         try {
-
+            
             if (area == 0) {
                 this.jPanel1.setVisible(false);
                 if (this.rbtnInsumoN.isSelected()) {
@@ -445,13 +436,13 @@ public class Ingreso_suministros extends javax.swing.JDialog {
             } else {
                 this.jPanel1.setVisible(false);
             }
-
+            
             if ((areaSeleccionada.equals("Restaurante")) || (areaSeleccionada.equals("Personal")) || (areaSeleccionada.equals("Habitaciones"))
                    || (areaSeleccionada.equals("Mantenimiento")) || (areaSeleccionada.equals("Recepción")) || (areaSeleccionada.equals("Otros"))) {
                 this.txtPorciones.setEnabled(false);
                 suministros.cargarcbUM(cbIDunidadM);
                 suministros.cargarIDper(cbIDpersonal);
-
+                
             } else if (areaSeleccionada.equals("Seleccione área")) {
                 this.jPanel1.setVisible(false);
             } else {
@@ -469,7 +460,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
 
     private void btnIngresarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarInsumoActionPerformed
         Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
-
+        
         try {
             String dia = this.spnDiaInsumo.getValue().toString();
             String mes = this.spnMesInsumo.getValue().toString();
@@ -491,18 +482,18 @@ public class Ingreso_suministros extends javax.swing.JDialog {
             String comentarios = this.txtAComentarios.getText();
             Double porciones = null;
             int IDpersonal = Integer.parseInt(this.cbIDpersonal.getSelectedItem().toString());
-
+            
             if (dia.isEmpty() || mes.isEmpty() || nombreInsuID.isEmpty() || inicial.isEmpty() || nombreInsumo.isEmpty() || tipoInsu.isEmpty()
                    || this.txtPrecioTotalInsu.getText().isEmpty() || this.txtPrecioUnitarioInsu.getText().isEmpty()
                    || this.txtCantEntregadaInsu.getText().isEmpty() || this.txtPerdidasInsu.getText().isEmpty() || this.txtCantFinalInsu.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Faltan campos obligatorios por llenar", "Advertencia", JOptionPane.WARNING_MESSAGE);
             } else {
-
+                
                 suministros.registroTablaInsumo(dia, mes, nombreInsuID, inicial, nombreInsumo, tipoInsu, descripcion,
                        precioUni, precioTotal, comentarios, fechaCadu);
                 suministros.registroTablaSuministro(dia, mes, nombreInsuID, inicial, nombreInsumo, tipoInsu, descripcion,
                        precioUni, precioTotal, cantEntregada, perdidas, cantFinal, unidadM, comentarios);
-
+                
                 if (this.cbArea.getSelectedItem().equals("Servicio")) {
                     porciones = Double.parseDouble(this.txtPorciones.getText());
                     suministros.registroTablaStockServicio(dia, mes, nombreInsuID, inicial, cantFinal, stockMin, unidadM, porciones);
@@ -545,9 +536,13 @@ public class Ingreso_suministros extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Registro existoso\n"
                            + "Enviado al registro general", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
                 }
-
-                suministros.registroTablaAccesosP(IDpersonal);
-
+                
+                if (this.rbtnInsumoN.isSelected()) {
+                    operaciones.regAccesosIngresoSumiNuevo(IDpersonal);
+                }
+                if (this.rbtnAgregarInsumo.isSelected()) {
+                    operaciones.regAccesosIngresoSumiExist(IDpersonal);
+                }
             }
         } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
@@ -556,74 +551,13 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     }//GEN-LAST:event_btnIngresarInsumoActionPerformed
 
     private void cbIDunidadMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbIDunidadMActionPerformed
-
-        String columnas[] = {"ID unidad", "Tipo unidad", "Nombre unidad", "Abrev. unidad"};
-        String datos[][] = {};
-        DefaultTableModel tablaUnidadM = new DefaultTableModel(datos, columnas) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 4) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tblUnidadM.setModel(tablaUnidadM);
-
-        try {
-            int unidad = this.cbIDunidadM.getSelectedIndex();
-            ResultSet re = suministros.verIDum(unidad);
-            ResultSetMetaData rM = (ResultSetMetaData) re.getMetaData();
-            int nColumnas = rM.getColumnCount();
-
-            Object[] datosTabla = new Object[nColumnas];
-
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaUnidadM.addRow(datosTabla);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar las unidades..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-        }
+        int unidad = this.cbIDunidadM.getSelectedIndex();
+        suministros.verIDum(unidad,tblUnidadM);
     }//GEN-LAST:event_cbIDunidadMActionPerformed
 
     private void cbIDpersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbIDpersonalActionPerformed
-        String columnas[] = {"Nombre", "Apellido paterno", "Cargo", "Turno"};
-        String datos[][] = {};
-        DefaultTableModel tablaPersonal = new DefaultTableModel(datos, columnas) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 4) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tblPersonalSumi.setModel(tablaPersonal);
-
-        try {
-            int personal = this.cbIDpersonal.getSelectedIndex();
-            ResultSet re = suministros.verIDper(personal);
-            ResultSetMetaData rM = (ResultSetMetaData) re.getMetaData();
-            int nColumnas = rM.getColumnCount();
-
-            Object[] datosTabla = new Object[nColumnas];
-
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaPersonal.addRow(datosTabla);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar inf. del personal..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-        }
+        int personal = this.cbIDpersonal.getSelectedIndex();
+        suministros.verIDper(personal, tblPersonalSumi);
     }//GEN-LAST:event_cbIDpersonalActionPerformed
 
     private void txtAdescripcionCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtAdescripcionCaretUpdate
@@ -656,7 +590,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void rbtnInsumoNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnInsumoNMouseClicked
-
+        
         this.rbtnAgregarInsumo.setSelected(false);
         if (this.cbArea.getSelectedIndex() == 0) {
             this.jPanel1.setVisible(false);
@@ -679,6 +613,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
             this.spnMesInsumo.setEnabled(false);
             this.cbInicialArea.setEnabled(false);
             this.btnIngresarInsumo.setEnabled(false);
+            this.btnAgregarInsumo.setEnabled(true);
         }
     }//GEN-LAST:event_rbtnAgregarInsumoMouseClicked
 
@@ -689,7 +624,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         int IDpersonal = Integer.parseInt(this.cbIDpersonal.getSelectedItem().toString());
         int area = this.cbArea.getSelectedIndex();
         String iniArea = null;
-
+        
         if (area == 1) {
             iniArea = "S";
         }
@@ -715,14 +650,14 @@ public class Ingreso_suministros extends javax.swing.JDialog {
             iniArea = "O";
         }
         try {
-            adiSumi.agregarInsumoExistente(nombreArea, iniArea, cantidadN, idInsu);
+            adiSumi.agregarInsumoExistenteStock(nombreArea, iniArea, cantidadN, idInsu);
             //adiSumi.registroTablaSuministroExistente(idInsu, nombreArea, idInsu, iniArea, cantidadN, cantidadN, cantidadN, cantidadN, cantidadN, WIDTH, nombreArea)
             adiSumi.registroTablaAccesosP(IDpersonal);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un problema con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }//GEN-LAST:event_btnAgregarInsumoActionPerformed
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

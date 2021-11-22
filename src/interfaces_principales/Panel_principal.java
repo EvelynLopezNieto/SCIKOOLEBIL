@@ -1,32 +1,33 @@
 package interfaces_principales;
 
+import QR_envioRequi.Envio_requisicion;
+import QR_envioRequi.GeneradorQR;
+import Usuarios_sistema.Administracion_usuarios;
 import com.mysql.jdbc.ResultSetMetaData;
-import ds.desktop.notify.DesktopNotify;
 import existencias.Panel_existencias;
 import java.awt.HeadlessException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import otras_operaciones.ConexionBD;
 import perecederos.Panel_perecederos;
+import requisiciones.Panel_requisiciones;
 import rojerusan.RSPanelsSlider;
 import salidas.Panel_salidas;
 import suministros.Ingreso_suministros;
@@ -43,6 +44,7 @@ public class Panel_principal extends javax.swing.JFrame {
     Panel_perecederos pere = new Panel_perecederos();
     Panel_salidas salidas = new Panel_salidas();
     Panel_existencias existencia = new Panel_existencias();
+    Panel_requisiciones requi = new Panel_requisiciones();
 
     Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
     Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
@@ -52,39 +54,23 @@ public class Panel_principal extends javax.swing.JFrame {
     int nColumnas = 0;
     Object[] datosTabla;
 
-    String columnas1[] = {"ID suministro", "ID insumo", "Nombre", "Tipo insumo", "Descripción", "$ unitario", "$ total",
-        "Cant. Entregada", "Pérdidas", "Cant. Final", "Unidad medida", "Fecha entrega", "Comentario"};
-    String columnas2[] = {"ID insumo", "Nombre insumo", "Tipo insumo", "Fecha entrega", "Fecha caducidad"};
-    String columnas3[] = {"ID insumo", "Nombre", "Existencia actual"};
-    String columnas4[] = {"ID unidad", "Tipo unidad", "Nombre unidad", "Abrev. unidad"};
-    String columnas5[] = {"ID insumo", "Nombre", "Nueva existencia", "Unidad medida"};
-    String columnas6[] = {"ID stock", "ID insumo", "Existencia", "Stock mínimo", "ID unidad medida"};
-    String columnas7[] = {"ID stock", "ID insumo", "Existencia", "Stock mínimo", "ID unidad medida", "Porciones"};
-    String columnas8[] = {"Nombre de insumo", "Tipo de insumo", "Descripción", "Comentarios"};
-    String datos[][] = {};
-
-    DefaultTableModel tablaExistsNuevo = new DefaultTableModel(datos, columnas5) {
-        @Override
-        public boolean isCellEditable(int filas, int columnas) {
-            if (columnas == 4) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    };
-
     public Panel_principal() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("/recursos_graficos/icono_scikoolebil_2.png")).getImage());
         this.pnlWelcome.setVisible(true);
         notificadosCaducar();
+        cerrarPrincipal();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pmTbl_requi = new javax.swing.JPopupMenu();
+        mipmPrepararRequi = new javax.swing.JMenuItem();
+        mipmEditarRequi = new javax.swing.JMenuItem();
+        mipmEliminarRequi = new javax.swing.JMenuItem();
         rSPanelsSlider1 = new rojerusan.RSPanelsSlider();
         pnlWelcome = new javax.swing.JPanel();
         rSPanelImage1 = new rojerusan.RSPanelImage();
@@ -103,8 +89,6 @@ public class Panel_principal extends javax.swing.JFrame {
         btnIngresarSumi = new RSMaterialComponent.RSButtonFormaIcon();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cbReporte = new RSMaterialComponent.RSComboBox();
-        jLabel6 = new javax.swing.JLabel();
         pnlCaducidades = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_caducidades = new javax.swing.JTable();
@@ -120,6 +104,30 @@ public class Panel_principal extends javax.swing.JFrame {
         cbBusquedaIniPere = new RSMaterialComponent.RSComboBox();
         jLabel7 = new javax.swing.JLabel();
         pnlRequisiciones = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tbl_requisiciones = new javax.swing.JTable();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tbl_infInsuRequi = new javax.swing.JTable();
+        pnlFormEditRequi = new javax.swing.JPanel();
+        lblIDinsu_requi = new javax.swing.JLabel();
+        txtIDinsumo_requi = new javax.swing.JTextField();
+        lblCantidad_requi = new javax.swing.JLabel();
+        txtCantidad_requi = new javax.swing.JTextField();
+        lblIDunidadM_requi = new javax.swing.JLabel();
+        txtIDunidadM_requi = new javax.swing.JTextField();
+        lblIDpersonal_requi = new javax.swing.JLabel();
+        txtIDPersonal_requi = new javax.swing.JTextField();
+        lblFechaSolicitud_requi = new javax.swing.JLabel();
+        btnValidar_requi = new RSMaterialComponent.RSButtonIconOne();
+        btnCancel_requi = new RSMaterialComponent.RSButtonIconOne();
+        btnGenerarDocu_requi = new RSMaterialComponent.RSButtonFormaIcon();
+        btnSolicitarRequi_requi = new RSMaterialComponent.RSButtonFormaIcon();
+        btnUpdateRequi = new RSMaterialComponent.RSButtonIconOne();
+        dateSolicitud_requi = new com.toedter.calendar.JDateChooser();
+        lblIDrequi = new javax.swing.JLabel();
+        cbAreaRequi = new RSMaterialComponent.RSComboBox();
+        btnMostrarInsu_requi = new rojeru_san.rsbutton.RSButtonForma();
+        jLabel6 = new javax.swing.JLabel();
         pnlInsumos = new javax.swing.JPanel();
         pnlExistencias = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -159,7 +167,30 @@ public class Panel_principal extends javax.swing.JFrame {
         lblImageLogo = new necesario.RSLabelImage();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        mbmiCambiarUser = new javax.swing.JMenuItem();
+        mbmiSalir = new javax.swing.JMenuItem();
+        mbMainHerramientas = new javax.swing.JMenu();
+        mbmiAdminUser = new javax.swing.JMenuItem();
+        mbmiQR = new javax.swing.JMenuItem();
+
+        mipmPrepararRequi.setText("Preparar envío");
+        mipmPrepararRequi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mipmPrepararRequiActionPerformed(evt);
+            }
+        });
+        pmTbl_requi.add(mipmPrepararRequi);
+
+        mipmEditarRequi.setText("Editar");
+        mipmEditarRequi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mipmEditarRequiActionPerformed(evt);
+            }
+        });
+        pmTbl_requi.add(mipmEditarRequi);
+
+        mipmEliminarRequi.setText("Eliminar");
+        pmTbl_requi.add(mipmEliminarRequi);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - SCIKo'olebil");
@@ -176,10 +207,10 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlWelcome.add(rSPanelImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 100, 350, 350));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("¡BIENVENIDO!");
-        pnlWelcome.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(385, 520, -1, -1));
+        pnlWelcome.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 520, -1, -1));
 
         rSPanelsSlider1.add(pnlWelcome, "card2");
 
@@ -271,6 +302,11 @@ public class Panel_principal extends javax.swing.JFrame {
         btnReporteSumi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnReporteSumi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnReporteSumi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
+        btnReporteSumi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteSumiActionPerformed(evt);
+            }
+        });
         pnlSuministros.add(btnReporteSumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 185, 200, 35));
 
         btnIngresarSumi.setBackground(new java.awt.Color(153, 204, 0));
@@ -286,7 +322,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnIngresarSumiActionPerformed(evt);
             }
         });
-        pnlSuministros.add(btnIngresarSumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 80, 200, 35));
+        pnlSuministros.add(btnIngresarSumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 140, 200, 35));
 
         jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -297,18 +333,6 @@ public class Panel_principal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Filtro de búsqueda #2 (búsqueda avanzada)");
         pnlSuministros.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
-
-        cbReporte.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione opción", "Todos los registros", "Búsqueda filtro #1", "Búsqueda filtro #1+#2" }));
-        cbReporte.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbReporte.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbReporte.setColorSeleccion(new java.awt.Color(153, 204, 0));
-        cbReporte.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        pnlSuministros.add(cbReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 145, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Opciones de reporte:");
-        pnlSuministros.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 120, -1, -1));
 
         rSPanelsSlider1.add(pnlSuministros, "card7");
 
@@ -426,6 +450,174 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlRequisiciones.setBackground(new java.awt.Color(0, 0, 51));
         pnlRequisiciones.setName("pnlRequisiciones"); // NOI18N
         pnlRequisiciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbl_requisiciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "--", "--", "--", "--", "--", "--"
+            }
+        ));
+        tbl_requisiciones.setComponentPopupMenu(pmTbl_requi);
+        jScrollPane8.setViewportView(tbl_requisiciones);
+
+        pnlRequisiciones.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 730, 400));
+
+        tbl_infInsuRequi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nombre insumo", "Tipo insumo", "Descripción", "Comentarios"
+            }
+        ));
+        jScrollPane9.setViewportView(tbl_infInsuRequi);
+
+        pnlRequisiciones.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 730, 50));
+
+        pnlFormEditRequi.setBackground(new java.awt.Color(0, 0, 51));
+        pnlFormEditRequi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        pnlFormEditRequi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblIDinsu_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        lblIDinsu_requi.setForeground(new java.awt.Color(255, 255, 255));
+        lblIDinsu_requi.setText("ID insumo:");
+        pnlFormEditRequi.add(lblIDinsu_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        txtIDinsumo_requi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pnlFormEditRequi.add(txtIDinsumo_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 240, 30));
+
+        lblCantidad_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        lblCantidad_requi.setForeground(new java.awt.Color(255, 255, 255));
+        lblCantidad_requi.setText("Cantidad solicitada:");
+        pnlFormEditRequi.add(lblCantidad_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, 20));
+
+        txtCantidad_requi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pnlFormEditRequi.add(txtCantidad_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 180, 30));
+
+        lblIDunidadM_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        lblIDunidadM_requi.setForeground(new java.awt.Color(255, 255, 255));
+        lblIDunidadM_requi.setText("ID unidad medida:");
+        pnlFormEditRequi.add(lblIDunidadM_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+
+        txtIDunidadM_requi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pnlFormEditRequi.add(txtIDunidadM_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 180, 30));
+
+        lblIDpersonal_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        lblIDpersonal_requi.setForeground(new java.awt.Color(255, 255, 255));
+        lblIDpersonal_requi.setText("ID personal solicitud:");
+        pnlFormEditRequi.add(lblIDpersonal_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+
+        txtIDPersonal_requi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pnlFormEditRequi.add(txtIDPersonal_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 180, 30));
+
+        lblFechaSolicitud_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        lblFechaSolicitud_requi.setForeground(new java.awt.Color(255, 255, 255));
+        lblFechaSolicitud_requi.setText("<html><p>Fecha de solicitud</p>\n<p>(yyyy-MM-dd):</p></html>");
+        pnlFormEditRequi.add(lblFechaSolicitud_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 120, -1));
+
+        btnValidar_requi.setBackground(new java.awt.Color(0, 51, 204));
+        btnValidar_requi.setToolTipText("Validar requisición");
+        btnValidar_requi.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnValidar_requi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK);
+        btnValidar_requi.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
+        btnValidar_requi.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
+        btnValidar_requi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValidar_requiActionPerformed(evt);
+            }
+        });
+        pnlFormEditRequi.add(btnValidar_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, -1, -1));
+
+        btnCancel_requi.setBackground(new java.awt.Color(0, 51, 204));
+        btnCancel_requi.setToolTipText("Cancelar movimiento");
+        btnCancel_requi.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnCancel_requi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancel_requi.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
+        btnCancel_requi.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
+        btnCancel_requi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancel_requiActionPerformed(evt);
+            }
+        });
+        pnlFormEditRequi.add(btnCancel_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+
+        btnGenerarDocu_requi.setBackground(new java.awt.Color(0, 51, 204));
+        btnGenerarDocu_requi.setText("Generar documento");
+        btnGenerarDocu_requi.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnGenerarDocu_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        btnGenerarDocu_requi.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
+        btnGenerarDocu_requi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
+        pnlFormEditRequi.add(btnGenerarDocu_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 190, -1));
+
+        btnSolicitarRequi_requi.setBackground(new java.awt.Color(0, 51, 204));
+        btnSolicitarRequi_requi.setText("Solicitar requisición");
+        btnSolicitarRequi_requi.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnSolicitarRequi_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        btnSolicitarRequi_requi.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
+        btnSolicitarRequi_requi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MAIL_OUTLINE);
+        btnSolicitarRequi_requi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSolicitarRequi_requiActionPerformed(evt);
+            }
+        });
+        pnlFormEditRequi.add(btnSolicitarRequi_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 190, -1));
+
+        btnUpdateRequi.setBackground(new java.awt.Color(0, 51, 204));
+        btnUpdateRequi.setToolTipText("Actualizar datos");
+        btnUpdateRequi.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnUpdateRequi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnUpdateRequi.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
+        btnUpdateRequi.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
+        btnUpdateRequi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateRequiActionPerformed(evt);
+            }
+        });
+        pnlFormEditRequi.add(btnUpdateRequi, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+
+        dateSolicitud_requi.setDateFormatString("yyyy-MM-d");
+        dateSolicitud_requi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pnlFormEditRequi.add(dateSolicitud_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 180, 30));
+
+        lblIDrequi.setFont(new java.awt.Font("Comic Sans MS", 0, 8)); // NOI18N
+        lblIDrequi.setForeground(new java.awt.Color(255, 255, 255));
+        lblIDrequi.setText("ID");
+        pnlFormEditRequi.add(lblIDrequi, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 380, -1, -1));
+
+        pnlRequisiciones.add(pnlFormEditRequi, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 200, 330, 400));
+
+        cbAreaRequi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitacion", "Mantenimiento", "Recepcion", "Otros" }));
+        cbAreaRequi.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbAreaRequi.setColorBorde(new java.awt.Color(0, 51, 204));
+        cbAreaRequi.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbAreaRequi.setColorSeleccion(new java.awt.Color(0, 51, 204));
+        cbAreaRequi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        cbAreaRequi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAreaRequiActionPerformed(evt);
+            }
+        });
+        pnlRequisiciones.add(cbAreaRequi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+
+        btnMostrarInsu_requi.setBackground(new java.awt.Color(0, 51, 204));
+        btnMostrarInsu_requi.setText("Insumos a requisición");
+        btnMostrarInsu_requi.setColorHover(new java.awt.Color(0, 153, 204));
+        btnMostrarInsu_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        btnMostrarInsu_requi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarInsu_requiActionPerformed(evt);
+            }
+        });
+        pnlRequisiciones.add(btnMostrarInsu_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 180, -1));
+
+        jLabel6.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("<html>Unidades de medida:\n<p>ID\t Nombre\n<p>1\t kilogramo</p>\n<p>2\t gramo</p>\n<p>3\t litro</p>\n<p>4\t mililitro</p>\n<p>5\t pieza</p></html>");
+        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        pnlRequisiciones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, 180, 130));
+
         rSPanelsSlider1.add(pnlRequisiciones, "card6");
 
         pnlInsumos.setBackground(new java.awt.Color(0, 0, 51));
@@ -531,7 +723,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSalidas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbAreaSalidas.setBackground(new java.awt.Color(255, 51, 0));
-        cbAreaSalidas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione área", "Personal", "Habitacion", "Mantenimiento", "Recepcion", "Otros" }));
+        cbAreaSalidas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitacion", "Mantenimiento", "Recepcion", "Otros" }));
         cbAreaSalidas.setColorArrow(new java.awt.Color(153, 204, 0));
         cbAreaSalidas.setColorFondo(new java.awt.Color(153, 204, 0));
         cbAreaSalidas.setColorSeleccion(new java.awt.Color(153, 204, 0));
@@ -618,6 +810,11 @@ public class Panel_principal extends javax.swing.JFrame {
         btnDevolver.setColorHover(new java.awt.Color(0, 102, 204));
         btnDevolver.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         btnDevolver.setForma(rojeru_san.rsbutton.RSButtonForma.FORMA.ROUND);
+        btnDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverActionPerformed(evt);
+            }
+        });
         pnlSalidas.add(btnDevolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 130, -1));
 
         btnEscanerCodigo.setBackground(new java.awt.Color(255, 51, 0));
@@ -750,11 +947,45 @@ public class Panel_principal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jMenu1.setText("File");
+        jMenu1.setText("Archivo");
+
+        mbmiCambiarUser.setText("Cambiar de usuario");
+        mbmiCambiarUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mbmiCambiarUserActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mbmiCambiarUser);
+
+        mbmiSalir.setText("Salir");
+        mbmiSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mbmiSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mbmiSalir);
+
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        mbMainHerramientas.setText("Herramientas");
+
+        mbmiAdminUser.setText("Administración de usuarios");
+        mbmiAdminUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mbmiAdminUserActionPerformed(evt);
+            }
+        });
+        mbMainHerramientas.add(mbmiAdminUser);
+
+        mbmiQR.setText("Generador QR");
+        mbmiQR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mbmiQRActionPerformed(evt);
+            }
+        });
+        mbMainHerramientas.add(mbmiQR);
+
+        jMenuBar1.add(mbMainHerramientas);
 
         setJMenuBar(jMenuBar1);
 
@@ -762,20 +993,27 @@ public class Panel_principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void notificadosCaducar() {
-        try {
-            //ResultSet 
-            re = pere.notifyCaducadosDias();
-            String numCaducados = null;
-            while (re.next()) {
-                numCaducados = (re.getString("Notificados_caducar"));
-            }
-            DesktopNotify.showDesktopMessage("Notificación de caducados", "Según la revisión de inventarios, existen " + numCaducados + ""
-                   + " insumos perecederos totales que están por caducar entre hoy y las próximas 4 semanas. Para ver cuáles son,"
-                   + " vaya a la pestaña de perecederos y realice la búsqueda.", DesktopNotify.INFORMATION);
+        pere.notifyCaducadosDias();
+    }
 
-        } catch (SQLException e) {
-            DesktopNotify.showDesktopMessage("Error de consulta de perecederos", "Ocurrió un error con la apliación, por lo tanto,"
-                   + " no se puede mostrar el total de caducados de los próximos 15 días..." + e, DesktopNotify.ERROR);
+    public void cerrarPrincipal() {
+        try {
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent we) {
+                    confirmSalida();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void confirmSalida() {
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de cerrar el programa?", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            System.exit(0);
         }
     }
 
@@ -829,38 +1067,7 @@ public class Panel_principal extends javax.swing.JFrame {
         this.btnSuministros.setEnabled(true);
         this.btnSalidas.setEnabled(true);
 
-        DefaultTableModel tablaPere = new DefaultTableModel(datos, columnas2) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_caducidades.setModel(tablaPere);
-
-        try {
-            //ResultSet 
-            re = pere.cargaPerecederos();
-            //ResultSetMetaData 
-            rM = (ResultSetMetaData) re.getMetaData();
-            //int 
-            nColumnas = rM.getColumnCount();
-
-            //Object[] 
-            datosTabla = new Object[nColumnas];
-
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaPere.addRow(datosTabla);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-        }
+        pere.cargaPerecederos(tbl_caducidades);
     }//GEN-LAST:event_btnCaducidadesActionPerformed
 
     private void btnRequisicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequisicionesActionPerformed
@@ -872,6 +1079,10 @@ public class Panel_principal extends javax.swing.JFrame {
         this.btnRequisiciones.setEnabled(false);
         this.btnSuministros.setEnabled(true);
         this.btnSalidas.setEnabled(true);
+        if (this.cbAreaRequi.getSelectedIndex() == 0) {
+            this.pnlFormEditRequi.setVisible(false);
+        }
+
     }//GEN-LAST:event_btnRequisicionesActionPerformed
 
     private void btnSuministrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuministrosActionPerformed
@@ -891,39 +1102,7 @@ public class Panel_principal extends javax.swing.JFrame {
             this.cbFiltro2Sumi.setEnabled(false);
             this.txtFiltro2Sumi.setEnabled(false);
         }
-        DefaultTableModel tablaSumi = new DefaultTableModel(datos, columnas1) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 13) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_sumi.setModel(tablaSumi);
-
-        try {
-
-            //ResultSet 
-            re = sumi.cargaSuministros();
-            //ResultSetMetaData 
-            rM = (ResultSetMetaData) re.getMetaData();
-            //int 
-            nColumnas = rM.getColumnCount();
-
-            //Object[] 
-            datosTabla = new Object[nColumnas];
-
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaSumi.addRow(datosTabla);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar suministros..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-        }
+        sumi.cargaSuministros(tbl_sumi);
     }//GEN-LAST:event_btnSuministrosActionPerformed
 
     private void btnIngresarSumiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSumiActionPerformed
@@ -935,96 +1114,29 @@ public class Panel_principal extends javax.swing.JFrame {
         int opcionCB = this.cbFiltro1Sumi.getSelectedIndex();
         String datoTXT = this.txtFiltro1Sumi.getText();
 
-        DefaultTableModel tablaSumi = new DefaultTableModel(datos, columnas1) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 13) {
-                    return true;
+        switch (opcionCB) {
+            case 1:
+                if (sumi.validarNumeros(datoTXT)) {
+                    int idSumi = Integer.parseInt(datoTXT);
+                    sumi.busquedaIDsumi(idSumi, tbl_sumi);
                 } else {
-                    return false;
+                    JOptionPane.showMessageDialog(this, "La selección del filtro sólo permite\n"
+                           + "números por el tipo de dato.\n"
+                           + "Por favor, ingrese dato numérico.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }
-        };
-        this.tbl_sumi.setModel(tablaSumi);
-
-        try {
-            /*ResultSet re = null;
-            ResultSetMetaData rM = null;
-            int nColumnas = 0;
-            Object[] datosTabla = null;*/
-
-            switch (opcionCB) {
-                case 1:
-                    if (sumi.validarNumeros(datoTXT)) {
-                        int idSumi = Integer.parseInt(datoTXT);
-                        re = sumi.busquedaIDsumi(idSumi);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaSumi.addRow(datosTabla);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "La selección del filtro sólo permite\n"
-                               + "números por el tipo de dato.\n"
-                               + "Por favor, ingrese dato numérico.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    break;
-
-                case 2:
-                    re = sumi.busquedaIDinsu(datoTXT);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaSumi.addRow(datosTabla);
-                    }
-                    break;
-                case 3:
-                    re = sumi.busquedaNinsu(datoTXT);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaSumi.addRow(datosTabla);
-                    }
-                    break;
-                case 4:
-                    re = sumi.busquedaTinsu(datoTXT);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaSumi.addRow(datosTabla);
-                    }
-                    break;
-                case 5:
-                    re = sumi.busquedaFechaEntinsu(datoTXT);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaSumi.addRow(datosTabla);
-                    }
-                    break;
-            }
-        } catch (HeadlessException | NumberFormatException | SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+                break;
+            case 2:
+                sumi.busquedaIDinsu(datoTXT, tbl_sumi);
+                break;
+            case 3:
+                sumi.busquedaNinsu(datoTXT, tbl_sumi);
+                break;
+            case 4:
+                sumi.busquedaTinsu(datoTXT, tbl_sumi);
+                break;
+            case 5:
+                sumi.busquedaFechaEntinsu(datoTXT, tbl_sumi);
+                break;
         }
     }//GEN-LAST:event_btnSearchF1SumiActionPerformed
 
@@ -1032,53 +1144,15 @@ public class Panel_principal extends javax.swing.JFrame {
         String datoTXT = this.txtFiltro1Sumi.getText();
         int opcionCB2 = this.cbFiltro2Sumi.getSelectedIndex();
         String datoTXT2 = this.txtFiltro2Sumi.getText();
+        if (opcionCB2 == 1) {
 
-        DefaultTableModel tablaSumi = new DefaultTableModel(datos, columnas1) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 13) {
-                    return true;
-                } else {
-                    return false;
-                }
+            if (this.cbFiltro1Sumi.getSelectedIndex() == 3) {
+                sumi.busqueda2FILTROnomFECH(datoTXT, datoTXT2, tbl_sumi);
+            } else if (this.cbFiltro1Sumi.getSelectedIndex() == 4) {
+                sumi.busqueda2FILTROtipoFECH(datoTXT, datoTXT2, tbl_sumi);
             }
-        };
-        this.tbl_sumi.setModel(tablaSumi);
-
-        try {
-            /*ResultSet re = null;
-            ResultSetMetaData rM = null;
-            int nColumnas = 0;
-            Object[] datosTabla = null;*/
-
-            if (opcionCB2 == 1) {
-
-                if (this.cbFiltro1Sumi.getSelectedIndex() == 3) {
-                    re = sumi.busqued2FILTROnomFECH(datoTXT, datoTXT2);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaSumi.addRow(datosTabla);
-                    }
-                } else if (this.cbFiltro1Sumi.getSelectedIndex() == 4) {
-                    re = sumi.busqueda2FILTROtipoFECH(datoTXT, datoTXT2);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaSumi.addRow(datosTabla);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+        } else {
+            JOptionPane.showMessageDialog(this, "NO ha seleccionado una opción de filtro #2", "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_btnSearchF2Sumi2ActionPerformed
 
@@ -1092,6 +1166,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.txtFiltro1Sumi.setEnabled(false);
                 this.cbFiltro2Sumi.setEnabled(false);
                 this.txtFiltro2Sumi.setEnabled(false);
+                this.btnReporteSumi.setEnabled(false);
                 break;
             case 1:
                 this.btnSearchF1Sumi.setEnabled(true);
@@ -1099,6 +1174,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.cbFiltro2Sumi.setEnabled(false);
                 this.txtFiltro2Sumi.setEnabled(false);
                 this.btnSearchF2Sumi2.setEnabled(false);
+                this.btnReporteSumi.setEnabled(false);
                 break;
             case 2:
                 this.btnSearchF1Sumi.setEnabled(true);
@@ -1106,6 +1182,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.cbFiltro2Sumi.setEnabled(false);
                 this.txtFiltro2Sumi.setEnabled(false);
                 this.btnSearchF2Sumi2.setEnabled(false);
+                this.btnReporteSumi.setEnabled(false);
                 break;
             case 3:
                 this.btnSearchF1Sumi.setEnabled(true);
@@ -1113,6 +1190,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.cbFiltro2Sumi.setEnabled(true);
                 this.txtFiltro2Sumi.setEnabled(true);
                 this.btnSearchF2Sumi2.setEnabled(true);
+                this.btnReporteSumi.setEnabled(true);
                 break;
             case 4:
                 this.btnSearchF1Sumi.setEnabled(true);
@@ -1120,6 +1198,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.cbFiltro2Sumi.setEnabled(true);
                 this.txtFiltro2Sumi.setEnabled(true);
                 this.btnSearchF2Sumi2.setEnabled(true);
+                this.btnReporteSumi.setEnabled(true);
                 break;
             case 5:
                 this.btnSearchF1Sumi.setEnabled(true);
@@ -1127,6 +1206,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.cbFiltro2Sumi.setEnabled(false);
                 this.txtFiltro2Sumi.setEnabled(false);
                 this.btnSearchF2Sumi2.setEnabled(false);
+                this.btnReporteSumi.setEnabled(true);
                 break;
         }
     }//GEN-LAST:event_cbFiltro1SumiActionPerformed
@@ -1137,58 +1217,16 @@ public class Panel_principal extends javax.swing.JFrame {
         String fechaEspecifica = this.txtFechaDisCaduco.getText();
         String iArea = this.cbBusquedaIniPere.getSelectedItem().toString();
 
-        DefaultTableModel tablaPere = new DefaultTableModel(datos, columnas2) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_caducidades.setModel(tablaPere);
-
         try {
-            //ResultSet re = null;
-            ResultSet re2 = null;
-            //ResultSetMetaData rM = null;
-            //int nColumnas = 0;
-            //Object[] datosTabla = null;
-            String fecha = null;
-
             if (!(this.txtCaducosDias.getText().isEmpty())) {
                 if (pere.validarNumeros(dias)) {
                     int intDias = Integer.parseInt(dias);
                     if (iArea.equals("Seleccione inicial")) {
-                        re = pere.caducadosDias(intDias);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaPere.addRow(datosTabla);
-                        }
+                        pere.caducadosDias(intDias, tbl_caducidades);
                     } else {
-                        re = pere.caducadosDiasXarea(intDias, iArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaPere.addRow(datosTabla);
-                        }
+                        pere.caducadosDiasXarea(intDias, iArea, tbl_caducidades);
                     }
-                    re2 = pere.infoDias(intDias);
-                    while (re2.next()) {
-                        fecha = (re2.getString("Fecha"));
-                    }
-                    this.lblInfoBusqueda1.setText("<html><p>Prontos a caducar están entre las fechas "
-                           + "de hoy y " + fecha + " según la cantidad de días ingresados</p></html>");
+                    pere.infoDias(intDias, lblInfoBusqueda1);
                 } else {
                     JOptionPane.showMessageDialog(this, "Por favor, ingrese dato numérico, no letras", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -1196,111 +1234,36 @@ public class Panel_principal extends javax.swing.JFrame {
                 if (pere.validarNumeros(meses)) {
                     int intMeses = Integer.parseInt(meses);
                     if (iArea.equals("Seleccione inicial")) {
-                        re = pere.caducadosMeses(intMeses);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaPere.addRow(datosTabla);
-                        }
+                        pere.caducadosMeses(intMeses, tbl_caducidades);
                     } else {
-                        re = pere.caducadosMesesXarea(intMeses, iArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaPere.addRow(datosTabla);
-                        }
+                        pere.caducadosMesesXarea(intMeses, iArea, tbl_caducidades);
                     }
-                    re2 = pere.infoMeses(intMeses);
-                    while (re2.next()) {
-                        fecha = (re2.getString("Fecha"));
-                    }
-                    this.lblInfoBusqueda2.setText("<html><p>Prontos a caducar están entre las fechas "
-                           + "de hoy y " + fecha + " según la cantidad de meses ingresados</p></html>");
+                    pere.infoMeses(intMeses, lblInfoBusqueda2);
                 } else {
                     JOptionPane.showMessageDialog(this, "Por favor, ingrese dato numérico, no letras", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else if (!(this.txtFechaDisCaduco.getText().isEmpty())) {
                 if (iArea.equals("Seleccione inicial")) {
-                    re = pere.caducadosFechaEspecific(fechaEspecifica);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaPere.addRow(datosTabla);
-                    }
+                    pere.caducadosFechaEspecific(fechaEspecifica, tbl_caducidades);
                 } else {
-                    re = pere.caducadosFechaEspecificXarea(fechaEspecifica, iArea);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaPere.addRow(datosTabla);
-                    }
+                    pere.caducadosFechaEspecificXarea(fechaEspecifica, iArea, tbl_caducidades);
                 }
-                re2 = pere.infoFecha(fechaEspecifica);
-                while (re2.next()) {
-                    fecha = (re2.getString("Fecha"));
-                }
-                this.lblInfoBusqueda3.setText("<html><p>Prontos a caducar están en el rango de " + fecha + " días\n"
-                       + "de la fecha especificada</p></html>");
+                pere.infoFecha(fechaEspecifica, lblInfoBusqueda3);
             } else if ((this.txtCaducosDias.getText().isEmpty()) && (this.txtCaducosMeses.getText().isEmpty())
                    && (this.txtFechaDisCaduco.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(this, "No ha ingresado valor en ninguno\n"
                        + "de los campos de búsqueda", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             }
-        } catch (HeadlessException | NumberFormatException | SQLException e) {
+        } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }//GEN-LAST:event_btnSearchCaducosActionPerformed
 
     private void txtCaducosDiasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCaducosDiasCaretUpdate
-        DefaultTableModel tablaPere = new DefaultTableModel(datos, columnas2) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_caducidades.setModel(tablaPere);
         if (this.txtCaducosDias.getText().isEmpty()) {
             this.txtCaducosMeses.setEnabled(true);
             this.txtFechaDisCaduco.setEnabled(true);
-            try {
-                //ResultSet 
-                re = pere.cargaPerecederos();
-                //ResultSetMetaData 
-                rM = (ResultSetMetaData) re.getMetaData();
-                //int 
-                nColumnas = rM.getColumnCount();
-                //Object[] 
-                datosTabla = new Object[nColumnas];
-
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaPere.addRow(datosTabla);
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-            }
+            pere.cargaPerecederos(tbl_caducidades);
         } else {
             this.txtCaducosMeses.setEnabled(false);
             this.txtFechaDisCaduco.setEnabled(false);
@@ -1308,39 +1271,11 @@ public class Panel_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCaducosDiasCaretUpdate
 
     private void txtCaducosMesesCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCaducosMesesCaretUpdate
-        DefaultTableModel tablaPere = new DefaultTableModel(datos, columnas2) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_caducidades.setModel(tablaPere);
+
         if (this.txtCaducosMeses.getText().isEmpty()) {
             this.txtCaducosDias.setEnabled(true);
             this.txtFechaDisCaduco.setEnabled(true);
-            try {
-                //ResultSet 
-                re = pere.cargaPerecederos();
-                //ResultSetMetaData 
-                rM = (ResultSetMetaData) re.getMetaData();
-                //int 
-                nColumnas = rM.getColumnCount();
-                //Object[] 
-                datosTabla = new Object[nColumnas];
-
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaPere.addRow(datosTabla);
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-            }
+            pere.cargaPerecederos(tbl_caducidades);
         } else {
             this.txtCaducosDias.setEnabled(false);
             this.txtFechaDisCaduco.setEnabled(false);
@@ -1348,39 +1283,11 @@ public class Panel_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCaducosMesesCaretUpdate
 
     private void txtFechaDisCaducoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtFechaDisCaducoCaretUpdate
-        DefaultTableModel tablaPere = new DefaultTableModel(datos, columnas2) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_caducidades.setModel(tablaPere);
+
         if (this.txtFechaDisCaduco.getText().isEmpty()) {
             this.txtCaducosDias.setEnabled(true);
             this.txtCaducosMeses.setEnabled(true);
-            try {
-                //ResultSet 
-                re = pere.cargaPerecederos();
-                //ResultSetMetaData 
-                rM = (ResultSetMetaData) re.getMetaData();
-                //int 
-                nColumnas = rM.getColumnCount();
-                //Object[] 
-                datosTabla = new Object[nColumnas];
-
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaPere.addRow(datosTabla);
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-            }
+            pere.cargaPerecederos(tbl_caducidades);
         } else {
             this.txtCaducosDias.setEnabled(false);
             this.txtCaducosMeses.setEnabled(false);
@@ -1388,115 +1295,46 @@ public class Panel_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaDisCaducoCaretUpdate
 
     private void txtFiltro1SumiCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtFiltro1SumiCaretUpdate
-        DefaultTableModel tablaSumi = new DefaultTableModel(datos, columnas1) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 13) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tbl_sumi.setModel(tablaSumi);
-        try {
-            if (this.txtFiltro1Sumi.getText().isEmpty()) {
-                //ResultSet 
-                re = sumi.cargaSuministros();
-                //ResultSetMetaData 
-                rM = (ResultSetMetaData) re.getMetaData();
-                //int 
-                nColumnas = rM.getColumnCount();
 
-                //Object[] 
-                datosTabla = new Object[nColumnas];
-
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaSumi.addRow(datosTabla);
-                }
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un problema al cargar suministros..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+        if (this.txtFiltro1Sumi.getText().isEmpty()) {
+            sumi.cargaSuministros(tbl_sumi);
         }
     }//GEN-LAST:event_txtFiltro1SumiCaretUpdate
 
     private void txtCodigoSalidasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCodigoSalidasCaretUpdate
-        DefaultTableModel tablaExistActual = new DefaultTableModel(datos, columnas3) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 3) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-
-        DefaultTableModel tablaUnidadM = new DefaultTableModel(datos, columnas4) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 4) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tblExistActual.setModel(tablaExistActual);
-        this.tblUnidadSalidas.setModel(tablaUnidadM);
-
         String area = this.cbAreaSalidas.getSelectedItem().toString();
+        int area2 = this.cbAreaSalidas.getSelectedIndex();
         String inicialA = null;
         String IDinsu = this.txtCodigoSalidas.getText();
 
-        try {
-            if (area.equals("Personal")) {
+        switch (area2) {
+            case 1:
+                inicialA = "S";
+                break;
+            case 2:
+                inicialA = "R";
+                break;
+            case 3:
                 inicialA = "P";
-            } else if (area.equals("Habitacion")) {
+                break;
+            case 4:
+                inicialA = "B";
+                break;
+            case 5:
                 inicialA = "H";
-            } else if (area.equals("Mantenimiento")) {
+                break;
+            case 6:
                 inicialA = "M";
-            } else if (area.equals("Recepcion")) {
+                break;
+            case 7:
                 inicialA = "Re";
-            } else if (area.equals("Otros")) {
+                break;
+            case 8:
                 inicialA = "O";
-            }
-            //ResultSet 
-            re = salidas.cargaRegInsu(IDinsu, area, inicialA);
-            //ResultSetMetaData 
-            rM = (ResultSetMetaData) re.getMetaData();
-            //int 
-            nColumnas = rM.getColumnCount();
-
-            //Object[] 
-            datosTabla = new Object[nColumnas];
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaExistActual.addRow(datosTabla);
-            }
-
-            ResultSet re2 = salidas.cargaIDunidad(IDinsu, area, inicialA);
-            ResultSetMetaData rM2 = (ResultSetMetaData) re2.getMetaData();
-            int nColumnas2 = rM2.getColumnCount();
-
-            Object[] datosTabla2 = new Object[nColumnas2];
-
-            while (re2.next()) {
-                for (int j = 0; j < nColumnas2; j++) {
-                    datosTabla2[j] = re2.getObject(j + 1);
-                }
-                tablaUnidadM.addRow(datosTabla2);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+                break;
         }
+        salidas.cargaRegInsu(IDinsu, area, inicialA, tblExistActual);
+        salidas.cargaIDunidad(IDinsu, area, inicialA, tblUnidadSalidas);
     }//GEN-LAST:event_txtCodigoSalidasCaretUpdate
 
     private void btnSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidasActionPerformed
@@ -1543,47 +1381,41 @@ public class Panel_principal extends javax.swing.JFrame {
 
     private void btnGuardarSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSalidasActionPerformed
         String area = this.cbAreaSalidas.getSelectedItem().toString();
+        int area2 = this.cbAreaSalidas.getSelectedIndex();
         String inicialA = null;
         String IDinsu = this.txtCodigoSalidas.getText();
         Double cantSalida = Double.parseDouble(this.txtCantidadSalidas.getText());
 
-        try {
-            if (area.equals("Personal")) {
+        switch (area2) {
+            case 1:
+                inicialA = "S";
+                break;
+            case 2:
+                inicialA = "R";
+                break;
+            case 3:
                 inicialA = "P";
-            } else if (area.equals("Habitacion")) {
+                break;
+            case 4:
+                inicialA = "B";
+                break;
+            case 5:
                 inicialA = "H";
-            } else if (area.equals("Mantenimiento")) {
+                break;
+            case 6:
                 inicialA = "M";
-            } else if (area.equals("Recepcion")) {
+                break;
+            case 7:
                 inicialA = "Re";
-            } else if (area.equals("Otros")) {
+                break;
+            case 8:
                 inicialA = "O";
-            }
-
-            salidas.salidaInsumo(area, inicialA, cantSalida, IDinsu);
-
-            this.tblNuevaExist.setModel(tablaExistsNuevo);
-            //ResultSet 
-            re = salidas.cargaExistNInsu(IDinsu, area, inicialA);
-            //ResultSetMetaData 
-            rM = (ResultSetMetaData) re.getMetaData();
-            //int 
-            nColumnas = rM.getColumnCount();
-            //Object[] 
-            datosTabla = new Object[nColumnas];
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaExistsNuevo.addRow(datosTabla);
-            }
-
-            this.txtCodigoSalidas.setText("");
-            this.txtCantidadSalidas.setText("");
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "No se pudo realizar la salida del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+                break;
         }
+        salidas.salidaInsumo(area, inicialA, cantSalida, IDinsu);
+        salidas.cargaExistNInsu(IDinsu, area, inicialA, tblNuevaExist);
+        this.txtCodigoSalidas.setText("");
+        this.txtCantidadSalidas.setText("");
     }//GEN-LAST:event_btnGuardarSalidasActionPerformed
 
     private void cbAreaExistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAreaExistenciasActionPerformed
@@ -1595,55 +1427,8 @@ public class Panel_principal extends javax.swing.JFrame {
             this.btnBuscarInsuExistencias.setEnabled(true);
             this.cbBuscarStock.setEnabled(true);
             this.tblExistencias.setEnabled(true);
-            DefaultTableModel tablaExist = new DefaultTableModel(datos, columnas6) {
-                @Override
-                public boolean isCellEditable(int filas, int columnas) {
-                    if (columnas == 5) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            };
-            DefaultTableModel tablaExistPorci = new DefaultTableModel(datos, columnas7) {
-                @Override
-                public boolean isCellEditable(int filas, int columnas) {
-                    if (columnas == 6) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            };
-            try {
-                if ((area == 1) || (area == 4)) {
-                    this.tblExistencias.setModel(tablaExistPorci);
-                    re = existencia.cargaRegExistencias(nomArea);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaExistPorci.addRow(datosTabla);
-                    }
-                } else {
-                    this.tblExistencias.setModel(tablaExist);
-                    re = existencia.cargaRegExistencias(nomArea);
-                    rM = (ResultSetMetaData) re.getMetaData();
-                    nColumnas = rM.getColumnCount();
-                    datosTabla = new Object[nColumnas];
-                    while (re.next()) {
-                        for (int i = 0; i < nColumnas; i++) {
-                            datosTabla[i] = re.getObject(i + 1);
-                        }
-                        tablaExist.addRow(datosTabla);
-                    }
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "No se pudo cargar la información a la tabla..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-            }
+
+            existencia.cargaRegExistencias(nomArea, tblExistencias, tblExistencias, cbAreaExistencias);
         } else {
             this.txtSearchIDinsuExist.setEnabled(false);
             this.btnBuscarInsuExistencias.setEnabled(false);
@@ -1657,26 +1442,6 @@ public class Panel_principal extends javax.swing.JFrame {
         String nomArea = this.cbAreaExistencias.getSelectedItem().toString();
         int area = this.cbAreaExistencias.getSelectedIndex();
         String iniArea = null;
-        DefaultTableModel tablaExist = new DefaultTableModel(datos, columnas6) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        DefaultTableModel tablaExistPorci = new DefaultTableModel(datos, columnas7) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 6) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
 
         switch (area) {
             case 1:
@@ -1704,81 +1469,23 @@ public class Panel_principal extends javax.swing.JFrame {
                 iniArea = "O";
                 break;
         }
-        try {
-            /*ResultSet re = null;
-            ResultSetMetaData rM = null;
-            int nColumnas = 0;
-            Object[] datosTabla;*/
-            switch (stock) {
-                case 0:
-                    this.txtSearchIDinsuExist.setEnabled(true);
-                    this.btnBuscarInsuExistencias.setEnabled(true);
-                    break;
+        switch (stock) {
+            case 0:
+                this.txtSearchIDinsuExist.setEnabled(true);
+                this.btnBuscarInsuExistencias.setEnabled(true);
+                break;
 
-                case 1:
-                    this.txtSearchIDinsuExist.setEnabled(false);
-                    this.btnBuscarInsuExistencias.setEnabled(false);
+            case 1:
+                this.txtSearchIDinsuExist.setEnabled(false);
+                this.btnBuscarInsuExistencias.setEnabled(false);
+                existencia.busquedaStockMinExist(nomArea, iniArea, tblExistencias, tblExistencias, cbAreaExistencias);
+                break;
 
-                    if ((area == 1) || (area == 4)) {
-                        this.tblExistencias.setModel(tablaExistPorci);
-                        re = existencia.busquedaStockMinExist(nomArea, iniArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaExistPorci.addRow(datosTabla);
-                        }
-                    } else {
-                        this.tblExistencias.setModel(tablaExist);
-                        re = existencia.busquedaStockMinExist(nomArea, iniArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaExist.addRow(datosTabla);
-                        }
-                    }
-                    break;
-
-                case 2:
-                    this.txtSearchIDinsuExist.setEnabled(false);
-                    this.btnBuscarInsuExistencias.setEnabled(false);
-
-                    if ((area == 1) || (area == 4)) {
-                        this.tblExistencias.setModel(tablaExistPorci);
-                        re = existencia.busquedaExistActiva(nomArea, iniArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaExistPorci.addRow(datosTabla);
-                        }
-                    } else {
-                        this.tblExistencias.setModel(tablaExist);
-                        re = existencia.busquedaExistActiva(nomArea, iniArea);
-                        rM = (ResultSetMetaData) re.getMetaData();
-                        nColumnas = rM.getColumnCount();
-                        datosTabla = new Object[nColumnas];
-                        while (re.next()) {
-                            for (int i = 0; i < nColumnas; i++) {
-                                datosTabla[i] = re.getObject(i + 1);
-                            }
-                            tablaExist.addRow(datosTabla);
-                        }
-                    }
-                    break;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            case 2:
+                this.txtSearchIDinsuExist.setEnabled(false);
+                this.btnBuscarInsuExistencias.setEnabled(false);
+                existencia.busquedaExistActiva(nomArea, iniArea, tblExistencias, tblExistencias, cbAreaExistencias);
+                break;
         }
     }//GEN-LAST:event_cbBuscarStockActionPerformed
 
@@ -1788,26 +1495,6 @@ public class Panel_principal extends javax.swing.JFrame {
         int area = this.cbAreaExistencias.getSelectedIndex();
         String iniArea = null;
 
-        DefaultTableModel tablaExist = new DefaultTableModel(datos, columnas6) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 5) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        DefaultTableModel tablaExistPorci = new DefaultTableModel(datos, columnas7) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 6) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
         switch (area) {
             case 1:
                 iniArea = "S";
@@ -1834,40 +1521,8 @@ public class Panel_principal extends javax.swing.JFrame {
                 iniArea = "O";
                 break;
         }
-        try {
-            /*ResultSet re = null;
-            ResultSetMetaData rM = null;
-            int nColumnas = 0;
-            Object[] datosTabla;*/
+        existencia.busquedaIDexist(nomArea, IDinsu, iniArea, tblExistencias, tblExistencias, cbAreaExistencias);
 
-            if ((area == 1) || (area == 4)) {
-                this.tblExistencias.setModel(tablaExistPorci);
-                re = existencia.busquedaIDexist(nomArea, IDinsu, iniArea);
-                rM = (ResultSetMetaData) re.getMetaData();
-                nColumnas = rM.getColumnCount();
-                datosTabla = new Object[nColumnas];
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaExistPorci.addRow(datosTabla);
-                }
-            } else {
-                this.tblExistencias.setModel(tablaExist);
-                re = existencia.busquedaIDexist(nomArea, IDinsu, iniArea);
-                rM = (ResultSetMetaData) re.getMetaData();
-                nColumnas = rM.getColumnCount();
-                datosTabla = new Object[nColumnas];
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaExist.addRow(datosTabla);
-                }
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-        }
     }//GEN-LAST:event_txtSearchIDinsuExistCaretUpdate
 
     private void tblExistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblExistenciasMouseClicked
@@ -1879,31 +1534,7 @@ public class Panel_principal extends javax.swing.JFrame {
                    + " No se mostrará información de ningún\n"
                    + " registro en la tabla inferior.", "Información", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            DefaultTableModel tablaInfInsumo = new DefaultTableModel(datos, columnas8) {
-                @Override
-                public boolean isCellEditable(int filas, int columnas) {
-                    if (columnas == 4) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            };
-            this.tblInfoInsumoExistencia.setModel(tablaInfInsumo);
-            try {
-                re = existencia.searchInfoInsuExist(IDinsumoCelda);
-                rM = (ResultSetMetaData) re.getMetaData();
-                nColumnas = rM.getColumnCount();
-                datosTabla = new Object[nColumnas];
-                while (re.next()) {
-                    for (int i = 0; i < nColumnas; i++) {
-                        datosTabla[i] = re.getObject(i + 1);
-                    }
-                    tablaInfInsumo.addRow(datosTabla);
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
-            }
+            existencia.searchInfoInsuExist(IDinsumoCelda, tblInfoInsumoExistencia);
         }
     }//GEN-LAST:event_tblExistenciasMouseClicked
 
@@ -1913,7 +1544,6 @@ public class Panel_principal extends javax.swing.JFrame {
 
             if (!(this.txtCaducosDias.getText().isEmpty())) {
                 int dia = Integer.parseInt(this.txtCaducosDias.getText());
-                //JOptionPane.showMessageDialog(this, "Esta parte funciona: "+dia);
                 Connection con = conexion.obConexion2();
                 Map parametroDia = new HashMap();
                 parametroDia.put("dia", dia);
@@ -1921,6 +1551,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 JasperPrint jp = JasperFillManager.fillReport(jr, parametroDia, con);
                 JasperViewer view = new JasperViewer(jp, false);
                 view.setVisible(true);
+                conexion.cerrarConexion2();
             } else if ((!this.txtCaducosMeses.getText().isEmpty())) {
                 int mesPositivo = Integer.parseInt(this.txtCaducosMeses.getText());
                 Connection con = conexion.obConexion2();
@@ -1930,16 +1561,28 @@ public class Panel_principal extends javax.swing.JFrame {
                 JasperPrint jp = JasperFillManager.fillReport(jr, parametroMes, con);
                 JasperViewer view = new JasperViewer(jp, false);
                 view.setVisible(true);
+                conexion.cerrarConexion2();
+            } else if (!(this.txtFechaDisCaduco.getText().isEmpty())) {
+                String fecha = this.txtFechaDisCaduco.getText();
+                Connection con = conexion.obConexion2();
+                Map parametroFecha = new HashMap();
+                parametroFecha.put("fecha", fecha);
+                JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_perecederos\\Caducados_fecha.jasper");
+                JasperPrint jp = JasperFillManager.fillReport(jr, parametroFecha, con);
+                JasperViewer view = new JasperViewer(jp, false);
+                view.setVisible(true);
+                conexion.cerrarConexion2();
             } else {
                 Connection con = conexion.obConexion2();
                 JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_perecederos\\TodoReg_perecederos.jasper");
                 JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
                 JasperViewer view = new JasperViewer(jp, false);
                 view.setVisible(true);
+                conexion.cerrarConexion2();
             }
 
         } catch (NumberFormatException | JRException e) {
-
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnGenerarRepCaducosActionPerformed
@@ -1963,6 +1606,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -1970,9 +1614,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_servicio.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -1984,6 +1634,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -1991,9 +1642,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_restaurante.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2005,6 +1662,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -2012,9 +1670,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_personal.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2026,6 +1690,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -2033,9 +1698,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(null, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_bar.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2047,6 +1718,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -2054,9 +1726,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_habitaciones.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2068,6 +1746,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -2075,9 +1754,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_mantenimiento.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2089,6 +1774,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -2096,9 +1782,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_recepcion.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2110,6 +1802,7 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 1:
                             con = conexion.obConexion2();
@@ -2117,9 +1810,15 @@ public class Panel_principal extends javax.swing.JFrame {
                             jp = JasperFillManager.fillReport(jr, null, con);
                             view = new JasperViewer(jp, false);
                             view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                         case 2:
-                            JOptionPane.showMessageDialog(this, "Reportes en generación");
+                            con = conexion.obConexion2();
+                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_otros.jasper");
+                            jp = JasperFillManager.fillReport(jr, null, con);
+                            view = new JasperViewer(jp, false);
+                            view.setVisible(true);
+                            conexion.cerrarConexion2();
                             break;
                     }
                     break;
@@ -2128,6 +1827,412 @@ public class Panel_principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }//GEN-LAST:event_btnGenerarRepExistActionPerformed
+
+    private void mbmiAdminUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiAdminUserActionPerformed
+        Administracion_usuarios admin = new Administracion_usuarios(new javax.swing.JFrame(), true);
+        admin.setVisible(true);
+    }//GEN-LAST:event_mbmiAdminUserActionPerformed
+
+    private void btnReporteSumiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteSumiActionPerformed
+        try {
+            Connection con;
+            JasperReport jr;
+            JasperPrint jp;
+            JasperViewer view;
+            int filtro1 = this.cbFiltro1Sumi.getSelectedIndex();
+            int filtro2 = this.cbFiltro2Sumi.getSelectedIndex();
+            String txtFiltro2 = this.txtFiltro2Sumi.getText();
+            String txtFiltro1 = this.txtFiltro1Sumi.getText();
+
+            switch (filtro1) {
+                case 0:
+                    con = conexion.obConexion2();
+                    jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_suministros\\TodoSumi.jasper");
+                    jp = JasperFillManager.fillReport(jr, null, con);
+                    view = new JasperViewer(jp, false);
+                    view.setVisible(true);
+                    conexion.cerrarConexion2();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    if (!(filtro2 == 0 && txtFiltro2.isEmpty())) {
+
+                        con = conexion.obConexion2();
+                        Map<String, Object> parametros = new HashMap<String, Object>();
+                        parametros.put("nombreInsu", txtFiltro1);
+                        parametros.put("fechaEntre", txtFiltro2);
+
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_suministros\\NombreFechaInsu.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No ha seleccionado opción de búsqueda\n"
+                               + "en el filtro #2 y el campo de texto del\n"
+                               + "filtro #2 está vacío. No es permitido generar\n"
+                               + "reporte sólo por el nombre de insumo.\n"
+                               + "Para generar reporte con este dato, necesita\n"
+                               + "seleccionar una opción de búsqueda en filtro #2\n"
+                               + "e ingresar el valor solicitado en el campo del filtro #2.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                    break;
+                case 4:
+                    if ((filtro2 == 0 || filtro2 == 1) && txtFiltro2.isEmpty()) {
+                        con = conexion.obConexion2();
+                        Map parametroTipo = new HashMap();
+                        parametroTipo.put("tipoInsumo", txtFiltro1);
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_suministros\\TipoSumi.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametroTipo, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                    } else if (filtro2 == 1 && txtFiltro2.length() > 0) {
+                        con = conexion.obConexion2();
+                        Map<String, Object> parametros = new HashMap<String, Object>();
+                        parametros.put("tipoInsumo", txtFiltro1);
+                        parametros.put("dateEntrega", txtFiltro2);
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_suministros\\TipoFechaInsu.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                    }
+                    break;
+                case 5:
+                    con = conexion.obConexion2();
+                    Map parametroFecha = new HashMap();
+                    parametroFecha.put("fechaEntrega", txtFiltro1);
+                    jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_suministros\\FechaSumi.jasper");
+                    jp = JasperFillManager.fillReport(jr, parametroFecha, con);
+                    view = new JasperViewer(jp, false);
+                    view.setVisible(true);
+                    conexion.cerrarConexion2();
+                    break;
+            }
+        } catch (HeadlessException | JRException e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnReporteSumiActionPerformed
+
+    private void mbmiQRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiQRActionPerformed
+        GeneradorQR dialog = new GeneradorQR(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_mbmiQRActionPerformed
+
+    private void mbmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiSalirActionPerformed
+
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de cerrar el programa?", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_mbmiSalirActionPerformed
+
+    private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
+        String area = this.cbAreaSalidas.getSelectedItem().toString();
+        int area2 = this.cbAreaSalidas.getSelectedIndex();
+        String inicialA = null;
+        String IDinsu = this.txtCodigoSalidas.getText();
+        Double cantDevuelta = Double.parseDouble(this.txtCantidadSalidas.getText());
+
+        switch (area2) {
+            case 1:
+                inicialA = "S";
+                break;
+            case 2:
+                inicialA = "R";
+                break;
+            case 3:
+                inicialA = "P";
+                break;
+            case 4:
+                inicialA = "B";
+                break;
+            case 5:
+                inicialA = "H";
+                break;
+            case 6:
+                inicialA = "M";
+                break;
+            case 7:
+                inicialA = "Re";
+                break;
+            case 8:
+                inicialA = "O";
+                break;
+        }
+        salidas.devolucionInsumo(area, inicialA, cantDevuelta, IDinsu);
+        salidas.cargaExistNInsu(IDinsu, area, inicialA, tblNuevaExist);
+        this.txtCodigoSalidas.setText("");
+        this.txtCantidadSalidas.setText("");
+    }//GEN-LAST:event_btnDevolverActionPerformed
+
+    private void mbmiCambiarUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiCambiarUserActionPerformed
+        LOGIN login = new LOGIN();
+        this.dispose();
+        login.setVisible(true);
+    }//GEN-LAST:event_mbmiCambiarUserActionPerformed
+
+    private void btnMostrarInsu_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarInsu_requiActionPerformed
+        String area = this.cbAreaRequi.getSelectedItem().toString();
+        String iniArea = null;
+
+        switch (area) {
+            case "Servicio":
+                iniArea = "S";
+                break;
+            case "Restaurante":
+                iniArea = "R";
+                break;
+            case "Personal":
+                iniArea = "P";
+                break;
+            case "Bar":
+                iniArea = "B";
+                break;
+            case "Habitacion":
+                iniArea = "H";
+                break;
+            case "Mantenimiento":
+                iniArea = "M";
+                break;
+            case "Recepcion":
+                iniArea = "Re";
+                break;
+            case "Otros":
+                iniArea = "O";
+                break;
+        }
+
+        if (area.equals("Seleccione área")) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado un área", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            requi.mostrarInsuRequisicion(area, iniArea, tbl_requisiciones);
+            this.mipmPrepararRequi.setEnabled(true);
+            this.mipmEditarRequi.setEnabled(false);
+            this.mipmEliminarRequi.setEnabled(false);
+            this.pnlFormEditRequi.setVisible(true);
+            this.btnUpdateRequi.setVisible(false);
+        }
+
+    }//GEN-LAST:event_btnMostrarInsu_requiActionPerformed
+
+    private void mipmPrepararRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmPrepararRequiActionPerformed
+        try {
+            int filas = this.tbl_requisiciones.getSelectedRow();
+            String idInsumo = this.tbl_requisiciones.getValueAt(filas, 0).toString();
+            String idUnidad = this.tbl_requisiciones.getValueAt(filas, 1).toString();
+
+            if (!idInsumo.isEmpty()) {
+                this.txtIDinsumo_requi.setText(idInsumo);
+                this.txtIDunidadM_requi.setText(idUnidad);
+                this.btnValidar_requi.setVisible(true);
+                this.btnUpdateRequi.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "La fila no contiene datos", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_mipmPrepararRequiActionPerformed
+
+    private void btnValidar_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidar_requiActionPerformed
+        String area = this.cbAreaRequi.getSelectedItem().toString();
+
+        if (this.txtIDinsumo_requi.getText().isEmpty() || this.txtCantidad_requi.getText().isEmpty() || this.txtIDunidadM_requi.getText().isEmpty()
+               || this.txtIDPersonal_requi.getText().isEmpty() || this.dateSolicitud_requi.getDate().equals("")) {
+            JOptionPane.showMessageDialog(this, "Existen campos vacíos. Los datos son obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (requi.validarNumerosRequi(txtIDunidadM_requi.getText()) && requi.validarNumerosRequi(txtIDPersonal_requi.getText())) {
+                String idInsu = this.txtIDinsumo_requi.getText();
+                Date fecha = this.dateSolicitud_requi.getDate();
+                DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaSolicitud = formato.format(fecha);
+                Double cantidad = Double.parseDouble(this.txtCantidad_requi.getText());
+                int idUnidad = Integer.parseInt(this.txtIDunidadM_requi.getText());
+                int idPerson = Integer.parseInt(this.txtIDPersonal_requi.getText());
+                switch (area) {
+                    case "Servicio":
+                        requi.registrarRequiServicio(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Restaurante":
+                        requi.registrarRequiRestaurante(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Personal":
+                        requi.registrarRequiPersonal(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Bar":
+                        requi.registrarRequiBar(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Habitacion":
+                        requi.registrarRequiHabitacion(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Mantenimiento":
+                        requi.registrarRequiMantenimiento(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Recepcion":
+                        requi.registrarRequiRecepcion(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                    case "Otros":
+                        requi.registrarRequiOtros(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        break;
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese dato numérico, no letras", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnValidar_requiActionPerformed
+
+    private void btnCancel_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel_requiActionPerformed
+        this.txtIDinsumo_requi.setText("");
+        this.txtCantidad_requi.setText("");
+        this.txtIDunidadM_requi.setText("");
+
+    }//GEN-LAST:event_btnCancel_requiActionPerformed
+
+    private void cbAreaRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAreaRequiActionPerformed
+        int area = this.cbAreaRequi.getSelectedIndex();
+        String nombreArea = null;
+
+        if (area == 0) {
+            this.pnlFormEditRequi.setVisible(false);
+            this.mipmEditarRequi.setEnabled(false);
+            this.mipmEliminarRequi.setEnabled(false);
+            this.mipmPrepararRequi.setEnabled(false);
+        } else if (area == 1 || area == 2 || area == 3 || area == 4 || area == 5 || area == 6 || area == 7 || area == 8) {
+            switch (area) {
+                case 1:
+                    nombreArea = "servicio";
+                    break;
+                case 2:
+                    nombreArea = "restaurante";
+                    break;
+                case 3:
+                    nombreArea = "personal";
+                    break;
+                case 4:
+                    nombreArea = "bar";
+                    break;
+                case 5:
+                    nombreArea = "habitaciones";
+                    break;
+                case 6:
+                    nombreArea = "mantenimiento";
+                    break;
+                case 7:
+                    nombreArea = "recepcion";
+                    break;
+                case 8:
+                    nombreArea = "otros";
+                    break;
+            }
+            requi.mostrarRequiTodos(nombreArea, tbl_requisiciones);
+            this.pnlFormEditRequi.setVisible(false);
+            this.mipmEditarRequi.setEnabled(true);
+            this.mipmEliminarRequi.setEnabled(true);
+            this.mipmPrepararRequi.setEnabled(false);
+        }
+    }//GEN-LAST:event_cbAreaRequiActionPerformed
+
+    private void mipmEditarRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmEditarRequiActionPerformed
+        this.pnlFormEditRequi.setVisible(true);
+        this.btnValidar_requi.setVisible(false);
+        /**
+        this.btnUpdateRequi.setVisible(true);**/
+        try {
+            int filas = this.tbl_requisiciones.getSelectedRow();
+            String idRequi = this.tbl_requisiciones.getValueAt(filas, 0).toString();
+            String idInsumo = this.tbl_requisiciones.getValueAt(filas, 1).toString();
+            String cantidad = this.tbl_requisiciones.getValueAt(filas, 2).toString();
+            String idUnidad = this.tbl_requisiciones.getValueAt(filas, 3).toString();
+            String idPersonal = this.tbl_requisiciones.getValueAt(filas, 4).toString();
+            //Date fecha = this.tbl_requisiciones.getValueAt(filas, 5);
+
+            if (!idInsumo.isEmpty()) {
+                this.lblIDrequi.setText(idRequi);
+                this.txtIDinsumo_requi.setText(idInsumo);
+                this.txtCantidad_requi.setText(cantidad);
+                this.txtIDunidadM_requi.setText(idUnidad);
+                this.txtIDPersonal_requi.setText(idPersonal);
+                //this.dateSolicitud_requi.setDate(fecha);
+                this.btnUpdateRequi.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "La fila no contiene datos", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_mipmEditarRequiActionPerformed
+
+    private void btnUpdateRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateRequiActionPerformed
+        String nombreArea = null;
+        String iniArea = null;
+        int area = this.cbAreaRequi.getSelectedIndex();
+
+        if(this.txtIDinsumo_requi.getText().isEmpty() || this.txtCantidad_requi.getText().isEmpty() || this.txtIDunidadM_requi.getText().isEmpty()
+               || this.txtIDPersonal_requi.getText().isEmpty() || this.dateSolicitud_requi.getDate().equals("")) {
+            JOptionPane.showMessageDialog(this, "Existen campos vacíos. Los datos son obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if(requi.validarNumerosRequi(txtIDunidadM_requi.getText()) && requi.validarNumerosRequi(txtIDPersonal_requi.getText())) {
+                int idRequi = Integer.parseInt(this.lblIDrequi.getText());
+                String idInsu = this.txtIDinsumo_requi.getText();
+                Date fecha = this.dateSolicitud_requi.getDate();
+                DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaSolicitud = formato.format(fecha);
+                Double cantidad = Double.parseDouble(this.txtCantidad_requi.getText());
+                int idUnidad = Integer.parseInt(this.txtIDunidadM_requi.getText());
+                int idPerson = Integer.parseInt(this.txtIDPersonal_requi.getText());
+                
+                switch (area) {
+                    case 1:
+                        nombreArea = "servicio";
+                        iniArea = "S";
+                        break;
+                    case 2:
+                        nombreArea = "restaurante";
+                        iniArea = "R";
+                        break;
+                    case 3:
+                        nombreArea = "personal";
+                        iniArea = "P";
+                        break;
+                    case 4:
+                        nombreArea = "bar";
+                        iniArea = "B";
+                        break;
+                    case 5:
+                        nombreArea = "habitaciones";
+                        iniArea = "H";
+                        break;
+                    case 6:
+                        nombreArea = "mantenimiento";
+                        iniArea = "M";
+                        break;
+                    case 7:
+                        nombreArea = "recepcion";
+                        iniArea = "RE";
+                        break;
+                    case 8:
+                        nombreArea = "otros";
+                        iniArea = "O";
+                        break;
+                }
+                requi.actualizarRequiArea(nombreArea, iniArea, idRequi, idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese dato numérico, no letras", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnUpdateRequiActionPerformed
+
+    private void btnSolicitarRequi_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarRequi_requiActionPerformed
+        Envio_requisicion envioRequi = new Envio_requisicion(new javax.swing.JFrame(), true);
+        envioRequi.setVisible(true);
+        
+    }//GEN-LAST:event_btnSolicitarRequi_requiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2167,29 +2272,36 @@ public class Panel_principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonIconOne btnBuscarInsuExistencias;
-    private RSMaterialComponent.RSButtonFormaIcon btnCaducidades;
+    public RSMaterialComponent.RSButtonFormaIcon btnCaducidades;
+    private RSMaterialComponent.RSButtonIconOne btnCancel_requi;
     private rojeru_san.rsbutton.RSButtonForma btnDevolver;
     private RSMaterialComponent.RSButtonIconOne btnEscanerCodigo;
-    private RSMaterialComponent.RSButtonFormaIcon btnExistencias;
+    public RSMaterialComponent.RSButtonFormaIcon btnExistencias;
+    private RSMaterialComponent.RSButtonFormaIcon btnGenerarDocu_requi;
     private RSMaterialComponent.RSButtonFormaIcon btnGenerarRepCaducos;
     private RSMaterialComponent.RSButtonFormaIcon btnGenerarRepExist;
     private rojeru_san.rsbutton.RSButtonForma btnGuardarSalidas;
     private RSMaterialComponent.RSButtonFormaIcon btnIngresarSumi;
-    private RSMaterialComponent.RSButtonFormaIcon btnInsumos;
+    public RSMaterialComponent.RSButtonFormaIcon btnInsumos;
+    private rojeru_san.rsbutton.RSButtonForma btnMostrarInsu_requi;
     private RSMaterialComponent.RSButtonFormaIcon btnReporteSumi;
     private RSMaterialComponent.RSButtonFormaIcon btnRequisiciones;
     private RSMaterialComponent.RSButtonFormaIcon btnSalidas;
     private RSMaterialComponent.RSButtonIconOne btnSearchCaducos;
     private RSMaterialComponent.RSButtonIconOne btnSearchF1Sumi;
     private RSMaterialComponent.RSButtonIconOne btnSearchF2Sumi2;
-    private RSMaterialComponent.RSButtonFormaIcon btnSuministros;
+    public RSMaterialComponent.RSButtonFormaIcon btnSolicitarRequi_requi;
+    public RSMaterialComponent.RSButtonFormaIcon btnSuministros;
+    private RSMaterialComponent.RSButtonIconOne btnUpdateRequi;
+    private RSMaterialComponent.RSButtonIconOne btnValidar_requi;
     private RSMaterialComponent.RSComboBox cbAreaExistencias;
+    private RSMaterialComponent.RSComboBox cbAreaRequi;
     private RSMaterialComponent.RSComboBox cbAreaSalidas;
     private RSMaterialComponent.RSComboBox cbBuscarStock;
     private RSMaterialComponent.RSComboBox cbBusquedaIniPere;
     private RSMaterialComponent.RSComboBox cbFiltro1Sumi;
     private RSMaterialComponent.RSComboBox cbFiltro2Sumi;
-    private RSMaterialComponent.RSComboBox cbReporte;
+    private com.toedter.calendar.JDateChooser dateSolicitud_requi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2202,7 +2314,6 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -2212,13 +2323,31 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel lblCantidad_requi;
+    private javax.swing.JLabel lblFechaSolicitud_requi;
+    private javax.swing.JLabel lblIDinsu_requi;
+    private javax.swing.JLabel lblIDpersonal_requi;
+    private javax.swing.JLabel lblIDrequi;
+    private javax.swing.JLabel lblIDunidadM_requi;
     private necesario.RSLabelImage lblImageLogo;
     private javax.swing.JLabel lblInfoBusqueda1;
     private javax.swing.JLabel lblInfoBusqueda2;
     private javax.swing.JLabel lblInfoBusqueda3;
+    private javax.swing.JMenu mbMainHerramientas;
+    public javax.swing.JMenuItem mbmiAdminUser;
+    private javax.swing.JMenuItem mbmiCambiarUser;
+    public javax.swing.JMenuItem mbmiQR;
+    private javax.swing.JMenuItem mbmiSalir;
+    private javax.swing.JMenuItem mipmEditarRequi;
+    private javax.swing.JMenuItem mipmEliminarRequi;
+    private javax.swing.JMenuItem mipmPrepararRequi;
+    private javax.swing.JPopupMenu pmTbl_requi;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlCaducidades;
     private javax.swing.JPanel pnlExistencias;
+    private javax.swing.JPanel pnlFormEditRequi;
     private javax.swing.JPanel pnlInsumos;
     private javax.swing.JPanel pnlRequisiciones;
     private javax.swing.JPanel pnlSalidas;
@@ -2232,14 +2361,20 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JTable tblNuevaExist;
     private javax.swing.JTable tblUnidadSalidas;
     private javax.swing.JTable tbl_caducidades;
+    private javax.swing.JTable tbl_infInsuRequi;
+    private javax.swing.JTable tbl_requisiciones;
     private javax.swing.JTable tbl_sumi;
     private RSMaterialComponent.RSTextFieldOne txtCaducosDias;
     private RSMaterialComponent.RSTextFieldOne txtCaducosMeses;
     private RSMaterialComponent.RSTextFieldOne txtCantidadSalidas;
+    private javax.swing.JTextField txtCantidad_requi;
     private RSMaterialComponent.RSTextFieldOne txtCodigoSalidas;
     private RSMaterialComponent.RSTextFieldOne txtFechaDisCaduco;
     private RSMaterialComponent.RSTextFieldOne txtFiltro1Sumi;
     private RSMaterialComponent.RSTextFieldOne txtFiltro2Sumi;
+    private javax.swing.JTextField txtIDPersonal_requi;
+    private javax.swing.JTextField txtIDinsumo_requi;
+    private javax.swing.JTextField txtIDunidadM_requi;
     private RSMaterialComponent.RSTextFieldOne txtSearchIDinsuExist;
     // End of variables declaration//GEN-END:variables
 }

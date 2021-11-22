@@ -1,27 +1,33 @@
-
 package interfaces_principales;
 
+import Usuarios_sistema.Operaciones_usuarios;
 import com.mysql.jdbc.ResultSetMetaData;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import Usuarios_sistema.Operaciones_usuarios;
+import otras_operaciones.ConexionBD;
 
 /*
  * @author Evelyn López Nieto
  */
 public class LOGIN extends javax.swing.JFrame {
+
     Operaciones_usuarios consulta = new Operaciones_usuarios();
-    Icon denegado = new ImageIcon (getClass().getResource("/recursos_graficos/2.png"));
-    Icon error = new ImageIcon (getClass().getResource("/recursos_graficos/6.png"));
-    
+    ConexionBD conexion = new ConexionBD();
+    Icon denegado = new ImageIcon(getClass().getResource("/recursos_graficos/2.png"));
+    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
+
     public LOGIN() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("/recursos_graficos/icono_scikoolebil_2.png")).getImage());
         consulta.cargaUsuarioLogin(cbUsuarios);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -38,6 +44,7 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtUser = new RSMaterialComponent.RSTextFieldTwo();
         btnIngresar = new RSMaterialComponent.RSButtonFormaIcon();
+        lblNombreUser = new javax.swing.JLabel();
         rSPanelImage1 = new rojerusan.RSPanelImage();
         rSPanelImage2 = new rojerusan.RSPanelImage();
         jLabel1 = new javax.swing.JLabel();
@@ -88,7 +95,7 @@ public class LOGIN extends javax.swing.JFrame {
         lblSaludoUser.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         lblSaludoUser.setForeground(new java.awt.Color(255, 255, 255));
         lblSaludoUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSaludoUser.setText("¡Hola usuario X!");
+        lblSaludoUser.setText("¡Hola");
         jPanel1.add(lblSaludoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 210, -1, -1));
 
         rSLabelIcon1.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,6 +138,11 @@ public class LOGIN extends javax.swing.JFrame {
         });
         jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 120, 40));
 
+        lblNombreUser.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        lblNombreUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreUser.setText("nombre!");
+        jPanel1.add(lblNombreUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 400, 450));
 
         rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/recursos_graficos/login_.jpg"))); // NOI18N
@@ -169,44 +181,73 @@ public class LOGIN extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String usuario = this.txtUser.getText();
-        String contraseña =this.txtPass.getText();
-        String nombre = this.cbUsuarios.getSelectedItem().toString();
-        
+        String contraseña = this.txtPass.getText();
+        String nombre = this.lblNombreUser.getText();
+
+        String sentencia = "select usuario,password from tbl_personal where nombre_personal = '" + nombre + "' ";
+        String sentencia2 = "SELECT permiso_sis FROM tbl_personal WHERE nombre_personal = '" + nombre + "'";
         try {
-            ResultSet re = consulta.consultaUserLogin(nombre);
-            ResultSetMetaData rsMD = (ResultSetMetaData) re.getMetaData();
-            int cantColumnas = rsMD.getColumnCount();
+            Connection con = conexion.obConexion();
+            Statement consulta = conexion.crearSentencia();
+            ResultSet re = consulta.executeQuery(sentencia);
+            ResultSetMetaData rM = (ResultSetMetaData) re.getMetaData();
+            int cantColumnas = rM.getColumnCount();
             Object[] datosUser = new Object[cantColumnas];
-            while(re.next()){
+            while (re.next()) {
                 for (int i = 0; i < cantColumnas; i++) {
                     datosUser[i] = re.getObject(i + 1);
                 }
             }
-            
-            if(usuario.equals(datosUser[0])&&contraseña.equals(datosUser[1])){
-            this.repaint();
-            Panel_principal menuP = new Panel_principal();
-            menuP.setVisible(true);
-            this.dispose();
-        } else {
-                JOptionPane.showMessageDialog(this, "¡¡ACCESO DENEGADO PARA "+nombre+"!!"
-                       + "\nUsuario o contraseña incorrectos","Acceso denegado",JOptionPane.PLAIN_MESSAGE,denegado);
+
+            Statement consultaPermiso = conexion.crearSentencia();
+            ResultSet rs = consultaPermiso.executeQuery(sentencia2);
+            String privilegio = null;
+            while (rs.next()) {
+                privilegio = rs.getString("permiso_sis");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,"Ocurrió un error con el programa","¡¡ERROR!!",JOptionPane.PLAIN_MESSAGE,error);
+
+            if (usuario.equals(datosUser[0]) && contraseña.equals(datosUser[1])) {
+                if (privilegio.equals("Administrador")) {
+                    conexion.cerrarConexion();
+                    Panel_principal menuP = new Panel_principal();
+                    this.dispose();
+                    menuP.setVisible(true);
+                    menuP.setTitle("Principal - SCIKo'olebil ------> En sesión: " + nombre);
+                }
+                if (privilegio.equals("Usuario")) {
+                    conexion.cerrarConexion();
+                    Panel_principal menuP = new Panel_principal();
+                    this.dispose();
+                    menuP.setVisible(true);
+                    menuP.setTitle("Principal - SCIKo'olebil ------> En sesión: " + nombre);
+                    menuP.mbmiAdminUser.setEnabled(false);
+                    menuP.mbmiQR.setEnabled(false);
+                    menuP.btnSuministros.setVisible(false);
+                    menuP.btnExistencias.setVisible(false);
+                    menuP.btnInsumos.setVisible(false);
+                    menuP.btnCaducidades.setVisible(false);
+                    menuP.btnSolicitarRequi_requi.setVisible(false);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "¡¡ACCESO DENEGADO PARA " + nombre + "!!"
+                       + "\nUsuario o contraseña incorrectos", "Acceso denegado", JOptionPane.PLAIN_MESSAGE, denegado);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error con el programa..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
         }
-        
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void cbUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbUsuariosActionPerformed
         String nombre = this.cbUsuarios.getSelectedItem().toString();
-        
+
         if (nombre.equals("Seleccione nombre")) {
-            this.lblSaludoUser.setText("");
+            this.lblNombreUser.setText("");
         } else {
-            this.lblSaludoUser.setText("¡Hola "+nombre+"!");
+            this.lblNombreUser.setText(nombre);
         }
-        
+
     }//GEN-LAST:event_cbUsuariosActionPerformed
 
     public static void main(String args[]) {
@@ -245,6 +286,7 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblNombreUser;
     private javax.swing.JLabel lblSaludoUser;
     private rojerusan.RSPanelImage piFotoUser;
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;

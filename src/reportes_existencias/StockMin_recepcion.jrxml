@@ -38,7 +38,7 @@
 				<text><![CDATA[Hotel Ko'olebil]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="460" y="15" width="112" height="20" uuid="18cd2b2d-90dd-45fc-ad1f-927d1af292e4"/>
+				<reportElement x="453" y="15" width="119" height="20" uuid="18cd2b2d-90dd-45fc-ad1f-927d1af292e4"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>

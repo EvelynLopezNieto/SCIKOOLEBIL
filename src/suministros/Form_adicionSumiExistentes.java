@@ -20,6 +20,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import otras_operaciones.ConexionBD;
 
 /**
@@ -28,14 +31,18 @@ import otras_operaciones.ConexionBD;
  */
 public class Form_adicionSumiExistentes {
     ConexionBD conexion = new ConexionBD();
+    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
+    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
     
-    public int agregarInsumoExistente(String area, String inicialA, double cantidadN, String IDinsu) {
+    public void agregarInsumoExistenteStock(String area, String inicialA, double cantidadN, String IDinsu) {
         String sentencia = "UPDATE tbl_stock" + area + " SET existencia" + inicialA + "=existencia" + inicialA + "+" + cantidadN + " WHERE ID_insumo" + inicialA + "= '" + IDinsu + "'";
         try {
+            Connection con = conexion.obConexion();
             Statement actualizar = conexion.crearSentencia();
-            return actualizar.executeUpdate(sentencia);
+            actualizar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return -1;
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
     //implementar la actualización de descripcion, comentarios y nueva fecha de caducidad
@@ -43,19 +50,18 @@ public class Form_adicionSumiExistentes {
     
     //implementar también el almacenamiento del insumo existente a la tabla de suministros
     //para poder sacar las estadísticas de uso
-    public int registroTablaSuministroExistente(String IDinsumo, String nombreInsumo, String tipoInsumo,
+    public void registroTablaSuministroExistente(String IDinsumo, String nombreInsumo, String tipoInsumo,
            String descripcion, Double precioInsUnitario, Double precioInsTotal, Double cantEntreg, Double perdidas, Double cantFinal,
            int IDunidadM, String comentarios) {
 
-        //String IDinsumo = IDdia + IDmes + IDnombre + IDinicial;
         String sentencia = "INSERT INTO tbl_suministros VALUES (NULL,'" + IDinsumo + "','" + nombreInsumo + "','" + tipoInsumo + "','" + descripcion + "'," + precioInsUnitario + ","
                + "" + precioInsTotal + "," + cantEntreg + "," + perdidas + ", " + cantFinal + "," + IDunidadM + ",(SELECT curdate()),'" + comentarios + "')";
 
         try {
             Statement insertar = conexion.crearSentencia();
-            return insertar.executeUpdate(sentencia);
+            insertar.executeUpdate(sentencia);
         } catch (SQLException e) {
-            return -1;
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
     
@@ -74,15 +80,17 @@ public class Form_adicionSumiExistentes {
     }
     
     //REGISTRO DE MOVIMIENTO DEL USUARIO
-    public int registroTablaAccesosP(int IDpersonal) {
+    public void registroTablaAccesosP(int IDpersonal) {
 
         String sentencia = "INSERT INTO tbl_accesosP VALUES (NULL," + IDpersonal + ",(SELECT CURDATE()),(SELECT CURTIME()),'Ingreso datos nuevos a insumo existente');";
 
         try {
+            Connection con = conexion.obConexion();
             Statement insertar = conexion.crearSentencia();
-            return insertar.executeUpdate(sentencia);
+            insertar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return -1;
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del movimiento..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 }

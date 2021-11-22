@@ -41,6 +41,7 @@ public class GeneradorQR extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("/recursos_graficos/icono_scikoolebil_2.png")).getImage());
     }
 
     @SuppressWarnings("unchecked")

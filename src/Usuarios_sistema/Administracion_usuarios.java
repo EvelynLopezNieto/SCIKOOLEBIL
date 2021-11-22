@@ -16,14 +16,9 @@
  */
 package Usuarios_sistema;
 
-import com.mysql.jdbc.ResultSetMetaData;
-import java.awt.HeadlessException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,18 +28,12 @@ public class Administracion_usuarios extends javax.swing.JDialog {
 
     Operaciones_usuarios usuario = new Operaciones_usuarios();
     Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
-    String columnas1[] = {"ID", "Nombre", "Cargo", "Turno"};
-    String datos[][] = {};
-
-    ResultSet re = null;
-    ResultSetMetaData rM = null;
-    int nColumnas = 0;
-    Object[] datosTabla;
-
+    
     public Administracion_usuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("/recursos_graficos/icono_scikoolebil_2.png")).getImage());
         this.txtIDpersonalEliminar.setEnabled(false);
         this.btnEliminarPerfil.setEnabled(false);
         this.tblPerfiles.setEnabled(false);
@@ -105,6 +94,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pm_tblPerfiles.add(mi_verReg_tblPerfiles);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administración de usuarios");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -237,6 +227,11 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         btnHistorialUser.setText("Historial");
         btnHistorialUser.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnHistorialUser.setForma(rojeru_san.rsbutton.RSButtonForma.FORMA.ROUND);
+        btnHistorialUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialUserActionPerformed(evt);
+            }
+        });
         pnlPerfiles.add(btnHistorialUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 395, 100, -1));
 
         rbtnAdmin.setBackground(new java.awt.Color(153, 204, 0));
@@ -355,32 +350,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         this.tblPerfiles.setEnabled(true);
         this.pnlPerfiles.setVisible(false);
 
-        DefaultTableModel tablaPerfiles = new DefaultTableModel(datos, columnas1) {
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if (columnas == 4) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
-        this.tblPerfiles.setModel(tablaPerfiles);
-        try {
-            re = usuario.verPerfiles();
-            rM = (ResultSetMetaData) re.getMetaData();
-            nColumnas = rM.getColumnCount();
-            datosTabla = new Object[nColumnas];
-
-            while (re.next()) {
-                for (int i = 0; i < nColumnas; i++) {
-                    datosTabla[i] = re.getObject(i + 1);
-                }
-                tablaPerfiles.addRow(datosTabla);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "No se pudieron mostrar los registros..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-        }
+        usuario.verPerfiles(tblPerfiles);
 
     }//GEN-LAST:event_rbtnVerPerfilesMouseClicked
 
@@ -406,7 +376,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         this.btnGuardarNUser.setVisible(true);
         this.btnHistorialUser.setVisible(false);
         this.pnl_tblHistorialUser.setVisible(false);
-        
+
         this.lblIDuser.setText("#");
         this.txtNombreUser.setEnabled(true);
         this.txtNombreUser.setText("");
@@ -433,18 +403,15 @@ public class Administracion_usuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_rbtnIngresarNuserMouseClicked
 
     private void btnEliminarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPerfilActionPerformed
-        try {
-            if (this.txtIDpersonalEliminar.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No ha ingresado ningún dato en el campo", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                int IDuser = Integer.parseInt(this.txtIDpersonalEliminar.getText());
-                usuario.eliminarPerfiles(IDuser);
-                JOptionPane.showMessageDialog(this, "Perfil eliminado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-            }
 
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un problema con el sistema..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+        if (this.txtIDpersonalEliminar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No ha ingresado ningún dato en el campo", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int IDuser = Integer.parseInt(this.txtIDpersonalEliminar.getText());
+            usuario.eliminarPerfiles(IDuser);
+            JOptionPane.showMessageDialog(this, "Perfil eliminado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
         }
+
     }//GEN-LAST:event_btnEliminarPerfilActionPerformed
 
     private void mi_verReg_tblPerfilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_verReg_tblPerfilesActionPerformed
@@ -463,6 +430,8 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         this.btnEditarInfUser.setVisible(true);
         this.btnActualizarInfUser.setVisible(true);
         this.btnGuardarNUser.setVisible(false);
+        this.btnHistorialUser.setVisible(true);
+        this.pnl_tblHistorialUser.setVisible(true);
 
         int fila = this.tblPerfiles.getSelectedRow();
         String IDinsumo = this.tblPerfiles.getValueAt(fila, 0).toString();
@@ -471,34 +440,9 @@ public class Administracion_usuarios extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "La celda que ha seleccionado está vacía.\n"
                    + " No se mostrará información de ningún registro.", "Información", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            try {
-                int IDinsumoCel = Integer.parseInt(this.tblPerfiles.getValueAt(fila, 0).toString());
-                re = usuario.cargaPerfil(IDinsumoCel);
-
-                if (re.next()) {
-                    this.lblIDuser.setText(re.getString("ID_personal"));
-                    this.txtNombreUser.setText(re.getString("nombre_personal"));
-                    this.txtPaternoUser.setText(re.getString("apePat_personal"));
-                    this.txtMaternoUser.setText(re.getString("apeMat_personal"));
-                    this.txtTelefonoUser.setText(re.getString("telefono_personal"));
-                    this.txtPuestoUser.setText(re.getString("cargo_personal"));
-                    if (re.getString("turno_personal").equals("Matutino")) {
-                        this.rbtnMatutino.setSelected(true);
-                    } else if (re.getString("turno_personal").equals("Vespertino")) {
-                        this.rbtnVespertino.setSelected(true);
-                    }
-                    if (re.getString("permiso_sis").equals("Administrador")) {
-                        this.rbtnAdmin.setSelected(true);
-                    } else if (re.getString("permiso_sis").equals("Usuario")) {
-                        this.rbtnUser.setSelected(true);
-                    }
-                    this.txtUsuario.setText(re.getString("usuario"));
-                    this.txtPasswordUser.setText(re.getString("password"));
-                }
-
-            } catch (NumberFormatException | SQLException e) {
-                JOptionPane.showMessageDialog(this, "Ocurrió un problema con el sistema..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-            }
+            int IDinsumoCel = Integer.parseInt(this.tblPerfiles.getValueAt(fila, 0).toString());
+            usuario.cargaPerf(IDinsumoCel, lblIDuser, txtNombreUser, txtPaternoUser, txtMaternoUser, txtTelefonoUser,
+                   txtPuestoUser, rbtnMatutino, rbtnVespertino, rbtnAdmin, rbtnUser, txtUsuario, txtPasswordUser);
         }
     }//GEN-LAST:event_mi_verReg_tblPerfilesActionPerformed
 
@@ -513,7 +457,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         this.rbtnAdmin.setEnabled(true);
         this.rbtnUser.setEnabled(true);
         this.txtUsuario.setEnabled(true);
-        this.txtPasswordUser.setEnabled(true);       
+        this.txtPasswordUser.setEnabled(true);
     }//GEN-LAST:event_btnEditarInfUserActionPerformed
 
     private void btnActualizarInfUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarInfUserActionPerformed
@@ -524,26 +468,22 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         String telefono = this.txtTelefonoUser.getText();
         String puesto = this.txtPuestoUser.getText();
         String turno = null;
-        if(this.rbtnMatutino.isSelected()) {
+        if (this.rbtnMatutino.isSelected()) {
             turno = this.rbtnMatutino.getText();
-        } else if(this.rbtnVespertino.isSelected()) {
+        } else if (this.rbtnVespertino.isSelected()) {
             turno = this.rbtnVespertino.getText();
         }
         String privilegio = null;
-        if(this.rbtnAdmin.isSelected()) {
+        if (this.rbtnAdmin.isSelected()) {
             privilegio = this.rbtnAdmin.getText();
-        } else if(this.rbtnUser.isSelected()) {
+        } else if (this.rbtnUser.isSelected()) {
             privilegio = this.rbtnUser.getText();
         }
         String user = this.txtUsuario.getText();
         String pass = this.txtPasswordUser.getText();
-        
-        try {
-            usuario.editarPerfil(ID, nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
-            JOptionPane.showMessageDialog(this, "Perfil actualizado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "No se pudo actualizar el registro..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-        }
+
+        usuario.editarPerfil(ID, nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
+        JOptionPane.showMessageDialog(this, "Perfil actualizado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
     }//GEN-LAST:event_btnActualizarInfUserActionPerformed
 
     private void rbtnMatutinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMatutinoMouseClicked
@@ -569,27 +509,32 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         String telefono = this.txtTelefonoUser.getText();
         String puesto = this.txtPuestoUser.getText();
         String turno = null;
-        if(this.rbtnMatutino.isSelected()) {
+        if (this.rbtnMatutino.isSelected()) {
             turno = this.rbtnMatutino.getText();
-        } else if(this.rbtnVespertino.isSelected()) {
+        } else if (this.rbtnVespertino.isSelected()) {
             turno = this.rbtnVespertino.getText();
         }
         String privilegio = null;
-        if(this.rbtnAdmin.isSelected()) {
+        if (this.rbtnAdmin.isSelected()) {
             privilegio = this.rbtnAdmin.getText();
-        } else if(this.rbtnUser.isSelected()) {
+        } else if (this.rbtnUser.isSelected()) {
             privilegio = this.rbtnUser.getText();
         }
         String user = this.txtUsuario.getText();
         String pass = this.txtPasswordUser.getText();
-        
-        try {
-            usuario.agregarPerfiles(nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
-            JOptionPane.showMessageDialog(this, "Perfil agregado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "No se pudo agregar el registro..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-        }
+
+        usuario.agregarPerfiles(nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
+        JOptionPane.showMessageDialog(this, "Perfil agregado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+
     }//GEN-LAST:event_btnGuardarNUserActionPerformed
+
+    private void btnHistorialUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialUserActionPerformed
+
+        this.pnl_tblHistorialUser.setVisible(true);
+        int idUser = Integer.parseInt(this.lblIDuser.getText());
+        usuario.historialUser(idUser, tblHistorialUser);
+
+    }//GEN-LAST:event_btnHistorialUserActionPerformed
 
     /**
      * @param args the command line arguments

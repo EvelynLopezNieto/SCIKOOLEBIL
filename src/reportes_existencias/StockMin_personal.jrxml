@@ -38,7 +38,7 @@
 				<text><![CDATA[Hotel Ko'olebil]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="457" y="15" width="115" height="20" uuid="57f2e9b2-25a8-4d81-9516-c8d4295a9871"/>
+				<reportElement x="447" y="15" width="125" height="20" uuid="57f2e9b2-25a8-4d81-9516-c8d4295a9871"/>
 				<textElement>
 					<font fontName="Comic Sans MS"/>
 				</textElement>

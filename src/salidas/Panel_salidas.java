@@ -16,11 +16,17 @@
  */
 package salidas;
 
+import com.mysql.jdbc.ResultSetMetaData;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import otras_operaciones.ConexionBD;
 import java.sql.Statement;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,56 +35,124 @@ import java.sql.Statement;
 public class Panel_salidas {
 
     ConexionBD conexion = new ConexionBD();
+    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
+    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
 
-    public int salidaInsumo(String area, String inicialA, double cantidad, String IDinsu) {
+    String columnas2[] = {"ID insumo", "Nombre insumo", "Tipo insumo", "Fecha entrega", "Fecha caducidad"};
+    String columnas3[] = {"ID insumo", "Nombre", "Existencia actual"};
+    String columnas4[] = {"ID unidad", "Tipo unidad", "Nombre unidad", "Abrev. unidad"};
+    String columnas5[] = {"ID insumo", "Nombre", "Nueva existencia", "Unidad medida"};
+    String datos[][] = {};
+
+    ResultSet re = null;
+    ResultSetMetaData rM = null;
+    int nColumnas = 0;
+    Object[] datosTabla;
+    
+    DefaultTableModel tablaExistsNuevo = new DefaultTableModel(datos, columnas5) {
+        @Override
+        public boolean isCellEditable(int filas, int columnas) {
+            if (columnas == 4) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
+    public void salidaInsumo(String area, String inicialA, double cantidad, String IDinsu) {
         String sentencia = "UPDATE tbl_stock" + area + " SET existencia" + inicialA + "=existencia" + inicialA + "-" + cantidad + " WHERE ID_insumo" + inicialA + "= '" + IDinsu + "'";
         try {
+            Connection con = conexion.obConexion();
             Statement actualizar = conexion.crearSentencia();
-            return actualizar.executeUpdate(sentencia);
+            actualizar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return -1;
+            JOptionPane.showMessageDialog(null,"No se pudo ejecutar la salida del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 
-    public int devolucionInsumo(String area, String inicialA, double cantidad, String IDinsu) {
+    public void devolucionInsumo(String area, String inicialA, double cantidad, String IDinsu) {
         String sentencia = "UPDATE tbl_stock" + area + " SET existencia" + inicialA + "=existencia" + inicialA + "+" + cantidad + " WHERE ID_insumo" + inicialA + "= '" + IDinsu + "'";
         try {
+            Connection con = conexion.obConexion();
             Statement actualizar = conexion.crearSentencia();
-            return actualizar.executeUpdate(sentencia);
+            actualizar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return -1;
+            JOptionPane.showMessageDialog(null,"No se pudo ejecutar la devolución del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 
-    public ResultSet cargaRegInsu(String IDinsu, String area, String inicialA) {
+    public void cargaRegInsu(String IDinsu, String area, String inicialA, JTable tablaExistenciaActual) {
         String sentencia = "SELECT tbl_insumo.ID_insumo, tbl_insumo.nombre_insumo, tbl_stock" + area + ".existencia" + inicialA + ""
                + " FROM tbl_insumo, tbl_stock" + area + ""
                + " WHERE tbl_insumo.ID_insumo = tbl_stock" + area + ".ID_insumo" + inicialA + " and tbl_insumo.ID_insumo = '" + IDinsu + "'";
-
+        DefaultTableModel tablaExistActual = new DefaultTableModel(datos, columnas3) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 3) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        tablaExistenciaActual.setModel(tablaExistActual);
         try {
             Connection con = conexion.obConexion();
             Statement verBusqueda = conexion.crearSentencia();
-            return verBusqueda.executeQuery(sentencia);
+            re = verBusqueda.executeQuery(sentencia);
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            datosTabla = new Object[nColumnas];
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tablaExistActual.addRow(datosTabla);
+            }
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return null;
+            JOptionPane.showMessageDialog(null,"No se pudo visualizar la existencia actual del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 
-    public ResultSet cargaIDunidad(String IDinsu, String area, String inicialA) {
+    public void cargaIDunidad(String IDinsu, String area, String inicialA, JTable unidadMedida) {
         String sentencia = "SELECT tbl_stock" + area + ".ID_unidadM" + inicialA + ", tbl_unidadm.tipo_unidadM, tbl_unidadm.nombre_unidadM, tbl_unidadm.abrev_unidadM"
                + " FROM tbl_stock" + area + ",tbl_unidadm"
                + " WHERE tbl_stock" + area + ".ID_unidadM" + inicialA + " = tbl_unidadm.ID_unidadM AND tbl_stock" + area + ".ID_insumo" + inicialA + " = '" + IDinsu + "'";
-
+        DefaultTableModel tablaUnidadM = new DefaultTableModel(datos, columnas4) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 4) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        unidadMedida.setModel(tablaUnidadM);
         try {
             Connection con = conexion.obConexion();
             Statement verBusqueda = conexion.crearSentencia();
-            return verBusqueda.executeQuery(sentencia);
+            ResultSet re2 = verBusqueda.executeQuery(sentencia);
+            ResultSetMetaData rM2 = (ResultSetMetaData) re2.getMetaData();
+            int nColumnas2 = rM2.getColumnCount();
+            Object[] datosTabla2 = new Object[nColumnas2];
+            while (re2.next()) {
+                for (int j = 0; j < nColumnas2; j++) {
+                    datosTabla2[j] = re2.getObject(j + 1);
+                }
+                tablaUnidadM.addRow(datosTabla2);
+            }
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return null;
+            JOptionPane.showMessageDialog(null,"No se pudo visualizar los datos de la unidad de medida..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 
-    public ResultSet cargaExistNInsu(String IDinsu, String area, String inicialA) {
+    public void cargaExistNInsu(String IDinsu, String area, String inicialA, JTable tablaExistenciaNueva) {
         String sentencia = "SELECT tbl_insumo.ID_insumo, tbl_insumo.nombre_insumo, tbl_stock" + area + ".existencia" + inicialA + ", tbl_stock" + area + ".ID_unidadM" + inicialA + ""
                + " FROM tbl_insumo, tbl_stock" + area + ""
                + " WHERE tbl_insumo.ID_insumo = tbl_stock" + area + ".ID_insumo" + inicialA + " and tbl_insumo.ID_insumo = '" + IDinsu + "'";
@@ -86,9 +160,21 @@ public class Panel_salidas {
         try {
             Connection con = conexion.obConexion();
             Statement verBusqueda = conexion.crearSentencia();
-            return verBusqueda.executeQuery(sentencia);
+            tablaExistenciaNueva.setModel(tablaExistsNuevo);
+            re = verBusqueda.executeQuery(sentencia);
+            
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            datosTabla = new Object[nColumnas];
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tablaExistsNuevo.addRow(datosTabla);
+            }
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            return null;
+            JOptionPane.showMessageDialog(null,"No se pudo visualizar la nueva existencia del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 }

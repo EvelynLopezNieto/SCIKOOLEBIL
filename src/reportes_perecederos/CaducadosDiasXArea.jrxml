@@ -10,7 +10,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() AND ADDDATE(CURDATE(),INTERVAL $P{diaPositivo} DAY) AND ID_insumo LIKE '%$P!{iArea}';]]>
+		<![CDATA[SELECT ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad FROM tbl_insumo WHERE fecha_caducidad BETWEEN CURDATE() AND ADDDATE(CURDATE(),INTERVAL $P{diaPositivo} DAY) AND ID_insumo LIKE %$P{iArea};]]>
 	</queryString>
 	<field name="ID_insumo" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
