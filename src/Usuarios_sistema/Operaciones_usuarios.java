@@ -1,8 +1,6 @@
 package Usuarios_sistema;
 
 import com.mysql.jdbc.ResultSetMetaData;
-import interfaces_principales.LOGIN;
-import interfaces_principales.Panel_principal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -168,7 +166,7 @@ public class Operaciones_usuarios {
     }
 
     public void historialUser(int IDuser, JTable tabla) {
-        String sentencia = "SELECT * FROM tbl_accesosP WHERE ID_personal = " + IDuser + "";
+        String sentencia = "SELECT * FROM tbl_accesosP WHERE ID_personal = " + IDuser + " ORDER BY fecha_acceso DESC";
         DefaultTableModel tablaHistorial = new DefaultTableModel(datos, columnas2) {
             @Override
             public boolean isCellEditable(int filas, int columnas) {
@@ -219,6 +217,42 @@ public class Operaciones_usuarios {
         String sentencia = "INSERT INTO tbl_accesosP VALUES (NULL," + IDpersonal + ",(SELECT CURDATE()),(SELECT CURTIME()),'Ingreso datos nuevos a insumo existente');";
 
         try {
+            Connection con = conexion.obConexion();
+            Statement insertar = conexion.crearSentencia();
+            insertar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            
+        }
+    }
+    
+    public void regAccesoSistemaYes(int IDpersonal) {
+        try {
+            String sentencia = "INSERT INTO tbl_accesosP VALUES (NULL," + IDpersonal + ",(SELECT CURDATE()),(SELECT CURTIME()),'Acceso exitoso al sistema');";
+            Connection con = conexion.obConexion();
+            Statement insertar = conexion.crearSentencia();
+            insertar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            
+        }
+    }
+    
+    public void regAccesoSistemaNo(int IDpersonal) {
+        try {
+            String sentencia = "INSERT INTO tbl_accesosP VALUES (NULL," + IDpersonal + ",(SELECT CURDATE()),(SELECT CURTIME()),'Acceso fallido al sistema');";
+            Connection con = conexion.obConexion();
+            Statement insertar = conexion.crearSentencia();
+            insertar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            
+        }
+    }
+    
+    public void regSalidaSistema(int IDpersonal) {
+        try {
+            String sentencia = "INSERT INTO tbl_accesosP VALUES (NULL," + IDpersonal + ",(SELECT CURDATE()),(SELECT CURTIME()),'Salida del sistema');";
             Connection con = conexion.obConexion();
             Statement insertar = conexion.crearSentencia();
             insertar.executeUpdate(sentencia);

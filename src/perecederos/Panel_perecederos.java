@@ -35,7 +35,7 @@ public class Panel_perecederos {
     //CARGA TOTAL DE REGISTROS DE PERECEDEROS
     //A REPORTE
     public void cargaPerecederos(JTable tablaPerecederos) {
-        String sentencia = "select ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad from tbl_insumo";
+        String sentencia = "select ID_insumo,nombre_insumo,tipo_insumo,fecha_entrega,fecha_caducidad from tbl_insumo order by nombre_insumo asc";
         DefaultTableModel tablaPere = new DefaultTableModel(datos, columnas2) {
             @Override
             public boolean isCellEditable(int filas, int columnas) {

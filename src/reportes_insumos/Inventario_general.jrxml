@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Inventario_general" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61377503-5c1e-44fe-bb0d-8ef352376259">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM tbl_insumo ORDER BY nombre_insumo ASC]]>
+	</queryString>
+	<field name="ID_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio_insumo_unitario" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio_insumo_total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comentarios" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_entrega" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_caducidad" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="15" width="70" height="70" uuid="79118e4a-e573-472d-b36b-31f8abe5d1f0"/>
+				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="b46aee7b-1706-4048-8979-77b1a59ef130"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Ko'olebil]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="610" y="15" width="142" height="20" uuid="30a00aea-5a18-4807-8653-18229cc730f9"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="224" y="47" width="310" height="24" uuid="db7c3775-6b4f-4686-9c39-303b236ee632"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVENTARIO GENERAL DE INSUMOS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-19" y="0" width="790" height="5" backcolor="#99CC00" uuid="0594eaa2-8373-48fa-b924-0976e76cfb3a"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="752" height="30" backcolor="#99CC00" uuid="467d32c0-78c7-48db-aebd-47811230bc04"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="396e61cc-0ca3-40ac-a9d3-b638a1bc1147"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID insumo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="fde4bfee-68d0-42dc-89bf-661306314b18"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre insumo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="d8b21053-f95b-4fba-9ff2-3783fd841ab6"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo insumo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="122" height="20" uuid="bfb0f000-bd1e-4b34-896a-651ace96dcfa"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="40" height="30" uuid="582eb1b7-7d19-4484-a87d-dc05b4f8cf2c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[$ unitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="0" width="41" height="20" uuid="48fd92d5-a3a3-4b5e-b348-8cba48cbc2ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[$ total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="503" y="0" width="144" height="20" uuid="f4f16b7e-befc-4c55-95f1-e7d16ce5c748"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentarios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="647" y="0" width="50" height="30" uuid="9a5b9166-3480-4154-a072-5038810a38b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="697" y="0" width="55" height="30" uuid="1ca15227-6c51-49d2-a620-9f030daadc50"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha caducidad]]></text>
+			</staticText>
+			<line>
+				<reportElement x="647" y="0" width="1" height="30" uuid="6f393e91-9c69-4762-9fb2-b0bee3dd3fc5"/>
+			</line>
+			<line>
+				<reportElement x="697" y="0" width="1" height="30" uuid="c785bfd8-849f-4175-a90d-a3794d32757c"/>
+			</line>
+			<line>
+				<reportElement x="503" y="0" width="1" height="30" uuid="61a02658-dcd9-4670-82d9-941f41eeb322"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="752" height="36" uuid="9e5d5a81-3c3a-4b2b-9fef-c1bf1ab7a40a"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d4d72769-5d2b-4ebc-b3a0-c185ba4a6d85"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{ID_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="5cba374e-5486-4cdc-92ca-cbf51b266ef7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{nombre_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="b0217e4f-c153-4d23-aa08-b19ac713f704"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{tipo_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="122" height="36" uuid="772c0340-76fe-40c6-aa51-2f49701ea2e9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="0" width="40" height="20" uuid="80f8bd40-7a0c-4f7c-8a4f-5f299453ca1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{precio_insumo_unitario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="462" y="0" width="41" height="20" uuid="eafcd7f8-e1f4-47f1-b874-c15f7b439ef7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{precio_insumo_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="0" width="144" height="36" uuid="689e27fd-9be4-4d77-83e2-d7003656ce40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{comentarios}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="650" y="0" width="45" height="20" uuid="0c692c18-5491-456d-95a6-60cc6d4a2979"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{fecha_entrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="50" height="20" uuid="254ab2f7-89f8-4c94-a92f-2566258fea7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{fecha_caducidad}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="647" y="0" width="1" height="36" uuid="e0836495-8cb7-48ce-a65a-72f6d6a7522f"/>
+			</line>
+			<line>
+				<reportElement x="697" y="0" width="1" height="36" uuid="0e6da1a6-2dfa-4cab-b034-4cdc42a7dce9"/>
+			</line>
+			<line>
+				<reportElement x="503" y="0" width="1" height="36" uuid="f58d4183-3cf2-409b-9844-7496595a0522"/>
+			</line>
+			<line>
+				<reportElement x="462" y="-30" width="1" height="30" uuid="cafce7a8-9cad-4edd-b04d-63d19af6e978"/>
+			</line>
+			<line>
+				<reportElement x="462" y="0" width="1" height="36" uuid="1a1e0a95-7643-4daf-b36f-050b2c743a3d"/>
+			</line>
+			<line>
+				<reportElement x="422" y="-30" width="1" height="30" uuid="2ce3305d-139f-42ff-b087-becee21c0f7a"/>
+			</line>
+			<line>
+				<reportElement x="422" y="0" width="1" height="36" uuid="55e0f258-fd3c-4a59-b31d-eb79f04f8157"/>
+			</line>
+			<line>
+				<reportElement x="300" y="-30" width="1" height="30" uuid="1438e56e-5fa4-48fb-86fc-74cf20eb4266"/>
+			</line>
+			<line>
+				<reportElement x="300" y="0" width="1" height="36" uuid="3ae93ba6-9988-4b1e-841b-e14af57f6582"/>
+			</line>
+			<line>
+				<reportElement x="200" y="-30" width="1" height="30" uuid="66eb55c6-8ffd-42f7-bbb5-20c48177aea0"/>
+			</line>
+			<line>
+				<reportElement x="200" y="0" width="1" height="36" uuid="134e4044-8157-4bf2-8f9a-8fc32c5994b1"/>
+			</line>
+			<line>
+				<reportElement x="100" y="-30" width="1" height="30" uuid="1d41daca-3657-474a-83aa-800d47a161af"/>
+			</line>
+			<line>
+				<reportElement x="100" y="0" width="1" height="36" uuid="4900b701-e115-4587-8c72-36087722e978"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="305" y="14" width="80" height="20" uuid="4d05c55b-57d9-4a60-9cfd-f0590c08d761"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="385" y="14" width="40" height="20" uuid="f2d986e6-ed38-49f3-85e7-24554732f309"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-19" y="49" width="790" height="5" backcolor="#99CC00" uuid="ac225d0b-648d-4136-b314-8a4928d2fb45"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

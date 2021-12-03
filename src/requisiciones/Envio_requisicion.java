@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package QR_envioRequi;
+package requisiciones;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;

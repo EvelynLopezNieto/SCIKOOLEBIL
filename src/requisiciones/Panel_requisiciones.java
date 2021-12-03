@@ -40,6 +40,7 @@ public class Panel_requisiciones {
 
     String columnas[] = {"ID insumo", "ID unidad de medida"};
     String columnas1[] = {"ID requisición", "ID insumo", "Cantidad solicitada", "ID unidad medida", "ID personal que solicita", "Fecha solicitud"};
+    String columnas8[] = {"Nombre de insumo", "Tipo de insumo", "Descripción", "Comentarios"};
     String datos[][] = {};
 
     ResultSet re = null;
@@ -47,8 +48,8 @@ public class Panel_requisiciones {
     int nColumnas = 0;
     Object[] datosTabla;
 
-    public void mostrarRequiTodos(String area, JTable tablaRequisicion) {
-        String sentencia = "SELECT * FROM tbl_requisiciones_" + area + "";
+    public void mostrarRequiTodos(String area, String iniArea, JTable tablaRequisicion) {
+        String sentencia = "SELECT * FROM tbl_requisiciones_" + area + " ORDER BY fecha_solicitudR"+iniArea+" desc";
         DefaultTableModel tablaRequi = new DefaultTableModel(datos, columnas1) {
             @Override
             public boolean isCellEditable(int filas, int columnas) {
@@ -249,6 +250,38 @@ public class Panel_requisiciones {
             JOptionPane.showMessageDialog(null, "Requisición actualizada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un problema al actualizar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+        }
+    }
+    
+    public void mostrarInfInsumo(String IDexist, JTable tablaInf) {
+        String sentencia = "SELECT nombre_insumo,tipo_insumo,descripcion,comentarios FROM tbl_insumo WHERE ID_insumo = '" + IDexist + "'";
+        DefaultTableModel tablaInfInsumo = new DefaultTableModel(datos, columnas8) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 4) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        tablaInf.setModel(tablaInfInsumo);
+        try {
+            Connection con = conexion.obConexion();
+            Statement verBusqueda = conexion.crearSentencia();
+            re = verBusqueda.executeQuery(sentencia);
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            datosTabla = new Object[nColumnas];
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tablaInfInsumo.addRow(datosTabla);
+            }
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
 

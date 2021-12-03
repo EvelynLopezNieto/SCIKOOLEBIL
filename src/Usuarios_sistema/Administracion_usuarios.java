@@ -98,10 +98,10 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlPerfiles.setBackground(new java.awt.Color(153, 204, 0));
+        pnlPerfiles.setBackground(new java.awt.Color(0, 0, 51));
         pnlPerfiles.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnl_tblHistorialUser.setBackground(new java.awt.Color(102, 204, 0));
+        pnl_tblHistorialUser.setBackground(new java.awt.Color(0, 0, 51));
         pnl_tblHistorialUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblHistorialUser.setModel(new javax.swing.table.DefaultTableModel(
@@ -119,6 +119,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(pnl_tblHistorialUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 450, 160));
 
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre:");
         pnlPerfiles.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 135, 50, -1));
 
@@ -126,6 +127,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(txtPaternoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 205, 210, 30));
 
         jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Apellido paterno:");
         pnlPerfiles.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 185, 100, -1));
 
@@ -133,6 +135,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(txtMaternoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 255, 210, 30));
 
         jLabel4.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Apellido materno:");
         pnlPerfiles.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 235, 100, -1));
 
@@ -140,6 +143,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(txtTelefonoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 305, 210, 30));
 
         jLabel5.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Teléfono:");
         pnlPerfiles.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 285, 60, -1));
 
@@ -147,15 +151,18 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(txtPuestoUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 355, 210, 30));
 
         jLabel6.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Puesto:");
         pnlPerfiles.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 335, 50, -1));
 
         jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Turno:");
         pnlPerfiles.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 135, 40, -1));
 
-        rbtnMatutino.setBackground(new java.awt.Color(153, 204, 0));
+        rbtnMatutino.setBackground(new java.awt.Color(0, 0, 51));
         rbtnMatutino.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        rbtnMatutino.setForeground(new java.awt.Color(255, 255, 255));
         rbtnMatutino.setText("Matutino");
         rbtnMatutino.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -164,8 +171,9 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         });
         pnlPerfiles.add(rbtnMatutino, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 155, -1, -1));
 
-        rbtnVespertino.setBackground(new java.awt.Color(153, 204, 0));
+        rbtnVespertino.setBackground(new java.awt.Color(0, 0, 51));
         rbtnVespertino.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        rbtnVespertino.setForeground(new java.awt.Color(255, 255, 255));
         rbtnVespertino.setText("Vespertino");
         rbtnVespertino.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -175,6 +183,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(rbtnVespertino, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 155, -1, -1));
 
         lblIDuser.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
+        lblIDuser.setForeground(new java.awt.Color(255, 255, 255));
         lblIDuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIDuser.setText("#");
         lblIDuser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -184,10 +193,12 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(txtNombreUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 155, 210, 30));
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Privilegios:");
         pnlPerfiles.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 185, 70, -1));
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Usuario:");
         pnlPerfiles.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 285, 60, -1));
 
@@ -195,6 +206,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         pnlPerfiles.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 305, 210, 30));
 
         jLabel10.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Contraseña:");
         pnlPerfiles.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 335, 70, -1));
 
@@ -204,6 +216,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         btnEditarInfUser.setBackground(new java.awt.Color(0, 0, 153));
         btnEditarInfUser.setToolTipText("Editar datos de perfil");
         btnEditarInfUser.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnEditarInfUser.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
         btnEditarInfUser.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
         btnEditarInfUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +228,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         btnGuardarNUser.setBackground(new java.awt.Color(0, 0, 153));
         btnGuardarNUser.setToolTipText("Insertar nuevo perfil");
         btnGuardarNUser.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        btnGuardarNUser.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
         btnGuardarNUser.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
         btnGuardarNUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,8 +248,9 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         });
         pnlPerfiles.add(btnHistorialUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 395, 100, -1));
 
-        rbtnAdmin.setBackground(new java.awt.Color(153, 204, 0));
+        rbtnAdmin.setBackground(new java.awt.Color(0, 0, 51));
         rbtnAdmin.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        rbtnAdmin.setForeground(new java.awt.Color(255, 255, 255));
         rbtnAdmin.setText("Administrador");
         rbtnAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -244,8 +259,9 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         });
         pnlPerfiles.add(rbtnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 205, -1, -1));
 
-        rbtnUser.setBackground(new java.awt.Color(153, 204, 0));
+        rbtnUser.setBackground(new java.awt.Color(0, 0, 51));
         rbtnUser.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        rbtnUser.setForeground(new java.awt.Color(255, 255, 255));
         rbtnUser.setText("Usuario");
         rbtnUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -257,6 +273,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         btnActualizarInfUser.setBackground(new java.awt.Color(0, 0, 153));
         btnActualizarInfUser.setToolTipText("Actualizar datos de perfil");
         btnActualizarInfUser.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnActualizarInfUser.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
         btnActualizarInfUser.setTypeBorder(RSMaterialComponent.RSButtonIconOne.TYPEBORDER.CIRCLE);
         btnActualizarInfUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

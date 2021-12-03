@@ -32,7 +32,7 @@ public class Panel_suministros {
     //CARGA DE REGISTROS A LA TABLA DEL PANEL SUMINISTROS
     //A REPORTE
     public void cargaSuministros(JTable tablaSuministros) {
-        String sentencia = "SELECT * FROM tbl_suministros order by fecha_entregaN desc";
+        String sentencia = "SELECT * FROM tbl_suministros order by nombre_insumoN asc";
 
         DefaultTableModel tablaSumi = new DefaultTableModel(datos, columnas1) {
             @Override

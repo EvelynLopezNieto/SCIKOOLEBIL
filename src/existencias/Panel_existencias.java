@@ -317,4 +317,17 @@ public class Panel_existencias {
             JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
     }
+    
+    public void actualizarExistenciaGeneral(String area, String iniArea, String idInsumo, Double existencia, Double stockMin, int IDunidad) {
+        try {
+            String sentencia = "UPDATE tbl_stock"+area+" SET existencia" + iniArea + "= "+existencia+","
+                   + "stock_minimo" + iniArea + "= "+stockMin+", ID_unidadM" + iniArea + "= "+IDunidad+" WHERE ID_insumo" + iniArea + "='"+idInsumo+"'";
+            Connection con = conexion.obConexion();
+            Statement actualizar = conexion.crearSentencia();
+            actualizar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al actualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+        }
+    }
 }

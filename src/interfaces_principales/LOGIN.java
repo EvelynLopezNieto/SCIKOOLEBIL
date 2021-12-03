@@ -63,6 +63,8 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel3.setText("¿Quién quiere ingresar?");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
 
+        piFotoUser.setImagen(new javax.swing.ImageIcon(getClass().getResource("/recursos_graficos/usuario-sin-foto.png"))); // NOI18N
+
         javax.swing.GroupLayout piFotoUserLayout = new javax.swing.GroupLayout(piFotoUser);
         piFotoUser.setLayout(piFotoUserLayout);
         piFotoUserLayout.setHorizontalGroup(
@@ -186,10 +188,11 @@ public class LOGIN extends javax.swing.JFrame {
 
         String sentencia = "select usuario,password from tbl_personal where nombre_personal = '" + nombre + "' ";
         String sentencia2 = "SELECT permiso_sis FROM tbl_personal WHERE nombre_personal = '" + nombre + "'";
+        String sentencia3 = "SELECT ID_personal FROM tbl_personal WHERE nombre_personal = '" + nombre + "'";
         try {
             Connection con = conexion.obConexion();
-            Statement consulta = conexion.crearSentencia();
-            ResultSet re = consulta.executeQuery(sentencia);
+            Statement consultaD = conexion.crearSentencia();
+            ResultSet re = consultaD.executeQuery(sentencia);
             ResultSetMetaData rM = (ResultSetMetaData) re.getMetaData();
             int cantColumnas = rM.getColumnCount();
             Object[] datosUser = new Object[cantColumnas];
@@ -205,9 +208,17 @@ public class LOGIN extends javax.swing.JFrame {
             while (rs.next()) {
                 privilegio = rs.getString("permiso_sis");
             }
+            
+            Statement consultaID = conexion.crearSentencia();
+            ResultSet res = consultaID.executeQuery(sentencia3);
+            int IDperson = 0;
+            while (res.next()) {
+                IDperson = res.getInt("ID_personal");
+            }
 
             if (usuario.equals(datosUser[0]) && contraseña.equals(datosUser[1])) {
                 if (privilegio.equals("Administrador")) {
+                    consulta.regAccesoSistemaYes(IDperson);
                     conexion.cerrarConexion();
                     Panel_principal menuP = new Panel_principal();
                     this.dispose();
@@ -215,13 +226,14 @@ public class LOGIN extends javax.swing.JFrame {
                     menuP.setTitle("Principal - SCIKo'olebil ------> En sesión: " + nombre);
                 }
                 if (privilegio.equals("Usuario")) {
+                    consulta.regAccesoSistemaYes(IDperson);
                     conexion.cerrarConexion();
                     Panel_principal menuP = new Panel_principal();
                     this.dispose();
                     menuP.setVisible(true);
                     menuP.setTitle("Principal - SCIKo'olebil ------> En sesión: " + nombre);
                     menuP.mbmiAdminUser.setEnabled(false);
-                    menuP.mbmiQR.setEnabled(false);
+                    menuP.mbmiEnvioRequi.setEnabled(false);
                     menuP.btnSuministros.setVisible(false);
                     menuP.btnExistencias.setVisible(false);
                     menuP.btnInsumos.setVisible(false);
@@ -230,6 +242,8 @@ public class LOGIN extends javax.swing.JFrame {
                 }
 
             } else {
+                consulta.regAccesoSistemaNo(IDperson);
+                conexion.cerrarConexion();
                 JOptionPane.showMessageDialog(this, "¡¡ACCESO DENEGADO PARA " + nombre + "!!"
                        + "\nUsuario o contraseña incorrectos", "Acceso denegado", JOptionPane.PLAIN_MESSAGE, denegado);
             }

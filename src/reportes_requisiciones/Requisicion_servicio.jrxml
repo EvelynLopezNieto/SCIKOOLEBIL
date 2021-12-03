@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Requisicion_servicio" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92c81069-336c-4b48-99ec-cacb817e2dcc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechaSolicitud" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT tbl_requisiciones_servicio.ID_insumoRS,tbl_insumo.nombre_insumo,tbl_requisiciones_servicio.cant_solicitadaRS,
+tbl_unidadm.abrev_unidadM,tbl_personal.nombre_personal,tbl_requisiciones_servicio.fecha_solicitudRS
+FROM tbl_requisiciones_servicio,tbl_insumo,tbl_unidadm,tbl_personal
+WHERE tbl_requisiciones_servicio.fecha_solicitudRS=$P{fechaSolicitud} AND tbl_insumo.ID_insumo=tbl_requisiciones_servicio.ID_insumoRS
+AND tbl_unidadm.ID_unidadM=tbl_requisiciones_servicio.ID_unidadMRS AND tbl_personal.ID_personal=tbl_requisiciones_servicio.ID_personalRS;]]>
+	</queryString>
+	<field name="ID_insumoRS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cant_solicitadaRS" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="abrev_unidadM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_personal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_solicitudRS" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="15" width="70" height="70" uuid="3483ee93-7506-478e-af4b-f448f904f90f"/>
+				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="b1048944-b96a-4674-bbcf-ab2c0f1a04cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Ko'olebil]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="436" y="15" width="136" height="20" uuid="5181c501-564e-4489-9427-0e6607d87080"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="118" y="53" width="335" height="20" uuid="df70b9a8-95ec-4186-8691-461c076fc6ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD DE REQUISICIÓN DE SERVICIO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-18" y="0" width="609" height="5" backcolor="#99CC00" uuid="d4f7713b-8ca3-48fe-ae5b-be4644199851"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="57" splitType="Stretch">
+			<textField>
+				<reportElement x="121" y="0" width="130" height="20" uuid="79a8f453-72b8-4fd2-a7da-8d402cae2d2b"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaSolicitud}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="121" height="20" uuid="583d6c14-471f-45df-8d37-d5a09f92d791"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de solicitud:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="121" y="20" width="130" height="20" uuid="52dd41ab-43e3-4c39-a76a-72b785083cff"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_personal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="53685923-8f69-4218-81fc-964036d4e568"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicita:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="31" backcolor="#99CC00" uuid="f2d34d38-b525-4960-9b1c-67ba6cdb8a58"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="135" y="0" width="137" height="20" uuid="8e7240b7-5b3a-41e8-8cfa-5e9bd9bbea36"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de insumo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="0" width="100" height="20" uuid="4498dbae-6c22-4e66-aa86-09edf18a2b59"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad solicitada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="0" width="100" height="20" uuid="73040d40-548a-47f5-b3ea-77e9851f7849"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad de medida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="100" height="20" uuid="440fec56-c163-490d-8715-e4c93dae9b0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad a entregar]]></text>
+			</staticText>
+			<line>
+				<reportElement x="134" y="0" width="1" height="31" uuid="6a154497-7335-4bcd-bc3e-1285b9e87a50"/>
+			</line>
+			<line>
+				<reportElement x="271" y="0" width="1" height="31" uuid="3a619ebd-1698-4038-ad83-f3ec4ca73405"/>
+			</line>
+			<line>
+				<reportElement x="371" y="0" width="1" height="31" uuid="287f23f4-0d17-4318-a89d-c42eee0524af"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="135" height="20" uuid="4c32e172-c819-4221-ab81-29adbb360c04"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID insumo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="472" y="0" width="1" height="31" uuid="50da22c5-db0e-4f70-83d3-b67a09c8bf09"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="21" uuid="5c5e5479-2177-4759-bd1c-e6ff96a4fc7c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="135" y="0" width="137" height="20" uuid="14ab223b-19e1-4742-81b6-8a261bee25bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="0" width="100" height="20" uuid="01d0d6c6-4ad7-474c-b57f-1c36e9df5e6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cant_solicitadaRS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="100" height="20" uuid="774181be-eb39-4092-a5d0-06dcb8ccf9a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{abrev_unidadM}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="371" y="1" width="101" height="20" backcolor="#CCCCFF" uuid="1f0c8583-3ed2-421e-875e-0f4f0d50718a"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="134" y="0" width="1" height="21" uuid="81d27ea8-6976-496e-a692-76878b637819"/>
+			</line>
+			<line>
+				<reportElement x="271" y="0" width="1" height="21" uuid="1b37ba87-d853-4856-88d4-d5bd92df0995"/>
+			</line>
+			<line>
+				<reportElement x="371" y="0" width="1" height="21" uuid="4d145fdf-e50d-43ef-8dd3-98c6cbb236e4"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="135" height="20" uuid="d87ab65c-ace9-42f3-b63e-fd7085d1a8b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_insumoRS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="472" y="0" width="1" height="21" uuid="4f7cebf1-c7ff-4005-908e-d5dc93cdef0a"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="222" y="34" width="80" height="20" uuid="6c75ce05-0d9b-48c8-acd6-5ebeab42dfb8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="302" y="34" width="40" height="20" uuid="3608c1b0-9074-4a4e-be1a-41247d655b84"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-18" y="49" width="609" height="5" backcolor="#99CC00" uuid="f19f8130-3da2-4521-86b7-bfc15e082934"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

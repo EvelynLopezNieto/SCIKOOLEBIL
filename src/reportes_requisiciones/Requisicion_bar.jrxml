@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Requisicion_bar" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bb8ae6b4-0d7a-4e80-aca4-c9548c9154e5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechaSolicitud" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT tbl_requisiciones_bar.ID_insumoRB,tbl_insumo.nombre_insumo,tbl_requisiciones_bar.cant_solicitadaRB,
+tbl_unidadm.abrev_unidadM,tbl_personal.nombre_personal,tbl_requisiciones_bar.fecha_solicitudRB
+FROM tbl_requisiciones_bar,tbl_insumo,tbl_unidadm,tbl_personal
+WHERE tbl_requisiciones_bar.fecha_solicitudRB=$P{fechaSolicitud} AND tbl_insumo.ID_insumo=tbl_requisiciones_bar.ID_insumoRB
+AND tbl_unidadm.ID_unidadM=tbl_requisiciones_bar.ID_unidadMRB AND tbl_personal.ID_personal=tbl_requisiciones_bar.ID_personalRB;]]>
+	</queryString>
+	<field name="ID_insumoRB" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_insumo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cant_solicitadaRB" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="abrev_unidadM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_personal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_solicitudRB" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="122" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="15" width="70" height="70" uuid="cd28e435-c989-45d8-8111-3016c9f4cf0d"/>
+				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="814c3139-2ee9-494d-b13c-475a6d76ad49"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Ko'olebil]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="435" y="15" width="137" height="20" uuid="32efec33-494a-4e4a-b6cc-0bff00d800e8"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="138" y="45" width="290" height="20" uuid="ae6dc5b2-9187-4afa-ba39-c0cdb264bbd6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLICITUD DE REQUISICIÓN DEL BAR]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-19" y="0" width="609" height="5" backcolor="#99CC00" uuid="931f0edf-b500-4ef0-a68f-0ea6b9593619"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="116" y="0" width="133" height="20" uuid="8d1e0162-5bc8-44c4-9453-71afbf2319ea"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaSolicitud}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="116" height="20" uuid="7ca8633f-f3b8-4915-932d-4ea2b59f2221"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de solicitud:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="116" height="20" uuid="332e436e-66f5-40b5-a1a0-a9513d1c6f5c"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicita:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="116" y="20" width="133" height="20" uuid="ee4ec725-8d82-4e79-b1db-66b13b3a9d7d"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_personal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="30" backcolor="#99CC00" uuid="d3be43b0-39ef-4469-bfe7-16e9c3807382"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="144" y="0" width="125" height="20" uuid="575c46fb-1563-441e-b576-4859cbb341a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de insumo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="0" width="100" height="20" uuid="bbf91530-32f5-4ea9-b463-eea4d0ca90c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad solicitada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="0" width="100" height="20" uuid="5a7be7a1-4576-4233-88a5-34c68837950f"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad de medida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="100" height="20" uuid="f8b6c3e6-8b35-46b9-a861-eb0793024b75"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad a entregar]]></text>
+			</staticText>
+			<line>
+				<reportElement x="269" y="0" width="1" height="30" uuid="588f948c-8559-45a1-88ff-278c0417227b"/>
+			</line>
+			<line>
+				<reportElement x="370" y="0" width="1" height="30" uuid="b92f881d-5953-4251-902b-80ea2ca3c8f7"/>
+			</line>
+			<line>
+				<reportElement x="471" y="0" width="1" height="30" uuid="a0a19a78-9cb8-4389-816a-648163de2047"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="144" height="20" uuid="b0a4a749-537e-4523-933a-fe0a2c105ab7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID insumo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="144" y="0" width="1" height="30" uuid="75f9d4c6-8bcb-40b5-ae03-106925485ff1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="21" uuid="60f4a995-5d0a-4088-af89-cbeecc403570"/>
+			</rectangle>
+			<textField>
+				<reportElement x="144" y="0" width="125" height="20" uuid="621a2368-36b8-4c14-82d4-d70a5ae110ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_insumo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="0" width="100" height="20" uuid="821d5897-c3c0-484f-a164-174aec778710"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cant_solicitadaRB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="100" height="20" uuid="8d1dd699-ca62-4a4e-acd9-fdc0f43aad23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{abrev_unidadM}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="371" y="1" width="100" height="20" backcolor="#CCCCFF" uuid="c3aad970-2489-4eda-a198-a37aae4f45bf"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="269" y="0" width="1" height="21" uuid="63bf6685-5190-47e2-a69b-200e2cf990e9"/>
+			</line>
+			<line>
+				<reportElement x="471" y="0" width="1" height="21" uuid="4e5f26d7-f330-471b-a6d0-5cb61d27eb90"/>
+			</line>
+			<line>
+				<reportElement x="370" y="0" width="1" height="21" uuid="028f3bfd-b197-4927-9966-f0f2cb2a021c"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="144" height="20" uuid="0298f6d7-dc1f-49c7-8ec9-d644a3eb233a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID_insumoRB}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="144" y="1" width="1" height="20" uuid="60abe667-3d60-4e50-bd04-60859758eae6"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="223" y="14" width="80" height="20" uuid="1ac29d5f-23f4-4bfd-91c5-dd28339bd9a0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="303" y="14" width="40" height="20" uuid="4fc2eb20-ff9d-4d12-bd53-f3a4b2bd5f91"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-19" y="49" width="609" height="5" backcolor="#99CC00" uuid="94aea122-80ad-428d-b19e-59ff6571521c"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>

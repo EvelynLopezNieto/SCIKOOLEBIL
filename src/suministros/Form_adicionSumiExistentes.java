@@ -29,6 +29,8 @@ import otras_operaciones.ConexionBD;
  *
  * @author Evelyn López Nieto
  */
+
+//CLASE DESCARTADA
 public class Form_adicionSumiExistentes {
     ConexionBD conexion = new ConexionBD();
     Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));

@@ -1,15 +1,35 @@
+/*
+ * Copyright (C) 2021 Evelyn López Nieto
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package interfaces_principales;
 
-import QR_envioRequi.Envio_requisicion;
-import QR_envioRequi.GeneradorQR;
+import requisiciones.Envio_requisicion;
 import Usuarios_sistema.Administracion_usuarios;
+import Usuarios_sistema.Operaciones_usuarios;
 import com.mysql.jdbc.ResultSetMetaData;
 import existencias.Panel_existencias;
+import insumos.Edicion_insumos;
+import insumos.Panel_insumos;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +39,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -40,11 +61,13 @@ public class Panel_principal extends javax.swing.JFrame {
 
     ConexionBD conexion = new ConexionBD();
 
+    Panel_insumos insumo = new Panel_insumos();
     Panel_suministros sumi = new Panel_suministros();
     Panel_perecederos pere = new Panel_perecederos();
     Panel_salidas salidas = new Panel_salidas();
     Panel_existencias existencia = new Panel_existencias();
     Panel_requisiciones requi = new Panel_requisiciones();
+    Operaciones_usuarios usuarios = new Operaciones_usuarios();
 
     Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
     Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
@@ -71,10 +94,16 @@ public class Panel_principal extends javax.swing.JFrame {
         mipmPrepararRequi = new javax.swing.JMenuItem();
         mipmEditarRequi = new javax.swing.JMenuItem();
         mipmEliminarRequi = new javax.swing.JMenuItem();
+        pmTbl_insumo = new javax.swing.JPopupMenu();
+        mipmEditarInsumo = new javax.swing.JMenuItem();
+        mipmEliminar_insumo = new javax.swing.JMenuItem();
+        pmTbl_existencias = new javax.swing.JPopupMenu();
+        mipmActualizarExistencia = new javax.swing.JMenuItem();
         rSPanelsSlider1 = new rojerusan.RSPanelsSlider();
         pnlWelcome = new javax.swing.JPanel();
         rSPanelImage1 = new rojerusan.RSPanelImage();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         pnlSuministros = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_sumi = new javax.swing.JTable();
@@ -128,7 +157,20 @@ public class Panel_principal extends javax.swing.JFrame {
         cbAreaRequi = new RSMaterialComponent.RSComboBox();
         btnMostrarInsu_requi = new rojeru_san.rsbutton.RSButtonForma();
         jLabel6 = new javax.swing.JLabel();
+        rSTextFieldOne1 = new RSMaterialComponent.RSTextFieldOne();
+        rSButtonIconOne1 = new RSMaterialComponent.RSButtonIconOne();
+        jLabel14 = new javax.swing.JLabel();
         pnlInsumos = new javax.swing.JPanel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        tbl_insumo = new javax.swing.JTable();
+        btnGenerarReporteInsumo = new RSMaterialComponent.RSButtonFormaIcon();
+        txtNombreInsumo = new RSMaterialComponent.RSTextFieldOne();
+        btnBuscarIDinsumo = new RSMaterialComponent.RSButtonIconOne();
+        jLabel1 = new javax.swing.JLabel();
+        cbAreaInsumo = new RSMaterialComponent.RSComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        lblCantRegistrosInsumos = new javax.swing.JLabel();
+        btnUpdateMasivaInsumo = new RSMaterialComponent.RSButtonFormaIcon();
         pnlExistencias = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblExistencias = new javax.swing.JTable();
@@ -136,10 +178,21 @@ public class Panel_principal extends javax.swing.JFrame {
         cbAreaExistencias = new RSMaterialComponent.RSComboBox();
         txtSearchIDinsuExist = new RSMaterialComponent.RSTextFieldOne();
         cbBuscarStock = new RSMaterialComponent.RSComboBox();
-        btnBuscarInsuExistencias = new RSMaterialComponent.RSButtonIconOne();
         jScrollPane7 = new javax.swing.JScrollPane();
         tblInfoInsumoExistencia = new javax.swing.JTable();
         btnGenerarRepExist = new RSMaterialComponent.RSButtonFormaIcon();
+        jLabel16 = new javax.swing.JLabel();
+        pnlUpdateExistencia = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txtExistencia = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        txtStockMin = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        txtUnidadM = new javax.swing.JTextField();
+        btnUpdateExistencia = new RSMaterialComponent.RSButtonIconOne();
+        btnCerrarUpdateExistencia = new RSMaterialComponent.RSButtonIconOne();
         pnlSalidas = new javax.swing.JPanel();
         cbAreaSalidas = new RSMaterialComponent.RSComboBox();
         txtCodigoSalidas = new RSMaterialComponent.RSTextFieldOne();
@@ -153,7 +206,6 @@ public class Panel_principal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         btnDevolver = new rojeru_san.rsbutton.RSButtonForma();
-        btnEscanerCodigo = new RSMaterialComponent.RSButtonIconOne();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblNuevaExist = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -171,7 +223,7 @@ public class Panel_principal extends javax.swing.JFrame {
         mbmiSalir = new javax.swing.JMenuItem();
         mbMainHerramientas = new javax.swing.JMenu();
         mbmiAdminUser = new javax.swing.JMenuItem();
-        mbmiQR = new javax.swing.JMenuItem();
+        mbmiEnvioRequi = new javax.swing.JMenuItem();
 
         mipmPrepararRequi.setText("Preparar envío");
         mipmPrepararRequi.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +244,30 @@ public class Panel_principal extends javax.swing.JFrame {
         mipmEliminarRequi.setText("Eliminar");
         pmTbl_requi.add(mipmEliminarRequi);
 
+        mipmEditarInsumo.setText("Editar");
+        mipmEditarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mipmEditarInsumoActionPerformed(evt);
+            }
+        });
+        pmTbl_insumo.add(mipmEditarInsumo);
+
+        mipmEliminar_insumo.setText("Eliminar");
+        mipmEliminar_insumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mipmEliminar_insumoActionPerformed(evt);
+            }
+        });
+        pmTbl_insumo.add(mipmEliminar_insumo);
+
+        mipmActualizarExistencia.setText("Actualizar");
+        mipmActualizarExistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mipmActualizarExistenciaActionPerformed(evt);
+            }
+        });
+        pmTbl_existencias.add(mipmActualizarExistencia);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - SCIKo'olebil");
         setResizable(false);
@@ -204,13 +280,19 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlWelcome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/recursos_graficos/rediseno_logoKoolebil.png"))); // NOI18N
-        pnlWelcome.add(rSPanelImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 100, 350, 350));
+        pnlWelcome.add(rSPanelImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 350, 350));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("¡BIENVENIDO!");
-        pnlWelcome.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 520, -1, -1));
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Sistema de control de inventarios");
+        pnlWelcome.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 48)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Hotel Ko'olebil");
+        pnlWelcome.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 540, 350, -1));
 
         rSPanelsSlider1.add(pnlWelcome, "card2");
 
@@ -460,6 +542,11 @@ public class Panel_principal extends javax.swing.JFrame {
             }
         ));
         tbl_requisiciones.setComponentPopupMenu(pmTbl_requi);
+        tbl_requisiciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_requisicionesMouseClicked(evt);
+            }
+        });
         jScrollPane8.setViewportView(tbl_requisiciones);
 
         pnlRequisiciones.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 730, 400));
@@ -549,6 +636,11 @@ public class Panel_principal extends javax.swing.JFrame {
         btnGenerarDocu_requi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnGenerarDocu_requi.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
         btnGenerarDocu_requi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
+        btnGenerarDocu_requi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarDocu_requiActionPerformed(evt);
+            }
+        });
         pnlFormEditRequi.add(btnGenerarDocu_requi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 190, -1));
 
         btnSolicitarRequi_requi.setBackground(new java.awt.Color(0, 51, 204));
@@ -599,7 +691,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 cbAreaRequiActionPerformed(evt);
             }
         });
-        pnlRequisiciones.add(cbAreaRequi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+        pnlRequisiciones.add(cbAreaRequi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 45, -1, -1));
 
         btnMostrarInsu_requi.setBackground(new java.awt.Color(0, 51, 204));
         btnMostrarInsu_requi.setText("Insumos a requisición");
@@ -618,11 +710,115 @@ public class Panel_principal extends javax.swing.JFrame {
         jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         pnlRequisiciones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 10, 180, 130));
 
+        rSTextFieldOne1.setForeground(new java.awt.Color(0, 0, 0));
+        rSTextFieldOne1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        rSTextFieldOne1.setPlaceholder("Ingrese fecha (yyyy-MM-dd)");
+        pnlRequisiciones.add(rSTextFieldOne1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+
+        rSButtonIconOne1.setBackground(new java.awt.Color(0, 51, 204));
+        rSButtonIconOne1.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        rSButtonIconOne1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        pnlRequisiciones.add(rSButtonIconOne1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Solicitud de requisiciones");
+        pnlRequisiciones.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 2, -1, -1));
+
         rSPanelsSlider1.add(pnlRequisiciones, "card6");
 
         pnlInsumos.setBackground(new java.awt.Color(0, 0, 51));
         pnlInsumos.setName("pnlInsumos"); // NOI18N
         pnlInsumos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbl_insumo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Tipo", "Descripción", "$ unitario", "$ total", "Comentarios", "Fecha entrega", "Fecha caducidad"
+            }
+        ));
+        tbl_insumo.setComponentPopupMenu(pmTbl_insumo);
+        jScrollPane10.setViewportView(tbl_insumo);
+
+        pnlInsumos.add(jScrollPane10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 1070, -1));
+
+        btnGenerarReporteInsumo.setBackground(new java.awt.Color(0, 51, 204));
+        btnGenerarReporteInsumo.setText("Generar reporte");
+        btnGenerarReporteInsumo.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnGenerarReporteInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        btnGenerarReporteInsumo.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
+        btnGenerarReporteInsumo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
+        btnGenerarReporteInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteInsumoActionPerformed(evt);
+            }
+        });
+        pnlInsumos.add(btnGenerarReporteInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, -1, -1));
+
+        txtNombreInsumo.setBorderColor(new java.awt.Color(0, 51, 204));
+        txtNombreInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        txtNombreInsumo.setPlaceholder("");
+        txtNombreInsumo.setThemeTooltip(necesario.Global.THEMETOOLTIP.LIGHT);
+        txtNombreInsumo.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtNombreInsumoCaretUpdate(evt);
+            }
+        });
+        pnlInsumos.add(txtNombreInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        btnBuscarIDinsumo.setBackground(new java.awt.Color(0, 51, 204));
+        btnBuscarIDinsumo.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnBuscarIDinsumo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscarIDinsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarIDinsumoActionPerformed(evt);
+            }
+        });
+        pnlInsumos.add(btnBuscarIDinsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Inventario general de insumos");
+        pnlInsumos.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 5, -1, -1));
+
+        cbAreaInsumo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitaciones", "Mantenimiento", "Recepción", "Otros" }));
+        cbAreaInsumo.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbAreaInsumo.setColorBorde(new java.awt.Color(0, 51, 204));
+        cbAreaInsumo.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbAreaInsumo.setColorSeleccion(new java.awt.Color(0, 51, 204));
+        cbAreaInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        cbAreaInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAreaInsumoActionPerformed(evt);
+            }
+        });
+        pnlInsumos.add(cbAreaInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Filtrar por área:");
+        pnlInsumos.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 165, -1, -1));
+
+        lblCantRegistrosInsumos.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        lblCantRegistrosInsumos.setForeground(new java.awt.Color(255, 255, 255));
+        lblCantRegistrosInsumos.setText("Registros:");
+        pnlInsumos.add(lblCantRegistrosInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 280, -1));
+
+        btnUpdateMasivaInsumo.setBackground(new java.awt.Color(0, 51, 204));
+        btnUpdateMasivaInsumo.setText("Actualización masiva");
+        btnUpdateMasivaInsumo.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnUpdateMasivaInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        btnUpdateMasivaInsumo.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
+        btnUpdateMasivaInsumo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnUpdateMasivaInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateMasivaInsumoActionPerformed(evt);
+            }
+        });
+        pnlInsumos.add(btnUpdateMasivaInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 130, -1, -1));
+
         rSPanelsSlider1.add(pnlInsumos, "card3");
 
         pnlExistencias.setBackground(new java.awt.Color(0, 0, 51));
@@ -637,6 +833,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 "ID stock", "ID insumo", "Existencia", "Stock mínimo", "ID unidad medida"
             }
         ));
+        tblExistencias.setComponentPopupMenu(pmTbl_existencias);
         tblExistencias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblExistenciasMouseClicked(evt);
@@ -644,7 +841,7 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(tblExistencias);
 
-        pnlExistencias.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 230, 1070, 370));
+        pnlExistencias.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 810, 370));
 
         jLabel11.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -687,11 +884,6 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlExistencias.add(cbBuscarStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
-        btnBuscarInsuExistencias.setBackground(new java.awt.Color(255, 51, 0));
-        btnBuscarInsuExistencias.setBackgroundHover(new java.awt.Color(255, 153, 0));
-        btnBuscarInsuExistencias.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CAMERA_ALT);
-        pnlExistencias.add(btnBuscarInsuExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 42, 42));
-
         tblInfoInsumoExistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -702,7 +894,7 @@ public class Panel_principal extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(tblInfoInsumoExistencia);
 
-        pnlExistencias.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 610, 810, 50));
+        pnlExistencias.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 810, 50));
 
         btnGenerarRepExist.setBackground(new java.awt.Color(153, 204, 0));
         btnGenerarRepExist.setText("Generar reporte");
@@ -715,6 +907,69 @@ public class Panel_principal extends javax.swing.JFrame {
             }
         });
         pnlExistencias.add(btnGenerarRepExist, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 185, -1, 35));
+
+        jLabel16.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("<html>Unidades de medida: <p>ID\t Nombre <p>1\t kilogramo</p> <p>2\t gramo</p> <p>3\t litro</p> <p>4\t mililitro</p> <p>5\t pieza</p></html>");
+        pnlExistencias.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 170, 150));
+
+        pnlUpdateExistencia.setBackground(new java.awt.Color(0, 0, 51));
+        pnlUpdateExistencia.setForeground(new java.awt.Color(102, 102, 102));
+        pnlUpdateExistencia.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel17.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("ID insumo:");
+        pnlUpdateExistencia.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        lblID.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        lblID.setForeground(new java.awt.Color(255, 255, 255));
+        lblID.setText("id");
+        pnlUpdateExistencia.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 150, -1));
+
+        jLabel19.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Existencia:");
+        pnlUpdateExistencia.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, -1, -1));
+
+        txtExistencia.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        pnlUpdateExistencia.add(txtExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 120, 30));
+
+        jLabel20.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Stock mínimo:");
+        pnlUpdateExistencia.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, -1, -1));
+
+        txtStockMin.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pnlUpdateExistencia.add(txtStockMin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 120, 30));
+
+        jLabel21.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("ID unidad medida:");
+        pnlUpdateExistencia.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
+
+        txtUnidadM.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        pnlUpdateExistencia.add(txtUnidadM, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 120, 30));
+
+        btnUpdateExistencia.setBackground(new java.awt.Color(153, 204, 0));
+        btnUpdateExistencia.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnUpdateExistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateExistenciaActionPerformed(evt);
+            }
+        });
+        pnlUpdateExistencia.add(btnUpdateExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 215, -1, -1));
+
+        btnCerrarUpdateExistencia.setBackground(new java.awt.Color(153, 204, 0));
+        btnCerrarUpdateExistencia.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnCerrarUpdateExistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarUpdateExistenciaActionPerformed(evt);
+            }
+        });
+        pnlUpdateExistencia.add(btnCerrarUpdateExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 215, -1, -1));
+
+        pnlExistencias.add(pnlUpdateExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 230, 250, 260));
 
         rSPanelsSlider1.add(pnlExistencias, "card4");
 
@@ -739,7 +994,7 @@ public class Panel_principal extends javax.swing.JFrame {
         txtCodigoSalidas.setBorderColor(new java.awt.Color(153, 204, 0));
         txtCodigoSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtCodigoSalidas.setPhColor(new java.awt.Color(0, 0, 0));
-        txtCodigoSalidas.setPlaceholder("Ingresar código");
+        txtCodigoSalidas.setPlaceholder("");
         txtCodigoSalidas.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtCodigoSalidasCaretUpdate(evt);
@@ -792,7 +1047,7 @@ public class Panel_principal extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Código del insumo:");
+        jLabel8.setText("ID insumo:");
         pnlSalidas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 55, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -816,12 +1071,6 @@ public class Panel_principal extends javax.swing.JFrame {
             }
         });
         pnlSalidas.add(btnDevolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 130, -1));
-
-        btnEscanerCodigo.setBackground(new java.awt.Color(255, 51, 0));
-        btnEscanerCodigo.setToolTipText("");
-        btnEscanerCodigo.setBackgroundHover(new java.awt.Color(255, 153, 0));
-        btnEscanerCodigo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CAMERA_ALT);
-        pnlSalidas.add(btnEscanerCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
 
         tblNuevaExist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -977,13 +1226,13 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         mbMainHerramientas.add(mbmiAdminUser);
 
-        mbmiQR.setText("Generador QR");
-        mbmiQR.addActionListener(new java.awt.event.ActionListener() {
+        mbmiEnvioRequi.setText("Envío de requisiciones");
+        mbmiEnvioRequi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mbmiQRActionPerformed(evt);
+                mbmiEnvioRequiActionPerformed(evt);
             }
         });
-        mbMainHerramientas.add(mbmiQR);
+        mbMainHerramientas.add(mbmiEnvioRequi);
 
         jMenuBar1.add(mbMainHerramientas);
 
@@ -1013,7 +1262,31 @@ public class Panel_principal extends javax.swing.JFrame {
     public void confirmSalida() {
         int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de cerrar el programa?", "Advertencia", JOptionPane.YES_NO_OPTION);
         if (valor == JOptionPane.YES_OPTION) {
+            regSalidaUser();
             System.exit(0);
+        }
+    }
+
+    public void regSalidaUser() {
+        try {
+            String tituloFrame = this.getTitle();
+            if (tituloFrame.length() > 24) {
+                String nombreUser = tituloFrame.substring(44);
+                String sentencia = "SELECT ID_personal FROM tbl_personal WHERE nombre_personal = '" + nombreUser + "'";
+
+                Connection con = conexion.obConexion();
+                Statement consultaID = conexion.crearSentencia();
+                ResultSet res = consultaID.executeQuery(sentencia);
+                int IDperson = 0;
+                while (res.next()) {
+                    IDperson = res.getInt("ID_personal");
+                }
+                usuarios.regSalidaSistema(IDperson);
+                conexion.cerrarConexion();
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Registro de salida fallido..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1037,6 +1310,11 @@ public class Panel_principal extends javax.swing.JFrame {
         this.btnRequisiciones.setEnabled(true);
         this.btnSuministros.setEnabled(true);
         this.btnSalidas.setEnabled(true);
+
+        if (this.cbAreaInsumo.getSelectedIndex() == 0) {
+            insumo.cargarTodosInsumos(tbl_insumo, lblCantRegistrosInsumos);
+        }
+
     }//GEN-LAST:event_btnInsumosActionPerformed
 
     private void btnExistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExistenciasActionPerformed
@@ -1048,10 +1326,10 @@ public class Panel_principal extends javax.swing.JFrame {
         this.btnRequisiciones.setEnabled(true);
         this.btnSuministros.setEnabled(true);
         this.btnSalidas.setEnabled(true);
+        this.pnlUpdateExistencia.setVisible(false);
 
         if (this.cbAreaExistencias.getSelectedIndex() == 0) {
             this.txtSearchIDinsuExist.setEnabled(false);
-            this.btnBuscarInsuExistencias.setEnabled(false);
             this.cbBuscarStock.setEnabled(false);
             this.tblExistencias.setEnabled(false);
         }
@@ -1349,7 +1627,6 @@ public class Panel_principal extends javax.swing.JFrame {
 
         if (this.cbAreaSalidas.getSelectedIndex() == 0) {
             this.txtCodigoSalidas.setEnabled(false);
-            this.btnEscanerCodigo.setEnabled(false);
             this.txtCantidadSalidas.setEnabled(false);
             this.btnDevolver.setEnabled(false);
             this.btnGuardarSalidas.setEnabled(false);
@@ -1363,13 +1640,11 @@ public class Panel_principal extends javax.swing.JFrame {
         try {
             if (!(area == 0)) {
                 this.txtCodigoSalidas.setEnabled(true);
-                this.btnEscanerCodigo.setEnabled(true);
                 this.txtCantidadSalidas.setEnabled(true);
                 this.btnDevolver.setEnabled(true);
                 this.btnGuardarSalidas.setEnabled(true);
             } else {
                 this.txtCodigoSalidas.setEnabled(false);
-                this.btnEscanerCodigo.setEnabled(false);
                 this.txtCantidadSalidas.setEnabled(false);
                 this.btnDevolver.setEnabled(false);
                 this.btnGuardarSalidas.setEnabled(false);
@@ -1424,16 +1699,39 @@ public class Panel_principal extends javax.swing.JFrame {
 
         if (!(area == 0)) {
             this.txtSearchIDinsuExist.setEnabled(true);
-            this.btnBuscarInsuExistencias.setEnabled(true);
             this.cbBuscarStock.setEnabled(true);
             this.tblExistencias.setEnabled(true);
 
             existencia.cargaRegExistencias(nomArea, tblExistencias, tblExistencias, cbAreaExistencias);
         } else {
             this.txtSearchIDinsuExist.setEnabled(false);
-            this.btnBuscarInsuExistencias.setEnabled(false);
             this.cbBuscarStock.setEnabled(false);
             this.tblExistencias.setEnabled(false);
+            String columnas[] = {"--", "--", "--", "--", "--"};
+            String columna[] = {"--", "--", "--", "--"};
+            String datos[][] = {};
+            DefaultTableModel tablaExis = new DefaultTableModel(datos, columnas) {
+                @Override
+                public boolean isCellEditable(int filas, int columnas) {
+                    if (columnas == 6) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+            this.tblExistencias.setModel(tablaExis);
+            DefaultTableModel tablaInfInsumo = new DefaultTableModel(datos, columna) {
+                @Override
+                public boolean isCellEditable(int filas, int columnas) {
+                    if (columnas == 4) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+            this.tblInfoInsumoExistencia.setModel(tablaInfInsumo);
         }
     }//GEN-LAST:event_cbAreaExistenciasActionPerformed
 
@@ -1472,18 +1770,15 @@ public class Panel_principal extends javax.swing.JFrame {
         switch (stock) {
             case 0:
                 this.txtSearchIDinsuExist.setEnabled(true);
-                this.btnBuscarInsuExistencias.setEnabled(true);
                 break;
 
             case 1:
                 this.txtSearchIDinsuExist.setEnabled(false);
-                this.btnBuscarInsuExistencias.setEnabled(false);
                 existencia.busquedaStockMinExist(nomArea, iniArea, tblExistencias, tblExistencias, cbAreaExistencias);
                 break;
 
             case 2:
                 this.txtSearchIDinsuExist.setEnabled(false);
-                this.btnBuscarInsuExistencias.setEnabled(false);
                 existencia.busquedaExistActiva(nomArea, iniArea, tblExistencias, tblExistencias, cbAreaExistencias);
                 break;
         }
@@ -1823,6 +2118,9 @@ public class Panel_principal extends javax.swing.JFrame {
                     }
                     break;
             }
+            if (area == 0) {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado un área", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (JRException e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
         }
@@ -1918,15 +2216,11 @@ public class Panel_principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnReporteSumiActionPerformed
 
-    private void mbmiQRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiQRActionPerformed
-        GeneradorQR dialog = new GeneradorQR(new javax.swing.JFrame(), true);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_mbmiQRActionPerformed
-
     private void mbmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiSalirActionPerformed
 
         int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de cerrar el programa?", "Advertencia", JOptionPane.YES_NO_OPTION);
         if (valor == JOptionPane.YES_OPTION) {
+            regSalidaUser();
             System.exit(0);
         }
     }//GEN-LAST:event_mbmiSalirActionPerformed
@@ -2057,27 +2351,35 @@ public class Panel_principal extends javax.swing.JFrame {
                 switch (area) {
                     case "Servicio":
                         requi.registrarRequiServicio(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Restaurante":
                         requi.registrarRequiRestaurante(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Personal":
                         requi.registrarRequiPersonal(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Bar":
                         requi.registrarRequiBar(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Habitacion":
                         requi.registrarRequiHabitacion(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Mantenimiento":
                         requi.registrarRequiMantenimiento(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Recepcion":
                         requi.registrarRequiRecepcion(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                     case "Otros":
                         requi.registrarRequiOtros(idInsu, cantidad, idUnidad, idPerson, fechaSolicitud);
+                        vaciarCamposRequi();
                         break;
                 }
 
@@ -2086,6 +2388,13 @@ public class Panel_principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnValidar_requiActionPerformed
+
+    public void vaciarCamposRequi() {
+        this.txtIDinsumo_requi.setText("");
+        this.txtCantidad_requi.setText("");
+        this.txtIDunidadM_requi.setText("");
+        this.txtIDPersonal_requi.setText("");
+    }
 
     private void btnCancel_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel_requiActionPerformed
         this.txtIDinsumo_requi.setText("");
@@ -2097,40 +2406,74 @@ public class Panel_principal extends javax.swing.JFrame {
     private void cbAreaRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAreaRequiActionPerformed
         int area = this.cbAreaRequi.getSelectedIndex();
         String nombreArea = null;
+        String iniArea = null;
 
         if (area == 0) {
             this.pnlFormEditRequi.setVisible(false);
             this.mipmEditarRequi.setEnabled(false);
             this.mipmEliminarRequi.setEnabled(false);
             this.mipmPrepararRequi.setEnabled(false);
+            String columnas[] = {"--", "--", "--", "--", "--", "--"};
+            String columnas1[] = {"--", "--", "--", "--"};
+            String datos[][] = {};
+            DefaultTableModel tablaRequi = new DefaultTableModel(datos, columnas) {
+                @Override
+                public boolean isCellEditable(int filas, int columnas) {
+                    if (columnas == 6) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+            this.tbl_requisiciones.setModel(tablaRequi);
+            DefaultTableModel tablaInfInsumo = new DefaultTableModel(datos, columnas1) {
+                @Override
+                public boolean isCellEditable(int filas, int columnas) {
+                    if (columnas == 4) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            };
+            this.tbl_infInsuRequi.setModel(tablaInfInsumo);
         } else if (area == 1 || area == 2 || area == 3 || area == 4 || area == 5 || area == 6 || area == 7 || area == 8) {
             switch (area) {
                 case 1:
                     nombreArea = "servicio";
+                    iniArea = "S";
                     break;
                 case 2:
                     nombreArea = "restaurante";
+                    iniArea = "R";
                     break;
                 case 3:
                     nombreArea = "personal";
+                    iniArea = "P";
                     break;
                 case 4:
                     nombreArea = "bar";
+                    iniArea = "B";
                     break;
                 case 5:
                     nombreArea = "habitaciones";
+                    iniArea = "H";
                     break;
                 case 6:
                     nombreArea = "mantenimiento";
+                    iniArea = "M";
                     break;
                 case 7:
                     nombreArea = "recepcion";
+                    iniArea = "RE";
                     break;
                 case 8:
                     nombreArea = "otros";
+                    iniArea = "O";
                     break;
             }
-            requi.mostrarRequiTodos(nombreArea, tbl_requisiciones);
+            requi.mostrarRequiTodos(nombreArea, iniArea, tbl_requisiciones);
             this.pnlFormEditRequi.setVisible(false);
             this.mipmEditarRequi.setEnabled(true);
             this.mipmEliminarRequi.setEnabled(true);
@@ -2141,8 +2484,7 @@ public class Panel_principal extends javax.swing.JFrame {
     private void mipmEditarRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmEditarRequiActionPerformed
         this.pnlFormEditRequi.setVisible(true);
         this.btnValidar_requi.setVisible(false);
-        /**
-        this.btnUpdateRequi.setVisible(true);**/
+
         try {
             int filas = this.tbl_requisiciones.getSelectedRow();
             String idRequi = this.tbl_requisiciones.getValueAt(filas, 0).toString();
@@ -2159,7 +2501,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.txtIDunidadM_requi.setText(idUnidad);
                 this.txtIDPersonal_requi.setText(idPersonal);
                 //this.dateSolicitud_requi.setDate(fecha);
-                this.btnUpdateRequi.setVisible(false);
+                this.btnUpdateRequi.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "La fila no contiene datos", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -2173,11 +2515,11 @@ public class Panel_principal extends javax.swing.JFrame {
         String iniArea = null;
         int area = this.cbAreaRequi.getSelectedIndex();
 
-        if(this.txtIDinsumo_requi.getText().isEmpty() || this.txtCantidad_requi.getText().isEmpty() || this.txtIDunidadM_requi.getText().isEmpty()
+        if (this.txtIDinsumo_requi.getText().isEmpty() || this.txtCantidad_requi.getText().isEmpty() || this.txtIDunidadM_requi.getText().isEmpty()
                || this.txtIDPersonal_requi.getText().isEmpty() || this.dateSolicitud_requi.getDate().equals("")) {
             JOptionPane.showMessageDialog(this, "Existen campos vacíos. Los datos son obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
-            if(requi.validarNumerosRequi(txtIDunidadM_requi.getText()) && requi.validarNumerosRequi(txtIDPersonal_requi.getText())) {
+            if (requi.validarNumerosRequi(txtIDunidadM_requi.getText()) && requi.validarNumerosRequi(txtIDPersonal_requi.getText())) {
                 int idRequi = Integer.parseInt(this.lblIDrequi.getText());
                 String idInsu = this.txtIDinsumo_requi.getText();
                 Date fecha = this.dateSolicitud_requi.getDate();
@@ -2186,7 +2528,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 Double cantidad = Double.parseDouble(this.txtCantidad_requi.getText());
                 int idUnidad = Integer.parseInt(this.txtIDunidadM_requi.getText());
                 int idPerson = Integer.parseInt(this.txtIDPersonal_requi.getText());
-                
+
                 switch (area) {
                     case 1:
                         nombreArea = "servicio";
@@ -2231,8 +2573,307 @@ public class Panel_principal extends javax.swing.JFrame {
     private void btnSolicitarRequi_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarRequi_requiActionPerformed
         Envio_requisicion envioRequi = new Envio_requisicion(new javax.swing.JFrame(), true);
         envioRequi.setVisible(true);
-        
+
     }//GEN-LAST:event_btnSolicitarRequi_requiActionPerformed
+
+    private void btnGenerarDocu_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarDocu_requiActionPerformed
+        try {
+            Connection con;
+            JasperReport jr;
+            JasperPrint jp;
+            JasperViewer view;
+            int indexArea = this.cbAreaRequi.getSelectedIndex();
+            if (this.dateSolicitud_requi.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Para generar el documento de requisición,\n"
+                       + "necesita especificar la fecha en que registró\n"
+                       + "requisiciones nuevas.\n\n"
+                       + "Especifique la fecha en el campo 'Fecha de Solicitud',\n"
+                       + "después dé clic en Generar documento.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Date fecha1 = this.dateSolicitud_requi.getDate();
+                DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha = formato.format(fecha1);
+                Map parametros = new HashMap();
+                parametros.put("fechaSolicitud", fecha);
+                switch (indexArea) {
+                    case 1:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_servicio.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 2:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_restaurante.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 3:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_personal.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 4:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_bar.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 5:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_habitaciones.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 6:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_mantenimiento.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 7:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_recepcion.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                    case 8:
+                        con = conexion.obConexion2();
+                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_otros.jasper");
+                        jp = JasperFillManager.fillReport(jr, parametros, con);
+                        view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
+                        break;
+                }
+            }
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGenerarDocu_requiActionPerformed
+
+    private void tbl_requisicionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_requisicionesMouseClicked
+        int fila = this.tbl_requisiciones.getSelectedRow();
+        String IDinsumoCelda = null;
+
+        if (this.tbl_requisiciones.getColumnCount() == 6) {
+            IDinsumoCelda = this.tbl_requisiciones.getValueAt(fila, 1).toString();
+            if (IDinsumoCelda.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La celda que ha seleccionado está vacía.\n"
+                       + " No se mostrará información de ningún\n"
+                       + " registro en la tabla inferior.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                requi.mostrarInfInsumo(IDinsumoCelda, tbl_infInsuRequi);
+            }
+        } else if (this.tbl_requisiciones.getColumnCount() == 2) {
+            IDinsumoCelda = this.tbl_requisiciones.getValueAt(fila, 0).toString();
+            if (IDinsumoCelda.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La celda que ha seleccionado está vacía.\n"
+                       + " No se mostrará información de ningún\n"
+                       + " registro en la tabla inferior.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                requi.mostrarInfInsumo(IDinsumoCelda, tbl_infInsuRequi);
+            }
+        }
+    }//GEN-LAST:event_tbl_requisicionesMouseClicked
+
+    private void txtNombreInsumoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtNombreInsumoCaretUpdate
+
+        if (!this.txtNombreInsumo.getText().isEmpty()) {
+            String nInsumo = this.txtNombreInsumo.getText();
+            insumo.searchXnombre(nInsumo, tbl_insumo, lblCantRegistrosInsumos);
+        } else {
+            insumo.cargarTodosInsumos(tbl_insumo, lblCantRegistrosInsumos);
+        }
+    }//GEN-LAST:event_txtNombreInsumoCaretUpdate
+
+    private void btnBuscarIDinsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIDinsumoActionPerformed
+        if (!this.txtNombreInsumo.getText().isEmpty()) {
+            String idInsumo = this.txtNombreInsumo.getText();
+            insumo.searchXid(idInsumo, tbl_insumo, lblCantRegistrosInsumos);
+        } else {
+            insumo.cargarTodosInsumos(tbl_insumo, lblCantRegistrosInsumos);
+        }
+
+    }//GEN-LAST:event_btnBuscarIDinsumoActionPerformed
+
+    private void cbAreaInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAreaInsumoActionPerformed
+        String area = this.cbAreaInsumo.getSelectedItem().toString();
+        String iArea = null;
+
+        if (area.equals("Seleccione área")) {
+            insumo.cargarTodosInsumos(tbl_insumo, lblCantRegistrosInsumos);
+        } else {
+            switch (area) {
+                case "Servicio":
+                    iArea = "S";
+                    break;
+                case "Restaurante":
+                    iArea = "R";
+                    break;
+                case "Personal":
+                    iArea = "P";
+                    break;
+                case "Bar":
+                    iArea = "B";
+                    break;
+                case "Habitaciones":
+                    iArea = "H";
+                    break;
+                case "Mantenimiento":
+                    iArea = "M";
+                    break;
+                case "Recepción":
+                    iArea = "RE";
+                    break;
+                case "Otros":
+                    iArea = "O";
+                    break;
+            }
+            insumo.filtroArea(iArea, tbl_insumo, lblCantRegistrosInsumos);
+        }
+
+    }//GEN-LAST:event_cbAreaInsumoActionPerformed
+
+    private void mipmEliminar_insumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmEliminar_insumoActionPerformed
+        int fila = this.tbl_insumo.getSelectedRow();
+        String idInsumo = this.tbl_insumo.getValueAt(fila, 0).toString();
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de eliminar el insumo?\n\n"
+               + "Al eliminar el insumo del inventario general,\n"
+               + "también será eliminado de la tabla de existencias\n"
+               + "del área donde pertenece.", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            insumo.eliminarInsumo(idInsumo);
+            JOptionPane.showMessageDialog(this, "EL insumo se ha eliminado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE, valido);
+        }
+    }//GEN-LAST:event_mipmEliminar_insumoActionPerformed
+
+    private void mipmEditarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmEditarInsumoActionPerformed
+        Edicion_insumos edicion = new Edicion_insumos(new javax.swing.JFrame(), true);
+        insumo.cargarInsumoEdicionTabla(tbl_insumo, edicion.txtIDinsumoEdit, edicion.txtNombreInsuEdit, edicion.cbTipoInsuEdit,
+               edicion.txtaDescripInsuEdit, edicion.txtUnitInsuEdit, edicion.txtTotalInsuEdit, edicion.txtaComentInsuEdit);
+        edicion.txtIDinsumoEdit.setEnabled(false);
+        edicion.btnUpdateInsumoIzquierda.setVisible(false);
+        edicion.btnUpdateInsuEditDerecho.setVisible(true);
+        edicion.lblEncabezado.setText("Actualización de datos de insumo");
+        edicion.setTitle("Actualización de insumo");
+        edicion.setVisible(true);
+    }//GEN-LAST:event_mipmEditarInsumoActionPerformed
+
+    private void btnUpdateMasivaInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateMasivaInsumoActionPerformed
+        Edicion_insumos edicion = new Edicion_insumos(new javax.swing.JFrame(), true);
+        edicion.txtIDinsumoEdit.setEnabled(true);
+        edicion.btnUpdateInsuEditDerecho.setVisible(false);
+        edicion.btnUpdateInsumoIzquierda.setVisible(true);
+        edicion.lblEncabezado.setText("Actualización masiva de datos");
+        edicion.setTitle("Actualización masiva");
+        edicion.setVisible(true);
+    }//GEN-LAST:event_btnUpdateMasivaInsumoActionPerformed
+
+    private void mipmActualizarExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmActualizarExistenciaActionPerformed
+        this.pnlUpdateExistencia.setVisible(true);
+        int filas = this.tblExistencias.getSelectedRow();
+        String id = this.tblExistencias.getValueAt(filas, 1).toString();
+        String existencias = this.tblExistencias.getValueAt(filas, 2).toString();
+        String stock = this.tblExistencias.getValueAt(filas, 3).toString();
+        String idUnidad = this.tblExistencias.getValueAt(filas, 4).toString();
+
+        this.lblID.setText(id);
+        this.txtExistencia.setText(existencias);
+        this.txtStockMin.setText(stock);
+        this.txtUnidadM.setText(idUnidad);
+    }//GEN-LAST:event_mipmActualizarExistenciaActionPerformed
+
+    private void btnUpdateExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateExistenciaActionPerformed
+        if (this.txtExistencia.getText().isEmpty() || this.txtStockMin.getText().isEmpty() || this.txtUnidadM.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String idInsu = this.lblID.getText();
+            Double existenciaN = Double.parseDouble(this.txtExistencia.getText());
+            Double stockN = Double.parseDouble(this.txtStockMin.getText());
+            int idUnidad = Integer.parseInt(this.txtUnidadM.getText());
+
+            int area = this.cbAreaExistencias.getSelectedIndex();
+            String nomArea = this.cbAreaExistencias.getSelectedItem().toString();
+            String iniArea = null;
+
+            switch (area) {
+                case 1:
+                    iniArea = "S";
+                    break;
+                case 2:
+                    iniArea = "R";
+                    break;
+                case 3:
+                    iniArea = "P";
+                    break;
+                case 4:
+                    iniArea = "B";
+                    break;
+                case 5:
+                    iniArea = "H";
+                    break;
+                case 6:
+                    iniArea = "M";
+                    break;
+                case 7:
+                    iniArea = "Re";
+                    break;
+                case 8:
+                    iniArea = "O";
+                    break;
+            }
+            existencia.actualizarExistenciaGeneral(nomArea, iniArea, idInsu, existenciaN, stockN, idUnidad);
+            JOptionPane.showMessageDialog(this, "EL insumo se ha actualizado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE, valido);
+            this.pnlUpdateExistencia.setVisible(false);
+        }
+    }//GEN-LAST:event_btnUpdateExistenciaActionPerformed
+
+    private void btnCerrarUpdateExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarUpdateExistenciaActionPerformed
+        this.lblID.setText("");
+        this.txtExistencia.setText("");
+        this.txtStockMin.setText("");
+        this.txtUnidadM.setText("");
+        this.pnlUpdateExistencia.setVisible(false);
+    }//GEN-LAST:event_btnCerrarUpdateExistenciaActionPerformed
+
+    private void btnGenerarReporteInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteInsumoActionPerformed
+        try {
+            Connection con;
+            JasperReport jr;
+            JasperPrint jp;
+            JasperViewer view;
+
+            con = conexion.obConexion2();
+            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_insumos\\Inventario_general.jasper");
+            jp = JasperFillManager.fillReport(jr, null, con);
+            view = new JasperViewer(jp, false);
+            view.setVisible(true);
+            conexion.cerrarConexion2();
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGenerarReporteInsumoActionPerformed
+
+    private void mbmiEnvioRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbmiEnvioRequiActionPerformed
+        Envio_requisicion envio = new Envio_requisicion(new javax.swing.JFrame(), true);
+        envio.setVisible(true);
+    }//GEN-LAST:event_mbmiEnvioRequiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2271,15 +2912,16 @@ public class Panel_principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private RSMaterialComponent.RSButtonIconOne btnBuscarInsuExistencias;
+    private RSMaterialComponent.RSButtonIconOne btnBuscarIDinsumo;
     public RSMaterialComponent.RSButtonFormaIcon btnCaducidades;
     private RSMaterialComponent.RSButtonIconOne btnCancel_requi;
+    private RSMaterialComponent.RSButtonIconOne btnCerrarUpdateExistencia;
     private rojeru_san.rsbutton.RSButtonForma btnDevolver;
-    private RSMaterialComponent.RSButtonIconOne btnEscanerCodigo;
     public RSMaterialComponent.RSButtonFormaIcon btnExistencias;
     private RSMaterialComponent.RSButtonFormaIcon btnGenerarDocu_requi;
     private RSMaterialComponent.RSButtonFormaIcon btnGenerarRepCaducos;
     private RSMaterialComponent.RSButtonFormaIcon btnGenerarRepExist;
+    private RSMaterialComponent.RSButtonFormaIcon btnGenerarReporteInsumo;
     private rojeru_san.rsbutton.RSButtonForma btnGuardarSalidas;
     private RSMaterialComponent.RSButtonFormaIcon btnIngresarSumi;
     public RSMaterialComponent.RSButtonFormaIcon btnInsumos;
@@ -2292,9 +2934,12 @@ public class Panel_principal extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne btnSearchF2Sumi2;
     public RSMaterialComponent.RSButtonFormaIcon btnSolicitarRequi_requi;
     public RSMaterialComponent.RSButtonFormaIcon btnSuministros;
+    private RSMaterialComponent.RSButtonIconOne btnUpdateExistencia;
+    private RSMaterialComponent.RSButtonFormaIcon btnUpdateMasivaInsumo;
     private RSMaterialComponent.RSButtonIconOne btnUpdateRequi;
     private RSMaterialComponent.RSButtonIconOne btnValidar_requi;
     private RSMaterialComponent.RSComboBox cbAreaExistencias;
+    private RSMaterialComponent.RSComboBox cbAreaInsumo;
     private RSMaterialComponent.RSComboBox cbAreaRequi;
     private RSMaterialComponent.RSComboBox cbAreaSalidas;
     private RSMaterialComponent.RSComboBox cbBuscarStock;
@@ -2305,7 +2950,16 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -2317,6 +2971,7 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2325,8 +2980,10 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel lblCantRegistrosInsumos;
     private javax.swing.JLabel lblCantidad_requi;
     private javax.swing.JLabel lblFechaSolicitud_requi;
+    private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblIDinsu_requi;
     private javax.swing.JLabel lblIDpersonal_requi;
     private javax.swing.JLabel lblIDrequi;
@@ -2338,11 +2995,16 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JMenu mbMainHerramientas;
     public javax.swing.JMenuItem mbmiAdminUser;
     private javax.swing.JMenuItem mbmiCambiarUser;
-    public javax.swing.JMenuItem mbmiQR;
+    public javax.swing.JMenuItem mbmiEnvioRequi;
     private javax.swing.JMenuItem mbmiSalir;
+    private javax.swing.JMenuItem mipmActualizarExistencia;
+    private javax.swing.JMenuItem mipmEditarInsumo;
     private javax.swing.JMenuItem mipmEditarRequi;
     private javax.swing.JMenuItem mipmEliminarRequi;
+    private javax.swing.JMenuItem mipmEliminar_insumo;
     private javax.swing.JMenuItem mipmPrepararRequi;
+    private javax.swing.JPopupMenu pmTbl_existencias;
+    private javax.swing.JPopupMenu pmTbl_insumo;
     private javax.swing.JPopupMenu pmTbl_requi;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlCaducidades;
@@ -2352,9 +3014,12 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlRequisiciones;
     private javax.swing.JPanel pnlSalidas;
     private javax.swing.JPanel pnlSuministros;
+    private javax.swing.JPanel pnlUpdateExistencia;
     private javax.swing.JPanel pnlWelcome;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne1;
     private rojerusan.RSPanelImage rSPanelImage1;
     private rojerusan.RSPanelsSlider rSPanelsSlider1;
+    private RSMaterialComponent.RSTextFieldOne rSTextFieldOne1;
     private javax.swing.JTable tblExistActual;
     private javax.swing.JTable tblExistencias;
     private javax.swing.JTable tblInfoInsumoExistencia;
@@ -2362,6 +3027,7 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JTable tblUnidadSalidas;
     private javax.swing.JTable tbl_caducidades;
     private javax.swing.JTable tbl_infInsuRequi;
+    private javax.swing.JTable tbl_insumo;
     private javax.swing.JTable tbl_requisiciones;
     private javax.swing.JTable tbl_sumi;
     private RSMaterialComponent.RSTextFieldOne txtCaducosDias;
@@ -2369,12 +3035,16 @@ public class Panel_principal extends javax.swing.JFrame {
     private RSMaterialComponent.RSTextFieldOne txtCantidadSalidas;
     private javax.swing.JTextField txtCantidad_requi;
     private RSMaterialComponent.RSTextFieldOne txtCodigoSalidas;
+    private javax.swing.JTextField txtExistencia;
     private RSMaterialComponent.RSTextFieldOne txtFechaDisCaduco;
     private RSMaterialComponent.RSTextFieldOne txtFiltro1Sumi;
     private RSMaterialComponent.RSTextFieldOne txtFiltro2Sumi;
     private javax.swing.JTextField txtIDPersonal_requi;
     private javax.swing.JTextField txtIDinsumo_requi;
     private javax.swing.JTextField txtIDunidadM_requi;
+    private RSMaterialComponent.RSTextFieldOne txtNombreInsumo;
     private RSMaterialComponent.RSTextFieldOne txtSearchIDinsuExist;
+    private javax.swing.JTextField txtStockMin;
+    private javax.swing.JTextField txtUnidadM;
     // End of variables declaration//GEN-END:variables
 }

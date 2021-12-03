@@ -31,9 +31,14 @@ public class ConexionBD {
     public Connection obConexion() {
         try {
             conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/BDIKOOLEBIL", "root", "lone990104");
-            //JOptionPane.showMessageDialog(null, "Conexion establecida a la base de datos", "Enlace a base de datos", JOptionPane.PLAIN_MESSAGE,connectionValida);
+            if(conexion == null){
+                conexion.close();
+                JOptionPane.showMessageDialog(null, "No se puedo conectar", "Enlace a base de datos", JOptionPane.PLAIN_MESSAGE,errorFuncion);
+            }
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos..." + e, "Enlace a base de datos", JOptionPane.PLAIN_MESSAGE, errorFuncion);
+            System.exit(0);
         }
         return conexion;
     }
@@ -49,9 +54,14 @@ public class ConexionBD {
     public Connection obConexion2() {
         try {
             conexion2 = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/BDIKOOLEBIL", "root", "lone990104");
+            if(conexion2 == null){
+                conexion2.close();
+                JOptionPane.showMessageDialog(null, "No se puedo conectar", "Enlace a base de datos", JOptionPane.PLAIN_MESSAGE,errorFuncion);
+            }
             JOptionPane.showMessageDialog(null, "Conexion establecida a la base de datos", "Enlace a base de datos", JOptionPane.PLAIN_MESSAGE, connectionValida);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos..." + e, "Enlace a base de datos", JOptionPane.PLAIN_MESSAGE, errorFuncion);
+            System.exit(0);
         }
         return conexion2;
     }
