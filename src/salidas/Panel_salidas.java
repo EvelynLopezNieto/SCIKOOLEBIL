@@ -117,9 +117,9 @@ public class Panel_salidas {
     }
 
     public void cargaIDunidad(String IDinsu, String area, String inicialA, JTable unidadMedida) {
-        String sentencia = "SELECT tbl_stock" + area + ".ID_unidadM" + inicialA + ", tbl_unidadm.tipo_unidadM, tbl_unidadm.nombre_unidadM, tbl_unidadm.abrev_unidadM"
-               + " FROM tbl_stock" + area + ",tbl_unidadm"
-               + " WHERE tbl_stock" + area + ".ID_unidadM" + inicialA + " = tbl_unidadm.ID_unidadM AND tbl_stock" + area + ".ID_insumo" + inicialA + " = '" + IDinsu + "'";
+        String sentencia = "SELECT tbl_stock" + area + ".ID_unidadM" + inicialA + ", tbl_unidadM.tipo_unidadM, tbl_unidadM.nombre_unidadM, tbl_unidadM.abrev_unidadM"
+               + " FROM tbl_stock" + area + ",tbl_unidadM"
+               + " WHERE tbl_stock" + area + ".ID_unidadM" + inicialA + " = tbl_unidadM.ID_unidadM AND tbl_stock" + area + ".ID_insumo" + inicialA + " = '" + IDinsu + "'";
         DefaultTableModel tablaUnidadM = new DefaultTableModel(datos, columnas4) {
             @Override
             public boolean isCellEditable(int filas, int columnas) {

@@ -206,6 +206,7 @@ public class Panel_principal extends javax.swing.JFrame {
         btnDevolver = new rojeru_san.rsbutton.RSButtonForma();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblNuevaExist = new javax.swing.JTable();
+        btnBuscarIDSalida = new RSMaterialComponent.RSButtonIconOne();
         jPanel2 = new javax.swing.JPanel();
         pnlBotones = new javax.swing.JPanel();
         btnInsumos = new RSMaterialComponent.RSButtonFormaIcon();
@@ -1007,11 +1008,6 @@ public class Panel_principal extends javax.swing.JFrame {
         txtCodigoSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtCodigoSalidas.setPhColor(new java.awt.Color(0, 0, 0));
         txtCodigoSalidas.setPlaceholder("");
-        txtCodigoSalidas.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtCodigoSalidasCaretUpdate(evt);
-            }
-        });
         pnlSalidas.add(txtCodigoSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
 
         txtCantidadSalidas.setForeground(new java.awt.Color(0, 0, 0));
@@ -1095,6 +1091,14 @@ public class Panel_principal extends javax.swing.JFrame {
         jScrollPane5.setViewportView(tblNuevaExist);
 
         pnlSalidas.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 780, 320));
+
+        btnBuscarIDSalida.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscarIDSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarIDSalidaActionPerformed(evt);
+            }
+        });
+        pnlSalidas.add(btnBuscarIDSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
 
         rSPanelsSlider1.add(pnlSalidas, "card8");
 
@@ -1590,42 +1594,6 @@ public class Panel_principal extends javax.swing.JFrame {
             sumi.cargaSuministros(tbl_sumi);
         }
     }//GEN-LAST:event_txtFiltro1SumiCaretUpdate
-
-    private void txtCodigoSalidasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCodigoSalidasCaretUpdate
-        String area = this.cbAreaSalidas.getSelectedItem().toString();
-        int area2 = this.cbAreaSalidas.getSelectedIndex();
-        String inicialA = null;
-        String IDinsu = this.txtCodigoSalidas.getText();
-
-        switch (area2) {
-            case 1:
-                inicialA = "S";
-                break;
-            case 2:
-                inicialA = "R";
-                break;
-            case 3:
-                inicialA = "P";
-                break;
-            case 4:
-                inicialA = "B";
-                break;
-            case 5:
-                inicialA = "H";
-                break;
-            case 6:
-                inicialA = "M";
-                break;
-            case 7:
-                inicialA = "Re";
-                break;
-            case 8:
-                inicialA = "O";
-                break;
-        }
-        salidas.cargaRegInsu(IDinsu, area, inicialA, tblExistActual);
-        salidas.cargaIDunidad(IDinsu, area, inicialA, tblUnidadSalidas);
-    }//GEN-LAST:event_txtCodigoSalidasCaretUpdate
 
     private void btnSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidasActionPerformed
         this.rSPanelsSlider1.slidPanel(20, pnlSalidas, RSPanelsSlider.direct.Right);
@@ -2893,6 +2861,43 @@ public class Panel_principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnActualizarTablaInsumosActionPerformed
 
+    private void btnBuscarIDSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIDSalidaActionPerformed
+        String area = this.cbAreaSalidas.getSelectedItem().toString();
+        int area2 = this.cbAreaSalidas.getSelectedIndex();
+        String inicialA = null;
+        String IDinsu = this.txtCodigoSalidas.getText();
+
+        switch (area2) {
+            case 1:
+                inicialA = "S";
+                break;
+            case 2:
+                inicialA = "R";
+                break;
+            case 3:
+                inicialA = "P";
+                break;
+            case 4:
+                inicialA = "B";
+                break;
+            case 5:
+                inicialA = "H";
+                break;
+            case 6:
+                inicialA = "M";
+                break;
+            case 7:
+                inicialA = "Re";
+                break;
+            case 8:
+                inicialA = "O";
+                break;
+        }
+        salidas.cargaRegInsu(IDinsu, area, inicialA, tblExistActual);
+        salidas.cargaIDunidad(IDinsu, area, inicialA, tblUnidadSalidas);
+        
+    }//GEN-LAST:event_btnBuscarIDSalidaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2931,6 +2936,7 @@ public class Panel_principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonIconOne btnActualizarTablaInsumos;
+    private RSMaterialComponent.RSButtonIconOne btnBuscarIDSalida;
     private RSMaterialComponent.RSButtonIconOne btnBuscarIDinsumo;
     public RSMaterialComponent.RSButtonFormaIcon btnCaducidades;
     private RSMaterialComponent.RSButtonIconOne btnCancel_requi;

@@ -8,10 +8,10 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT tbl_requisiciones_bar.ID_insumoRB,tbl_insumo.nombre_insumo,tbl_requisiciones_bar.cant_solicitadaRB,
-tbl_unidadm.abrev_unidadM,tbl_personal.nombre_personal,tbl_requisiciones_bar.fecha_solicitudRB
-FROM tbl_requisiciones_bar,tbl_insumo,tbl_unidadm,tbl_personal
+tbl_unidadM.abrev_unidadM,tbl_personal.nombre_personal,tbl_requisiciones_bar.fecha_solicitudRB
+FROM tbl_requisiciones_bar,tbl_insumo,tbl_unidadM,tbl_personal
 WHERE tbl_requisiciones_bar.fecha_solicitudRB=$P{fechaSolicitud} AND tbl_insumo.ID_insumo=tbl_requisiciones_bar.ID_insumoRB
-AND tbl_unidadm.ID_unidadM=tbl_requisiciones_bar.ID_unidadMRB AND tbl_personal.ID_personal=tbl_requisiciones_bar.ID_personalRB;]]>
+AND tbl_unidadM.ID_unidadM=tbl_requisiciones_bar.ID_unidadMRB AND tbl_personal.ID_personal=tbl_requisiciones_bar.ID_personalRB;]]>
 	</queryString>
 	<field name="ID_insumoRB" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
