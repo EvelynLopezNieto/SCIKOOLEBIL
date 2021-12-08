@@ -20,7 +20,6 @@ public class Ingreso_suministros extends javax.swing.JDialog {
     Form_sumiNuevos suministros = new Form_sumiNuevos();
     Form_adicionSumiExistentes adiSumi = new Form_adicionSumiExistentes();
     Operaciones_usuarios operaciones = new Operaciones_usuarios();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
 
     public Ingreso_suministros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -397,7 +396,8 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         try {
 
             if ((areaSeleccionada.equals("Restaurante")) || (areaSeleccionada.equals("Personal")) || (areaSeleccionada.equals("Habitaciones"))
-                   || (areaSeleccionada.equals("Mantenimiento")) || (areaSeleccionada.equals("Recepción")) || (areaSeleccionada.equals("Otros"))) {
+                   || (areaSeleccionada.equals("Mantenimiento")) || (areaSeleccionada.equals("Recepcion")) || (areaSeleccionada.equals("Otros"))) {
+                this.jPanel1.setVisible(true);
                 this.txtPorciones.setEnabled(false);
                 suministros.cargarcbUM(cbIDunidadM);
                 suministros.cargarIDper(cbIDpersonal);
@@ -405,13 +405,14 @@ public class Ingreso_suministros extends javax.swing.JDialog {
             } else if (areaSeleccionada.equals("Seleccione área")) {
                 this.jPanel1.setVisible(false);
             } else {
+                this.jPanel1.setVisible(true);
                 this.txtPorciones.setEnabled(true);
                 suministros.cargarcbUM(cbIDunidadM);
                 suministros.cargarIDper(cbIDpersonal);
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_cbAreaActionPerformed
@@ -495,7 +496,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
                 operaciones.regAccesosIngresoSumiNuevo(IDpersonal);
             }
         } catch (HeadlessException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnIngresarInsumoActionPerformed

@@ -36,8 +36,6 @@ import otras_operaciones.ConexionBD;
 public class Panel_existencias {
 
     ConexionBD conexion = new ConexionBD();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
     String columnas6[] = {"ID stock", "ID insumo", "Existencia", "Stock mínimo", "ID unidad medida"};
     String columnas7[] = {"ID stock", "ID insumo", "Existencia", "Stock mínimo", "ID unidad medida", "Porciones"};
     String columnas8[] = {"Nombre de insumo", "Tipo de insumo", "Descripción", "Comentarios"};
@@ -103,7 +101,7 @@ public class Panel_existencias {
                 conexion.cerrarConexion();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo cargar la información a la tabla..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la información a la tabla..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -162,7 +160,7 @@ public class Panel_existencias {
                 conexion.cerrarConexion();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo cargar la información a la tabla..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo cargar la información a la tabla..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -222,7 +220,7 @@ public class Panel_existencias {
                 conexion.cerrarConexion();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -282,7 +280,7 @@ public class Panel_existencias {
                 conexion.cerrarConexion();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -314,7 +312,7 @@ public class Panel_existencias {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -327,7 +325,7 @@ public class Panel_existencias {
             actualizar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al actualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al actualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

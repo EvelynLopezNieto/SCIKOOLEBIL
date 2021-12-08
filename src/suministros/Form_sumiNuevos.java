@@ -19,8 +19,6 @@ import otras_operaciones.ConexionBD;
 public class Form_sumiNuevos {
 
     ConexionBD conexion = new ConexionBD();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
 
     //ENVÍO DE REGISTROS DE INSUMOS AL INVENTARIO GENERAL
     public void registroTablaInsumo(String IDnombre, String IDinicial, String nombreInsumo, String tipoInsumo,
@@ -36,7 +34,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -55,7 +53,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -72,7 +70,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -88,7 +86,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -104,7 +102,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -120,7 +118,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -136,7 +134,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -152,7 +150,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -168,7 +166,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -184,7 +182,7 @@ public class Form_sumiNuevos {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "No se pudo registrar la información del insumo..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -258,7 +256,7 @@ public class Form_sumiNuevos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -295,7 +293,7 @@ public class Form_sumiNuevos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

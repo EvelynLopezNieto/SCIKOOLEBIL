@@ -40,8 +40,6 @@ import javax.swing.JOptionPane;
  */
 public class Envio_requisicion extends javax.swing.JDialog {
 
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
-
     public Envio_requisicion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -223,7 +221,7 @@ public class Envio_requisicion extends javax.swing.JDialog {
                     t.connect(correoRemitente, passwordRemitente);
                     t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
                     t.close();
-                    JOptionPane.showMessageDialog(this, "Correo enviado con éxito: ", "Envío requisiciones", JOptionPane.PLAIN_MESSAGE, valido);
+                    JOptionPane.showMessageDialog(this, "Correo enviado con éxito: ", "Envío requisiciones", JOptionPane.PLAIN_MESSAGE);
                 } else {
                     BodyPart texto = new MimeBodyPart();
                     texto.setText(mensaje);
@@ -250,7 +248,7 @@ public class Envio_requisicion extends javax.swing.JDialog {
                     t.connect(correoRemitente, passwordRemitente);
                     t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
                     t.close();
-                    JOptionPane.showMessageDialog(this, "Correo enviado con éxito: ", "Envío requisiciones", JOptionPane.PLAIN_MESSAGE, valido);
+                    JOptionPane.showMessageDialog(this, "Correo enviado con éxito: ", "Envío requisiciones", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         } catch (MessagingException e) {

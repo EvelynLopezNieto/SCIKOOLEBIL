@@ -30,7 +30,6 @@ import javax.swing.JOptionPane;
 public class Edicion_insumos extends javax.swing.JDialog {
 
     Panel_insumos insu = new Panel_insumos();
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
 
     public Edicion_insumos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -218,12 +217,12 @@ public class Edicion_insumos extends javax.swing.JDialog {
                 Date fecha1 = this.choEntregaInsuEdit.getDate();
                 DateFormat formato1 = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaEntrega = formato1.format(fecha1);
-                Date fecha2 = this.choEntregaInsuEdit.getDate();
+                Date fecha2 = this.choCaduInsuEdit.getDate();
                 DateFormat formato2 = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaCaducidad = formato2.format(fecha2);
 
                 insu.editarInsumo(idInsu, nombreInsu, tipo, descripcion, precioUni, precioTotal, comentario, fechaEntrega, fechaCaducidad);
-                JOptionPane.showMessageDialog(this, "La información deL insumo se ha actualizado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE, valido);
+                JOptionPane.showMessageDialog(this, "La información del insumo se ha actualizado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnUpdateInsuEditDerechoActionPerformed
@@ -247,14 +246,14 @@ public class Edicion_insumos extends javax.swing.JDialog {
                 Date fecha1 = this.choEntregaInsuEdit.getDate();
                 DateFormat formato1 = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaEntrega = formato1.format(fecha1);
-                Date fecha2 = this.choEntregaInsuEdit.getDate();
+                Date fecha2 = this.choCaduInsuEdit.getDate();
                 DateFormat formato2 = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaCaducidad = formato2.format(fecha2);
 
                 insu.editarInsumo(idInsu, nombreInsu, tipo, descripcion, precioUni, precioTotal, comentario, fechaEntrega, fechaCaducidad);
-                insu.registrarSuministroEdicion(idInsu, nombreInsu, tipo, descripcion, precioUni, precioTotal, comentario);
+                insu.registrarSuministroEdicion(idInsu, nombreInsu, tipo, descripcion, precioUni, precioTotal, fechaEntrega, comentario);
                 JOptionPane.showMessageDialog(this, "La información del insumo se ha actualizado con éxito,\n"
-                       + "y fue ingresado al registro de suministros", "Mensaje", JOptionPane.PLAIN_MESSAGE, valido);
+                       + "y fue ingresado al registro de suministros", "Mensaje", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnUpdateInsumoIzquierdaActionPerformed

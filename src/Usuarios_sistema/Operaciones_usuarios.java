@@ -21,8 +21,6 @@ import otras_operaciones.ConexionBD;
  */
 public class Operaciones_usuarios {
 
-    Icon denegado = new ImageIcon(getClass().getResource("/recursos_graficos/2.png"));
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
     ConexionBD conexion = new ConexionBD();
     String columnas1[] = {"ID", "Nombre", "Cargo", "Turno"};
     String columnas2[] = {"ID acceso", "ID personal", "Fecha acceso", "Hora acceso", "Movimiento"};
@@ -208,7 +206,7 @@ public class Operaciones_usuarios {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            
+            JOptionPane.showMessageDialog(null, "No se pudo registrar movimiento de usuario..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -222,7 +220,7 @@ public class Operaciones_usuarios {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            
+            JOptionPane.showMessageDialog(null, "No se pudo registrar movimiento de usuario..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -234,7 +232,7 @@ public class Operaciones_usuarios {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            
+            JOptionPane.showMessageDialog(null, "No se pudo registrar movimiento de usuario..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -246,7 +244,7 @@ public class Operaciones_usuarios {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            
+            JOptionPane.showMessageDialog(null, "No se pudo registrar movimiento de usuario..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -258,7 +256,7 @@ public class Operaciones_usuarios {
             insertar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            
+            JOptionPane.showMessageDialog(null, "No se pudo registrar movimiento de usuario..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

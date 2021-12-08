@@ -18,8 +18,6 @@ import otras_operaciones.ConexionBD;
 public class Panel_suministros {
 
     ConexionBD conexion = new ConexionBD();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
     String columnas1[] = {"ID suministro", "ID insumo", "Nombre", "Tipo insumo", "Descripción", "$ unitario", "$ total",
         "Cant. Entregada", "Pérdidas", "Cant. Final", "Unidad medida", "Fecha entrega", "Comentario"};
     String datos[][] = {};
@@ -61,7 +59,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar suministros..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar suministros..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -95,7 +93,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -128,7 +126,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -161,7 +159,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -195,7 +193,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -229,7 +227,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -263,7 +261,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -297,7 +295,7 @@ public class Panel_suministros {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

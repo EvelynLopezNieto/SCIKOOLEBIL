@@ -27,7 +27,6 @@ import javax.swing.JOptionPane;
 public class Administracion_usuarios extends javax.swing.JDialog {
 
     Operaciones_usuarios usuario = new Operaciones_usuarios();
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
     
     public Administracion_usuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -426,7 +425,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         } else {
             int IDuser = Integer.parseInt(this.txtIDpersonalEliminar.getText());
             usuario.eliminarPerfiles(IDuser);
-            JOptionPane.showMessageDialog(this, "Perfil eliminado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(this, "Perfil eliminado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         }
 
     }//GEN-LAST:event_btnEliminarPerfilActionPerformed
@@ -500,7 +499,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         String pass = this.txtPasswordUser.getText();
 
         usuario.editarPerfil(ID, nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
-        JOptionPane.showMessageDialog(this, "Perfil actualizado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+        JOptionPane.showMessageDialog(this, "Perfil actualizado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_btnActualizarInfUserActionPerformed
 
     private void rbtnMatutinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnMatutinoMouseClicked
@@ -541,7 +540,7 @@ public class Administracion_usuarios extends javax.swing.JDialog {
         String pass = this.txtPasswordUser.getText();
 
         usuario.agregarPerfiles(nombre, paterno, materno, telefono, puesto, turno, privilegio, user, pass);
-        JOptionPane.showMessageDialog(this, "Perfil agregado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+        JOptionPane.showMessageDialog(this, "Perfil agregado con éxito", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
 
     }//GEN-LAST:event_btnGuardarNUserActionPerformed
 

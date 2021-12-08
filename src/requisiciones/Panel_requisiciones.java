@@ -35,8 +35,6 @@ import otras_operaciones.ConexionBD;
 public class Panel_requisiciones {
 
     ConexionBD conexion = new ConexionBD();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
 
     String columnas[] = {"ID insumo", "ID unidad de medida"};
     String columnas1[] = {"ID requisición", "ID insumo", "Cantidad solicitada", "ID unidad medida", "ID personal que solicita", "Fecha solicitud"};
@@ -77,7 +75,7 @@ public class Panel_requisiciones {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar el historial de requisiciones..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar el historial de requisiciones..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -111,7 +109,7 @@ public class Panel_requisiciones {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar los insumos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar los insumos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -124,9 +122,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -139,9 +137,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -154,9 +152,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -169,9 +167,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -184,9 +182,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -199,9 +197,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -214,9 +212,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -229,9 +227,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición registrada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al registrar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -247,9 +245,9 @@ public class Panel_requisiciones {
             Statement regRequi = conexion.crearSentencia();
             regRequi.executeUpdate(sentencia);
             conexion.cerrarConexion();
-            JOptionPane.showMessageDialog(null, "Requisición actualizada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(null, "Requisición actualizada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al actualizar la requisición..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al actualizar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -281,7 +279,7 @@ public class Panel_requisiciones {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

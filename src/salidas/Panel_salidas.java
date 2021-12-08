@@ -35,9 +35,7 @@ import javax.swing.table.DefaultTableModel;
 public class Panel_salidas {
 
     ConexionBD conexion = new ConexionBD();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
-
+    
     String columnas2[] = {"ID insumo", "Nombre insumo", "Tipo insumo", "Fecha entrega", "Fecha caducidad"};
     String columnas3[] = {"ID insumo", "Nombre", "Existencia actual"};
     String columnas4[] = {"ID unidad", "Tipo unidad", "Nombre unidad", "Abrev. unidad"};
@@ -68,7 +66,7 @@ public class Panel_salidas {
             actualizar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"No se pudo ejecutar la salida del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null,"No se pudo ejecutar la salida del insumo..."+e, "¡ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -80,7 +78,7 @@ public class Panel_salidas {
             actualizar.executeUpdate(sentencia);
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"No se pudo ejecutar la devolución del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null,"No se pudo ejecutar la devolución del insumo..."+e, "¡ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -114,7 +112,7 @@ public class Panel_salidas {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"No se pudo visualizar la existencia actual del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null,"No se pudo visualizar la existencia actual del insumo..."+e, "¡ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -148,7 +146,7 @@ public class Panel_salidas {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"No se pudo visualizar los datos de la unidad de medida..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null,"No se pudo visualizar los datos de la unidad de medida..."+e, "¡ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -174,7 +172,7 @@ public class Panel_salidas {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"No se pudo visualizar la nueva existencia del insumo..."+e, "¡ERROR", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null,"No se pudo visualizar la nueva existencia del insumo..."+e, "¡ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

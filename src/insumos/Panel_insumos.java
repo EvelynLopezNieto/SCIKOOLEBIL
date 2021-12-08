@@ -232,10 +232,10 @@ public class Panel_insumos {
     }
 
     public void registrarSuministroEdicion(String IDinsumo, String nombreInsumo, String tipoInsumo, String descripcion,
-           Double precioInsUnitario, Double precioInsTotal, String comentarios) {
+           Double precioInsUnitario, Double precioInsTotal, String fechaEntrega, String comentarios) {
         try {
             String sentencia = "INSERT INTO tbl_suministros VALUES (NULL,'" + IDinsumo + "','" + nombreInsumo + "','" + tipoInsumo + "','" + descripcion + "'," + precioInsUnitario + ","
-                   + "" + precioInsTotal + ",0,0,0,1,(SELECT curdate()),'" + comentarios + "')";
+                   + "" + precioInsTotal + ",0,0,0,1,'"+fechaEntrega+"','" + comentarios + "')";
             Connection con = conexion.obConexion();
             Statement insertar = conexion.crearSentencia();
             insertar.executeUpdate(sentencia);

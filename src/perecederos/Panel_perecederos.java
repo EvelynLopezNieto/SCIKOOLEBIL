@@ -20,9 +20,6 @@ import otras_operaciones.ConexionBD;
 public class Panel_perecederos {
 
     ConexionBD conexion = new ConexionBD();
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
-
     
     String columnas2[] = {"ID insumo", "Nombre insumo", "Tipo insumo", "Fecha entrega", "Fecha caducidad"};
     String datos[][] = {};
@@ -62,7 +59,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -117,7 +114,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -151,7 +148,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -172,7 +169,7 @@ public class Panel_perecederos {
                    + "de hoy y " + fecha + " según la cantidad de días ingresados</p></html>");
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -206,7 +203,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -240,7 +237,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
     //VISUALIZACIÓN DE LA FECHA COMPLETA DE ACUERDO A LA CANTIDAD DE MESES INGRESADOS
@@ -261,7 +258,7 @@ public class Panel_perecederos {
                    + "de hoy y " + fecha + " según la cantidad de meses ingresados</p></html>");
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -295,7 +292,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -329,7 +326,7 @@ public class Panel_perecederos {
             }
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al cargar perecederos..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -349,7 +346,7 @@ public class Panel_perecederos {
                    + "de la fecha especificada</p></html>");
             conexion.cerrarConexion();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

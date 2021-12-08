@@ -69,9 +69,6 @@ public class Panel_principal extends javax.swing.JFrame {
     Panel_requisiciones requi = new Panel_requisiciones();
     Operaciones_usuarios usuarios = new Operaciones_usuarios();
 
-    Icon error = new ImageIcon(getClass().getResource("/recursos_graficos/6.png"));
-    Icon valido = new ImageIcon(getClass().getResource("/recursos_graficos/1.png"));
-
     ResultSet re = null;
     ResultSetMetaData rM = null;
     int nColumnas = 0;
@@ -171,6 +168,7 @@ public class Panel_principal extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         lblCantRegistrosInsumos = new javax.swing.JLabel();
         btnUpdateMasivaInsumo = new RSMaterialComponent.RSButtonFormaIcon();
+        btnActualizarTablaInsumos = new RSMaterialComponent.RSButtonIconOne();
         pnlExistencias = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblExistencias = new javax.swing.JTable();
@@ -321,7 +319,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSuministros.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 2, -1, -1));
 
         txtFiltro1Sumi.setForeground(new java.awt.Color(0, 0, 0));
-        txtFiltro1Sumi.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtFiltro1Sumi.setBorderColor(new java.awt.Color(0, 51, 204));
         txtFiltro1Sumi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtFiltro1Sumi.setPlaceholder("Ingrese dato a buscar");
         txtFiltro1Sumi.addCaretListener(new javax.swing.event.CaretListener() {
@@ -332,13 +330,13 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSuministros.add(txtFiltro1Sumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 188, 250, 30));
 
         txtFiltro2Sumi.setForeground(new java.awt.Color(0, 0, 0));
-        txtFiltro2Sumi.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtFiltro2Sumi.setBorderColor(new java.awt.Color(0, 51, 204));
         txtFiltro2Sumi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtFiltro2Sumi.setPlaceholder("yyyy-MM-dd");
         pnlSuministros.add(txtFiltro2Sumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 188, 250, 30));
 
-        btnSearchF1Sumi.setBackground(new java.awt.Color(153, 204, 0));
-        btnSearchF1Sumi.setBackgroundHover(new java.awt.Color(0, 102, 255));
+        btnSearchF1Sumi.setBackground(new java.awt.Color(0, 51, 204));
+        btnSearchF1Sumi.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnSearchF1Sumi.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         btnSearchF1Sumi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -347,8 +345,8 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlSuministros.add(btnSearchF1Sumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 185, 35, 35));
 
-        btnSearchF2Sumi2.setBackground(new java.awt.Color(153, 204, 0));
-        btnSearchF2Sumi2.setBackgroundHover(new java.awt.Color(0, 102, 204));
+        btnSearchF2Sumi2.setBackground(new java.awt.Color(0, 51, 204));
+        btnSearchF2Sumi2.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnSearchF2Sumi2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         btnSearchF2Sumi2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -358,9 +356,9 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSuministros.add(btnSearchF2Sumi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 185, 35, 35));
 
         cbFiltro1Sumi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione filtro", "ID suministro", "ID insumo", "Nombre insumo", "Tipo insumo", "Fecha entrega" }));
-        cbFiltro1Sumi.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbFiltro1Sumi.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbFiltro1Sumi.setColorSeleccion(new java.awt.Color(153, 204, 0));
+        cbFiltro1Sumi.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbFiltro1Sumi.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbFiltro1Sumi.setColorSeleccion(new java.awt.Color(0, 51, 204));
         cbFiltro1Sumi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         cbFiltro1Sumi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,15 +368,15 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSuministros.add(cbFiltro1Sumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         cbFiltro2Sumi.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione filtro", "Fecha entrega" }));
-        cbFiltro2Sumi.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbFiltro2Sumi.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbFiltro2Sumi.setColorSeleccion(new java.awt.Color(153, 204, 0));
+        cbFiltro2Sumi.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbFiltro2Sumi.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbFiltro2Sumi.setColorSeleccion(new java.awt.Color(0, 51, 204));
         cbFiltro2Sumi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         pnlSuministros.add(cbFiltro2Sumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
 
-        btnReporteSumi.setBackground(new java.awt.Color(153, 204, 0));
+        btnReporteSumi.setBackground(new java.awt.Color(0, 51, 204));
         btnReporteSumi.setText("Generar reporte");
-        btnReporteSumi.setBackgroundHover(new java.awt.Color(0, 102, 204));
+        btnReporteSumi.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnReporteSumi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnReporteSumi.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
         btnReporteSumi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -391,9 +389,9 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlSuministros.add(btnReporteSumi, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 185, 200, 35));
 
-        btnIngresarSumi.setBackground(new java.awt.Color(153, 204, 0));
+        btnIngresarSumi.setBackground(new java.awt.Color(0, 51, 204));
         btnIngresarSumi.setText("Ingresar suministros");
-        btnIngresarSumi.setBackgroundHover(new java.awt.Color(0, 102, 204));
+        btnIngresarSumi.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnIngresarSumi.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnIngresarSumi.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
         btnIngresarSumi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -435,7 +433,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlCaducidades.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 1070, -1));
 
         txtCaducosDias.setForeground(new java.awt.Color(0, 0, 0));
-        txtCaducosDias.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtCaducosDias.setBorderColor(new java.awt.Color(0, 51, 204));
         txtCaducosDias.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         txtCaducosDias.setPlaceholder("Tiempo D en días");
         txtCaducosDias.addCaretListener(new javax.swing.event.CaretListener() {
@@ -445,7 +443,7 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlCaducidades.add(txtCaducosDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 145, -1));
 
-        btnSearchCaducos.setBackground(new java.awt.Color(153, 204, 0));
+        btnSearchCaducos.setBackground(new java.awt.Color(0, 51, 204));
         btnSearchCaducos.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnSearchCaducos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         btnSearchCaducos.addActionListener(new java.awt.event.ActionListener() {
@@ -461,7 +459,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlCaducidades.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 2, -1, -1));
 
         txtCaducosMeses.setForeground(new java.awt.Color(0, 0, 0));
-        txtCaducosMeses.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtCaducosMeses.setBorderColor(new java.awt.Color(0, 51, 204));
         txtCaducosMeses.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         txtCaducosMeses.setPlaceholder("Tiempo D en meses");
         txtCaducosMeses.addCaretListener(new javax.swing.event.CaretListener() {
@@ -471,7 +469,7 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlCaducidades.add(txtCaducosMeses, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 145, -1));
 
-        btnGenerarRepCaducos.setBackground(new java.awt.Color(153, 204, 0));
+        btnGenerarRepCaducos.setBackground(new java.awt.Color(0, 51, 204));
         btnGenerarRepCaducos.setText("Generar reporte");
         btnGenerarRepCaducos.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnGenerarRepCaducos.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -487,7 +485,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlCaducidades.add(btnGenerarRepCaducos, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 185, -1, 35));
 
         txtFechaDisCaduco.setForeground(new java.awt.Color(0, 0, 0));
-        txtFechaDisCaduco.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtFechaDisCaduco.setBorderColor(new java.awt.Color(0, 51, 204));
         txtFechaDisCaduco.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         txtFechaDisCaduco.setPlaceholder("yyyy-MM-dd");
         txtFechaDisCaduco.addCaretListener(new javax.swing.event.CaretListener() {
@@ -516,9 +514,10 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlCaducidades.add(lblInfoBusqueda3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 183, 300, 35));
 
         cbBusquedaIniPere.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione inicial", "S", "R", "P", "B", "H", "M", "RE", "O" }));
-        cbBusquedaIniPere.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbBusquedaIniPere.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbBusquedaIniPere.setColorSeleccion(new java.awt.Color(153, 204, 0));
+        cbBusquedaIniPere.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbBusquedaIniPere.setColorBorde(new java.awt.Color(0, 51, 204));
+        cbBusquedaIniPere.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbBusquedaIniPere.setColorSeleccion(new java.awt.Color(0, 51, 204));
         cbBusquedaIniPere.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         pnlCaducidades.add(cbBusquedaIniPere, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 190, -1, -1));
 
@@ -819,6 +818,16 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlInsumos.add(btnUpdateMasivaInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 130, -1, -1));
 
+        btnActualizarTablaInsumos.setBackground(new java.awt.Color(0, 51, 204));
+        btnActualizarTablaInsumos.setBackgroundHover(new java.awt.Color(0, 153, 204));
+        btnActualizarTablaInsumos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        btnActualizarTablaInsumos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarTablaInsumosActionPerformed(evt);
+            }
+        });
+        pnlInsumos.add(btnActualizarTablaInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, -1, -1));
+
         rSPanelsSlider1.add(pnlInsumos, "card3");
 
         pnlExistencias.setBackground(new java.awt.Color(0, 0, 51));
@@ -849,10 +858,10 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlExistencias.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 2, -1, -1));
 
         cbAreaExistencias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitacion", "Mantenimiento", "Recepcion", "Otros" }));
-        cbAreaExistencias.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbAreaExistencias.setColorBorde(new java.awt.Color(153, 204, 0));
-        cbAreaExistencias.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbAreaExistencias.setColorSeleccion(new java.awt.Color(153, 204, 0));
+        cbAreaExistencias.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbAreaExistencias.setColorBorde(new java.awt.Color(0, 51, 204));
+        cbAreaExistencias.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbAreaExistencias.setColorSeleccion(new java.awt.Color(0, 51, 204));
         cbAreaExistencias.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         cbAreaExistencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -862,7 +871,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlExistencias.add(cbAreaExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
         txtSearchIDinsuExist.setForeground(new java.awt.Color(0, 0, 0));
-        txtSearchIDinsuExist.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtSearchIDinsuExist.setBorderColor(new java.awt.Color(0, 51, 204));
         txtSearchIDinsuExist.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtSearchIDinsuExist.setPlaceholder("Ingrese ID de insumo");
         txtSearchIDinsuExist.addCaretListener(new javax.swing.event.CaretListener() {
@@ -873,9 +882,9 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlExistencias.add(txtSearchIDinsuExist, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         cbBuscarStock.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione opción", "Existencia mínima", "Existencia activa" }));
-        cbBuscarStock.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbBuscarStock.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbBuscarStock.setColorSeleccion(new java.awt.Color(153, 204, 0));
+        cbBuscarStock.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbBuscarStock.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbBuscarStock.setColorSeleccion(new java.awt.Color(0, 51, 204));
         cbBuscarStock.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         cbBuscarStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -896,8 +905,9 @@ public class Panel_principal extends javax.swing.JFrame {
 
         pnlExistencias.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 810, 50));
 
-        btnGenerarRepExist.setBackground(new java.awt.Color(153, 204, 0));
+        btnGenerarRepExist.setBackground(new java.awt.Color(0, 51, 204));
         btnGenerarRepExist.setText("Generar reporte");
+        btnGenerarRepExist.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnGenerarRepExist.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnGenerarRepExist.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.ROUND);
         btnGenerarRepExist.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER);
@@ -951,7 +961,8 @@ public class Panel_principal extends javax.swing.JFrame {
         txtUnidadM.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         pnlUpdateExistencia.add(txtUnidadM, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 120, 30));
 
-        btnUpdateExistencia.setBackground(new java.awt.Color(153, 204, 0));
+        btnUpdateExistencia.setBackground(new java.awt.Color(0, 51, 204));
+        btnUpdateExistencia.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnUpdateExistencia.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
         btnUpdateExistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -960,7 +971,8 @@ public class Panel_principal extends javax.swing.JFrame {
         });
         pnlUpdateExistencia.add(btnUpdateExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 215, -1, -1));
 
-        btnCerrarUpdateExistencia.setBackground(new java.awt.Color(153, 204, 0));
+        btnCerrarUpdateExistencia.setBackground(new java.awt.Color(0, 51, 204));
+        btnCerrarUpdateExistencia.setBackgroundHover(new java.awt.Color(0, 153, 204));
         btnCerrarUpdateExistencia.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnCerrarUpdateExistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -979,9 +991,9 @@ public class Panel_principal extends javax.swing.JFrame {
 
         cbAreaSalidas.setBackground(new java.awt.Color(255, 51, 0));
         cbAreaSalidas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione área", "Servicio", "Restaurante", "Personal", "Bar", "Habitacion", "Mantenimiento", "Recepcion", "Otros" }));
-        cbAreaSalidas.setColorArrow(new java.awt.Color(153, 204, 0));
-        cbAreaSalidas.setColorFondo(new java.awt.Color(153, 204, 0));
-        cbAreaSalidas.setColorSeleccion(new java.awt.Color(153, 204, 0));
+        cbAreaSalidas.setColorArrow(new java.awt.Color(0, 51, 204));
+        cbAreaSalidas.setColorFondo(new java.awt.Color(0, 51, 204));
+        cbAreaSalidas.setColorSeleccion(new java.awt.Color(0, 51, 204));
         cbAreaSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         cbAreaSalidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -991,7 +1003,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSalidas.add(cbAreaSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
 
         txtCodigoSalidas.setForeground(new java.awt.Color(0, 0, 0));
-        txtCodigoSalidas.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtCodigoSalidas.setBorderColor(new java.awt.Color(0, 51, 204));
         txtCodigoSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtCodigoSalidas.setPhColor(new java.awt.Color(0, 0, 0));
         txtCodigoSalidas.setPlaceholder("");
@@ -1003,15 +1015,15 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlSalidas.add(txtCodigoSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
 
         txtCantidadSalidas.setForeground(new java.awt.Color(0, 0, 0));
-        txtCantidadSalidas.setBorderColor(new java.awt.Color(153, 204, 0));
+        txtCantidadSalidas.setBorderColor(new java.awt.Color(0, 51, 204));
         txtCantidadSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         txtCantidadSalidas.setPhColor(new java.awt.Color(0, 0, 0));
         txtCantidadSalidas.setPlaceholder("Cantidad");
         pnlSalidas.add(txtCantidadSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 140, -1));
 
-        btnGuardarSalidas.setBackground(new java.awt.Color(153, 204, 0));
+        btnGuardarSalidas.setBackground(new java.awt.Color(0, 51, 204));
         btnGuardarSalidas.setText("Salida");
-        btnGuardarSalidas.setColorHover(new java.awt.Color(0, 102, 204));
+        btnGuardarSalidas.setColorHover(new java.awt.Color(0, 153, 204));
         btnGuardarSalidas.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         btnGuardarSalidas.setForma(rojeru_san.rsbutton.RSButtonForma.FORMA.ROUND);
         btnGuardarSalidas.addActionListener(new java.awt.event.ActionListener() {
@@ -1060,9 +1072,9 @@ public class Panel_principal extends javax.swing.JFrame {
         jLabel10.setText("Unidad de medida del insumo:");
         pnlSalidas.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 55, -1, -1));
 
-        btnDevolver.setBackground(new java.awt.Color(153, 204, 0));
+        btnDevolver.setBackground(new java.awt.Color(0, 51, 204));
         btnDevolver.setText("Devolver");
-        btnDevolver.setColorHover(new java.awt.Color(0, 102, 204));
+        btnDevolver.setColorHover(new java.awt.Color(0, 153, 204));
         btnDevolver.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         btnDevolver.setForma(rojeru_san.rsbutton.RSButtonForma.FORMA.ROUND);
         btnDevolver.addActionListener(new java.awt.event.ActionListener() {
@@ -1170,7 +1182,7 @@ public class Panel_principal extends javax.swing.JFrame {
         pnlBotones.add(btnSuministros, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 210, 70));
 
         btnSalidas.setBackground(new java.awt.Color(153, 204, 0));
-        btnSalidas.setText("Registrar salidas");
+        btnSalidas.setText("Registro salidas");
         btnSalidas.setBackgroundHover(new java.awt.Color(51, 153, 0));
         btnSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnSalidas.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.RECT);
@@ -1533,7 +1545,7 @@ public class Panel_principal extends javax.swing.JFrame {
                        + "de los campos de búsqueda", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (HeadlessException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSearchCaducosActionPerformed
 
@@ -1650,7 +1662,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 this.btnGuardarSalidas.setEnabled(false);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(this, "Ocurrio un error con la aplicación..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_cbAreaSalidasActionPerformed
 
@@ -2122,7 +2134,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No ha seleccionado un área", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (JRException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.PLAIN_MESSAGE, error);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGenerarRepExistActionPerformed
 
@@ -2759,7 +2771,7 @@ public class Panel_principal extends javax.swing.JFrame {
                + "del área donde pertenece.", "Advertencia", JOptionPane.YES_NO_OPTION);
         if (valor == JOptionPane.YES_OPTION) {
             insumo.eliminarInsumo(idInsumo);
-            JOptionPane.showMessageDialog(this, "EL insumo se ha eliminado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(this, "EL insumo se ha eliminado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_mipmEliminar_insumoActionPerformed
 
@@ -2839,7 +2851,7 @@ public class Panel_principal extends javax.swing.JFrame {
                     break;
             }
             existencia.actualizarExistenciaGeneral(nomArea, iniArea, idInsu, existenciaN, stockN, idUnidad);
-            JOptionPane.showMessageDialog(this, "EL insumo se ha actualizado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE, valido);
+            JOptionPane.showMessageDialog(this, "EL insumo se ha actualizado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE);
             this.pnlUpdateExistencia.setVisible(false);
         }
     }//GEN-LAST:event_btnUpdateExistenciaActionPerformed
@@ -2874,6 +2886,12 @@ public class Panel_principal extends javax.swing.JFrame {
         Envio_requisicion envio = new Envio_requisicion(new javax.swing.JFrame(), true);
         envio.setVisible(true);
     }//GEN-LAST:event_mbmiEnvioRequiActionPerformed
+
+    private void btnActualizarTablaInsumosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTablaInsumosActionPerformed
+        this.cbAreaInsumo.setSelectedIndex(0);
+        insumo.cargarTodosInsumos(tbl_insumo, lblCantRegistrosInsumos);
+        
+    }//GEN-LAST:event_btnActualizarTablaInsumosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2912,6 +2930,7 @@ public class Panel_principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private RSMaterialComponent.RSButtonIconOne btnActualizarTablaInsumos;
     private RSMaterialComponent.RSButtonIconOne btnBuscarIDinsumo;
     public RSMaterialComponent.RSButtonFormaIcon btnCaducidades;
     private RSMaterialComponent.RSButtonIconOne btnCancel_requi;
