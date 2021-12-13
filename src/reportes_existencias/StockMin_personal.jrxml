@@ -26,17 +26,6 @@
 	</background>
 	<title>
 		<band height="120" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="15" width="70" height="70" uuid="fad38ef7-1c4e-4eb9-8105-bd403f2ec183"/>
-				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="ce354311-399a-40aa-8d21-9737379148f3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Century Gothic" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hotel Ko'olebil]]></text>
-			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="447" y="15" width="125" height="20" uuid="57f2e9b2-25a8-4d81-9516-c8d4295a9871"/>
 				<textElement>

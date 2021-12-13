@@ -43,23 +43,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="0" y="15" width="70" height="70" uuid="ff6d7e92-75a7-417b-9d11-e83a6479ed1a"/>
-				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="156" y="30" width="260" height="20" uuid="90ecb7ad-6a12-4f7c-beed-c662542269b5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Comic Sans MS" size="12"/>
 				</textElement>
 				<text><![CDATA[REPORTES DE INVENTARIO KO'OLEBIL]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="1b1cb6c3-f682-413c-9be2-9644aa66b2a0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Century Gothic" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hotel Ko'olebil]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="321" y="67" width="25" height="23" uuid="78522a5a-de1b-4040-82b8-0b1ebbf4be1a"/>

@@ -76,6 +76,7 @@ public class Panel_principal extends javax.swing.JFrame {
 
     public Panel_principal() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/recursos_graficos/icono_scikoolebil_2.png")).getImage());
         this.pnlWelcome.setVisible(true);
@@ -207,15 +208,14 @@ public class Panel_principal extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tblNuevaExist = new javax.swing.JTable();
         btnBuscarIDSalida = new RSMaterialComponent.RSButtonIconOne();
-        jPanel2 = new javax.swing.JPanel();
         pnlBotones = new javax.swing.JPanel();
+        lblImageLogo = new necesario.RSLabelImage();
         btnInsumos = new RSMaterialComponent.RSButtonFormaIcon();
         btnExistencias = new RSMaterialComponent.RSButtonFormaIcon();
         btnCaducidades = new RSMaterialComponent.RSButtonFormaIcon();
         btnRequisiciones = new RSMaterialComponent.RSButtonFormaIcon();
         btnSuministros = new RSMaterialComponent.RSButtonFormaIcon();
         btnSalidas = new RSMaterialComponent.RSButtonFormaIcon();
-        lblImageLogo = new necesario.RSLabelImage();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mbmiCambiarUser = new javax.swing.JMenuItem();
@@ -269,8 +269,6 @@ public class Panel_principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - SCIKo'olebil");
-        setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelsSlider1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -316,6 +314,7 @@ public class Panel_principal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Historial de suministros");
         pnlSuministros.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 2, -1, -1));
 
@@ -1102,13 +1101,19 @@ public class Panel_principal extends javax.swing.JFrame {
 
         rSPanelsSlider1.add(pnlSalidas, "card8");
 
-        getContentPane().add(rSPanelsSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 1090, 670));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(rSPanelsSlider1, java.awt.BorderLayout.CENTER);
 
         pnlBotones.setBackground(new java.awt.Color(153, 204, 0));
         pnlBotones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblImageLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos_graficos/rediseno_logoKoolebil_redimensionado.png"))); // NOI18N
+        lblImageLogo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblImageLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImageLogoMouseClicked(evt);
+            }
+        });
+        pnlBotones.add(lblImageLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 2, 100, 95));
 
         btnInsumos.setBackground(new java.awt.Color(153, 204, 0));
         btnInsumos.setText("Insumos");
@@ -1123,7 +1128,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnInsumosActionPerformed(evt);
             }
         });
-        pnlBotones.add(btnInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, 70));
+        pnlBotones.add(btnInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 97, -1, 95));
 
         btnExistencias.setBackground(new java.awt.Color(153, 204, 0));
         btnExistencias.setText("Existencias");
@@ -1138,7 +1143,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnExistenciasActionPerformed(evt);
             }
         });
-        pnlBotones.add(btnExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 210, 70));
+        pnlBotones.add(btnExistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 192, -1, 95));
 
         btnCaducidades.setBackground(new java.awt.Color(153, 204, 0));
         btnCaducidades.setText("Perecederos");
@@ -1153,7 +1158,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnCaducidadesActionPerformed(evt);
             }
         });
-        pnlBotones.add(btnCaducidades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 210, 70));
+        pnlBotones.add(btnCaducidades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 287, -1, 95));
 
         btnRequisiciones.setBackground(new java.awt.Color(153, 204, 0));
         btnRequisiciones.setText("Requisiciones");
@@ -1168,7 +1173,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnRequisicionesActionPerformed(evt);
             }
         });
-        pnlBotones.add(btnRequisiciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 210, 70));
+        pnlBotones.add(btnRequisiciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 382, -1, 95));
 
         btnSuministros.setBackground(new java.awt.Color(153, 204, 0));
         btnSuministros.setText("Suministros");
@@ -1183,10 +1188,10 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnSuministrosActionPerformed(evt);
             }
         });
-        pnlBotones.add(btnSuministros, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 210, 70));
+        pnlBotones.add(btnSuministros, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 477, -1, 95));
 
         btnSalidas.setBackground(new java.awt.Color(153, 204, 0));
-        btnSalidas.setText("Registro salidas");
+        btnSalidas.setText("Salidas");
         btnSalidas.setBackgroundHover(new java.awt.Color(51, 153, 0));
         btnSalidas.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnSalidas.setForma(RSMaterialComponent.RSButtonFormaIcon.FORMA.RECT);
@@ -1198,19 +1203,9 @@ public class Panel_principal extends javax.swing.JFrame {
                 btnSalidasActionPerformed(evt);
             }
         });
-        pnlBotones.add(btnSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 210, 70));
+        pnlBotones.add(btnSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 572, -1, 95));
 
-        lblImageLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos_graficos/rediseno_logoKoolebil_redimensionado.png"))); // NOI18N
-        lblImageLogo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImageLogoMouseClicked(evt);
-            }
-        });
-        pnlBotones.add(lblImageLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 35, 90, 90));
-
-        jPanel2.add(pnlBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 670));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(pnlBotones, java.awt.BorderLayout.WEST);
 
         jMenu1.setText("Archivo");
 
@@ -1446,7 +1441,7 @@ public class Panel_principal extends javax.swing.JFrame {
                 sumi.busqueda2FILTROtipoFECH(datoTXT, datoTXT2, tbl_sumi);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "NO ha seleccionado una opción de filtro #2", "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No ha seleccionado una opción de filtro #2", "¡¡ERROR!!", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_btnSearchF2Sumi2ActionPerformed
 
@@ -2994,7 +2989,6 @@ public class Panel_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;

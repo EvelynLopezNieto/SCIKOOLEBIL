@@ -36,17 +36,6 @@ AND tbl_unidadM.ID_unidadM=tbl_requisiciones_servicio.ID_unidadMRS AND tbl_perso
 	</background>
 	<title>
 		<band height="123" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="15" width="70" height="70" uuid="3483ee93-7506-478e-af4b-f448f904f90f"/>
-				<imageExpression><![CDATA["C:\\Users\\evelo\\Documents\\NetBeansProjects\\SCIKOOLEBIL_v1\\src\\recursos_graficos\\rediseno_logoKoolebil_redimensionado.png"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="0" y="85" width="70" height="20" forecolor="#0066CC" uuid="b1048944-b96a-4674-bbcf-ab2c0f1a04cd"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Century Gothic" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hotel Ko'olebil]]></text>
-			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="436" y="15" width="136" height="20" uuid="5181c501-564e-4489-9427-0e6607d87080"/>
 				<textElement>
