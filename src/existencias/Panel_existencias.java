@@ -47,8 +47,8 @@ public class Panel_existencias {
     Object[] datosTabla;
 
     //A REPORTE
-    public void cargaRegExistencias(String area, JTable tablaPorciones, JTable tablaSinPor, JComboBox comboArea) {
-        String sentencia = "SELECT * FROM tbl_stock" + area;
+    public void cargaRegExistencias(String area, String iniA, JTable tablaPorciones, JTable tablaSinPor, JComboBox comboArea) {
+        String sentencia = "SELECT * FROM tbl_stock" + area + " ORDER BY ID_insumo" + iniA + " ASC";
         DefaultTableModel tablaExist = new DefaultTableModel(datos, columnas6) {
             @Override
             public boolean isCellEditable(int filas, int columnas) {

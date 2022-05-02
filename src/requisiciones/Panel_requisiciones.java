@@ -282,6 +282,41 @@ public class Panel_requisiciones {
             JOptionPane.showMessageDialog(null, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public void busquedaFechaRequi (String fecha, String area, String iniArea, JTable tablaRequisicion) {
+        String sentencia = "SELECT * FROM tbl_requisiciones_" + area + " WHERE fecha_solicitudR"+iniArea+" = '"+fecha+"' ";
+        
+        DefaultTableModel tablaRequi = new DefaultTableModel(datos, columnas1) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 6) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        tablaRequisicion.setModel(tablaRequi);
+
+        try {
+            Connection con = conexion.obConexion();
+            Statement verRequi = conexion.crearSentencia();
+            re = verRequi.executeQuery(sentencia);
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            datosTabla = new Object[nColumnas];
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tablaRequi.addRow(datosTabla);
+            }
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema al mostrar el historial de requisiciones..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
 
     public boolean validarNumerosRequi(String dato) {
         return dato.matches("[0-9]*");
