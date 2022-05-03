@@ -80,7 +80,7 @@ public class Panel_requisiciones {
     }
 
     public void mostrarInsuRequisicion(String area, String iniArea, JTable tablaRequisicion) {
-        String sentencia = "SELECT ID_insumo" + iniArea + ",ID_unidadM" + iniArea + " FROM tbl_stock" + area + " WHERE existencia" + iniArea + " = stock_minimo" + iniArea + "";
+        String sentencia = "SELECT ID_insumo" + iniArea + ",ID_unidadM" + iniArea + " FROM tbl_stock" + area + " WHERE existencia" + iniArea + " <= stock_minimo" + iniArea + "";
         DefaultTableModel tablaRequi = new DefaultTableModel(datos, columnas) {
             @Override
             public boolean isCellEditable(int filas, int columnas) {

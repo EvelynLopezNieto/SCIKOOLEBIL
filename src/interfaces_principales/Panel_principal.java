@@ -1302,6 +1302,24 @@ public class Panel_principal extends javax.swing.JFrame {
         }
     }
 
+    public void generarReportesSinParams(String ubicacion) {
+        try {
+            Connection con;
+            JasperReport jr;
+            JasperPrint jp;
+            JasperViewer view;
+
+            con = conexion.obConexion2();
+            jr = (JasperReport) JRLoader.loadObjectFromFile(ubicacion);
+            jp = JasperFillManager.fillReport(jr, null, con);
+            view = new JasperViewer(jp, false);
+            view.setVisible(true);
+            conexion.cerrarConexion2();
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void lblImageLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageLogoMouseClicked
         this.rSPanelsSlider1.slidPanel(20, pnlWelcome, RSPanelsSlider.direct.Right);
         this.lblImageLogo.setEnabled(false);
@@ -1731,10 +1749,7 @@ public class Panel_principal extends javax.swing.JFrame {
 
     private void btnGenerarDocu_requiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarDocu_requiActionPerformed
         try {
-            Connection con;
-            JasperReport jr;
-            JasperPrint jp;
-            JasperViewer view;
+
             int indexArea = this.cbAreaRequi.getSelectedIndex();
             if (this.dateSolicitud_requi.getDate() == null) {
                 JOptionPane.showMessageDialog(this, "Para generar el documento de requisición,\n"
@@ -1750,72 +1765,40 @@ public class Panel_principal extends javax.swing.JFrame {
                 parametros.put("fechaSolicitud", fecha);
                 switch (indexArea) {
                     case 1:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_servicio.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion1 = "src\\reportes_requisiciones\\Requisicion_servicio.jasper";
+                        generarReportesSinParams(direccion1);
                         break;
                     case 2:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_restaurante.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion2 = "src\\reportes_requisiciones\\Requisicion_restaurante.jasper";
+                        generarReportesSinParams(direccion2);
                         break;
                     case 3:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_personal.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion3 = "src\\reportes_requisiciones\\Requisicion_personal.jasper";
+                        generarReportesSinParams(direccion3);
                         break;
                     case 4:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_bar.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion4 = "src\\reportes_requisiciones\\Requisicion_bar.jasper";
+                        generarReportesSinParams(direccion4);
                         break;
                     case 5:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_habitaciones.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion5 = "src\\reportes_requisiciones\\Requisicion_habitaciones.jasper";
+                        generarReportesSinParams(direccion5);
                         break;
                     case 6:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_mantenimiento.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion6 = "src\\reportes_requisiciones\\Requisicion_mantenimiento.jasper";
+                        generarReportesSinParams(direccion6);
                         break;
                     case 7:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_recepcion.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion7 = "src\\reportes_requisiciones\\Requisicion_recepcion.jasper";
+                        generarReportesSinParams(direccion7);
                         break;
                     case 8:
-                        con = conexion.obConexion2();
-                        jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_requisiciones\\Requisicion_otros.jasper");
-                        jp = JasperFillManager.fillReport(jr, parametros, con);
-                        view = new JasperViewer(jp, false);
-                        view.setVisible(true);
-                        conexion.cerrarConexion2();
+                        String direccion8 = "src\\reportes_requisiciones\\Requisicion_otros.jasper";
+                        generarReportesSinParams(direccion8);
                         break;
                 }
             }
-        } catch (JRException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGenerarDocu_requiActionPerformed
@@ -2005,21 +1988,9 @@ public class Panel_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateMasivaInsumoActionPerformed
 
     private void btnGenerarReporteInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteInsumoActionPerformed
-        try {
-            Connection con;
-            JasperReport jr;
-            JasperPrint jp;
-            JasperViewer view;
+        String direccion = "src\\reportes_insumos\\Inventario_general.jasper";
+        generarReportesSinParams(direccion);
 
-            con = conexion.obConexion2();
-            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_insumos\\Inventario_general.jasper");
-            jp = JasperFillManager.fillReport(jr, null, con);
-            view = new JasperViewer(jp, false);
-            view.setVisible(true);
-            conexion.cerrarConexion2();
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al generar el reporte..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_btnGenerarReporteInsumoActionPerformed
 
     private void txtNombreInsumoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreInsumoKeyPressed
@@ -2193,245 +2164,140 @@ public class Panel_principal extends javax.swing.JFrame {
 
     private void btnGenerarRepExistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarRepExistActionPerformed
 
-        try {
-            Connection con;
-            JasperReport jr;
-            JasperPrint jp;
-            JasperViewer view;
-            int area = this.cbAreaExistencias.getSelectedIndex();
-            int stock = this.cbBuscarStock.getSelectedIndex();
-
-            switch (area) {
-                case 1:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_servicio.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_servicio.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_servicio.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 2:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_restaurante.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_restaurante.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_restaurante.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 3:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_personal.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_personal.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_personal.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 4:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_bar.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_bar.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_bar.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 5:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_habitaciones.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_habitaciones.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_habitaciones.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 6:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_mantenimiento.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_mantenimiento.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_mantenimiento.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 7:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_recepcion.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_recepcion.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_recepcion.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-                case 8:
-                    switch (stock) {
-                        case 0:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\Exist_otros.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 1:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockMin_otros.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                        case 2:
-                            con = conexion.obConexion2();
-                            jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_existencias\\StockAct_otros.jasper");
-                            jp = JasperFillManager.fillReport(jr, null, con);
-                            view = new JasperViewer(jp, false);
-                            view.setVisible(true);
-                            conexion.cerrarConexion2();
-                            break;
-                    }
-                    break;
-            }
-            if (area == 0) {
-                JOptionPane.showMessageDialog(this, "No ha seleccionado un área", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error con la aplicación al visualizar la información..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+        int area = this.cbAreaExistencias.getSelectedIndex();
+        int stock = this.cbBuscarStock.getSelectedIndex();
+        switch (area) {
+            case 1:
+                switch (stock) {
+                    case 0:
+                        String d10 = "src\\reportes_existencias\\Exist_servicio.jasper";
+                        generarReportesSinParams(d10);
+                        break;
+                    case 1:
+                        String d11 = "src\\reportes_existencias\\StockMin_servicio.jasper";
+                        generarReportesSinParams(d11);
+                        break;
+                    case 2:
+                        String d12 = "src\\reportes_existencias\\StockAct_servicio.jasper";
+                        generarReportesSinParams(d12);
+                        break;
+                }
+                break;
+            case 2:
+                switch (stock) {
+                    case 0:
+                        String d20 = "src\\reportes_existencias\\Exist_restaurante.jasper";
+                        generarReportesSinParams(d20);
+                        break;
+                    case 1:
+                        String d21 = "src\\reportes_existencias\\StockMin_restaurante.jasper";
+                        generarReportesSinParams(d21);
+                        break;
+                    case 2:
+                        String d22 = "src\\reportes_existencias\\StockAct_restaurante.jasper";
+                        generarReportesSinParams(d22);
+                        break;
+                }
+                break;
+            case 3:
+                switch (stock) {
+                    case 0:
+                        String d30 = "src\\reportes_existencias\\Exist_personal.jasper";
+                        generarReportesSinParams(d30);
+                        break;
+                    case 1:
+                        String d31 = "src\\reportes_existencias\\StockMin_personal.jasper";
+                        generarReportesSinParams(d31);
+                        break;
+                    case 2:
+                        String d32 = "src\\reportes_existencias\\StockAct_personal.jasper";
+                        generarReportesSinParams(d32);
+                        break;
+                }
+                break;
+            case 4:
+                switch (stock) {
+                    case 0:
+                        String d40 = "src\\reportes_existencias\\Exist_bar.jasper";
+                        generarReportesSinParams(d40);
+                        break;
+                    case 1:
+                        String d41 = "src\\reportes_existencias\\StockMin_bar.jasper";
+                        generarReportesSinParams(d41);
+                        break;
+                    case 2:
+                        String d42 = "src\\reportes_existencias\\StockAct_bar.jasper";
+                        generarReportesSinParams(d42);
+                        break;
+                }
+                break;
+            case 5:
+                switch (stock) {
+                    case 0:
+                        String d50 = "src\\reportes_existencias\\Exist_habitaciones.jasper";
+                        generarReportesSinParams(d50);
+                        break;
+                    case 1:
+                        String d51 = "src\\reportes_existencias\\StockMin_habitaciones.jasper";
+                        generarReportesSinParams(d51);
+                        break;
+                    case 2:
+                        String d52 = "src\\reportes_existencias\\StockAct_habitaciones.jasper";
+                        generarReportesSinParams(d52);
+                        break;
+                }
+                break;
+            case 6:
+                switch (stock) {
+                    case 0:
+                        String d60 = "src\\reportes_existencias\\Exist_mantenimiento.jasper";
+                        generarReportesSinParams(d60);
+                        break;
+                    case 1:
+                        String d61 = "src\\reportes_existencias\\StockMin_mantenimiento.jasper";
+                        generarReportesSinParams(d61);
+                        break;
+                    case 2:
+                        String d62 = "src\\reportes_existencias\\StockAct_mantenimiento.jasper";
+                        generarReportesSinParams(d62);
+                        break;
+                }
+                break;
+            case 7:
+                switch (stock) {
+                    case 0:
+                        String d70 = "src\\reportes_existencias\\Exist_recepcion.jasper";
+                        generarReportesSinParams(d70);
+                        break;
+                    case 1:
+                        String d71 = "src\\reportes_existencias\\StockMin_recepcion.jasper";
+                        generarReportesSinParams(d71);
+                        break;
+                    case 2:
+                        String d72 = "src\\reportes_existencias\\StockAct_recepcion.jasper";
+                        generarReportesSinParams(d72);
+                        break;
+                }
+                break;
+            case 8:
+                switch (stock) {
+                    case 0:
+                        String d80 = "src\\reportes_existencias\\Exist_otros.jasper";
+                        generarReportesSinParams(d80);
+                        break;
+                    case 1:
+                        String d81 = "src\\reportes_existencias\\StockMin_otros.jasper";
+                        generarReportesSinParams(d81);
+                        break;
+                    case 2:
+                        String d82 = "src\\reportes_existencias\\StockAct_otros.jasper";
+                        generarReportesSinParams(d82);
+                        break;
+                }
+                break;
+        }
+        if (area == 0) {
+            JOptionPane.showMessageDialog(this, "No ha seleccionado un área", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnGenerarRepExistActionPerformed
 
@@ -2551,12 +2417,8 @@ public class Panel_principal extends javax.swing.JFrame {
                 view.setVisible(true);
                 conexion.cerrarConexion2();
             } else {
-                Connection con = conexion.obConexion2();
-                JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_perecederos\\TodoReg_perecederos.jasper");
-                JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
-                JasperViewer view = new JasperViewer(jp, false);
-                view.setVisible(true);
-                conexion.cerrarConexion2();
+                String direccion = "src\\reportes_perecederos\\TodoReg_perecederos.jasper";
+                generarReportesSinParams(direccion);
             }
 
         } catch (NumberFormatException | JRException e) {
@@ -2860,12 +2722,8 @@ public class Panel_principal extends javax.swing.JFrame {
 
             switch (filtro1) {
                 case 0:
-                    con = conexion.obConexion2();
-                    jr = (JasperReport) JRLoader.loadObjectFromFile("src\\reportes_suministros\\TodoSumi.jasper");
-                    jp = JasperFillManager.fillReport(jr, null, con);
-                    view = new JasperViewer(jp, false);
-                    view.setVisible(true);
-                    conexion.cerrarConexion2();
+                    String direccion = "src\\reportes_suministros\\TodoSumi.jasper";
+                    generarReportesSinParams(direccion);
                     break;
                 case 1:
                     break;
@@ -2873,7 +2731,6 @@ public class Panel_principal extends javax.swing.JFrame {
                     break;
                 case 3:
                     if (!(filtro2 == 0 && txtFiltro2.isEmpty())) {
-
                         con = conexion.obConexion2();
                         Map<String, Object> parametros = new HashMap<String, Object>();
                         parametros.put("nombreInsu", txtFiltro1);
