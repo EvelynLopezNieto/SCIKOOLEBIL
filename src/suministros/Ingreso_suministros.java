@@ -451,48 +451,59 @@ public class Ingreso_suministros extends javax.swing.JDialog {
                 suministros.registroTablaSuministro(nombreInsuID, inicial, nombreInsumo, tipoInsu, descripcion,
                        precioUni, precioTotal, cantEntregada, perdidas, cantFinal, unidadM, comentarios);
 
-                if (this.cbArea.getSelectedItem().equals("Servicio")) {
-                    porciones = Double.parseDouble(this.txtPorciones.getText());
-                    suministros.registroTablaStockServicio(nombreInsuID, inicial, cantFinal, stockMin, unidadM, porciones);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Servicio", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                int area = this.cbArea.getSelectedIndex();
+                switch (area) {
+                    case 1:
+                        porciones = Double.parseDouble(this.txtPorciones.getText());
+                        suministros.registroTablaStockServicio(nombreInsuID, inicial, cantFinal, stockMin, unidadM, porciones);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Servicio", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 2:
+                        suministros.registroTablaStockRestaurante(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Restaurante", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 3:
+                        suministros.registroTablaStockPersonal(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Personal", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 4:
+                        porciones = Double.parseDouble(this.txtPorciones.getText());
+                        suministros.registroTablaStockBar(nombreInsuID, inicial, cantFinal, stockMin, unidadM, porciones);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Bar", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 5:
+                        suministros.registroTablaStockHabitacion(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Habitaciones", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 6:
+                        suministros.registroTablaStockMantenimiento(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Mantenimiento", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 7:
+                        suministros.registroTablaStockRecepcion(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general y al área de Recepción", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
+
+                    case 8:
+                        suministros.registroTablaStockOtros(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
+                        JOptionPane.showMessageDialog(this, "Registro existoso\n"
+                               + "Enviado al registro general", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
+                        break;
                 }
-                if (this.cbArea.getSelectedItem().equals("Restaurante")) {
-                    suministros.registroTablaStockRestaurante(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Restaurante", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
-                if (this.cbArea.getSelectedItem().equals("Personal")) {
-                    suministros.registroTablaStockPersonal(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Personal", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
-                if (this.cbArea.getSelectedItem().equals("Bar")) {
-                    porciones = Double.parseDouble(this.txtPorciones.getText());
-                    suministros.registroTablaStockBar(nombreInsuID, inicial, cantFinal, stockMin, unidadM, porciones);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Bar", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
-                if (this.cbArea.getSelectedItem().equals("Habitaciones")) {
-                    suministros.registroTablaStockHabitacion(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Habitaciones", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
-                if (this.cbArea.getSelectedItem().equals("Mantenimiento")) {
-                    suministros.registroTablaStockMantenimiento(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Mantenimiento", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
-                if (this.cbArea.getSelectedItem().equals("Recepción")) {
-                    suministros.registroTablaStockRecepcion(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general y al área de Recepción", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
-                if (this.cbArea.getSelectedItem().equals("Otros")) {
-                    suministros.registroTablaStockOtros(nombreInsuID, inicial, cantFinal, stockMin, unidadM);
-                    JOptionPane.showMessageDialog(this, "Registro existoso\n"
-                           + "Enviado al registro general", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE, valido);
-                }
+
                 operaciones.regAccesosIngresoSumiNuevo(IDpersonal);
             }
         } catch (HeadlessException | NumberFormatException e) {

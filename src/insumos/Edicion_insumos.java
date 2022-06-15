@@ -65,6 +65,7 @@ public class Edicion_insumos extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         btnUpdateInsumoIzquierda = new rojeru_san.complementos.RSButtonHover();
+        btnBuscarInsumo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lblEncabezado = new javax.swing.JLabel();
 
@@ -76,11 +77,6 @@ public class Edicion_insumos extends javax.swing.JDialog {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtIDinsumoEdit.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        txtIDinsumoEdit.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                txtIDinsumoEditCaretUpdate(evt);
-            }
-        });
         jPanel1.add(txtIDinsumoEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 220, 30));
 
         txtNombreInsuEdit.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
@@ -182,6 +178,17 @@ public class Edicion_insumos extends javax.swing.JDialog {
         });
         jPanel1.add(btnUpdateInsumoIzquierda, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 150, -1));
 
+        btnBuscarInsumo.setBackground(new java.awt.Color(0, 51, 204));
+        btnBuscarInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        btnBuscarInsumo.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarInsumo.setText("Buscar");
+        btnBuscarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarInsumoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 750, 400));
 
         jPanel2.setBackground(new java.awt.Color(153, 204, 0));
@@ -258,11 +265,11 @@ public class Edicion_insumos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnUpdateInsumoIzquierdaActionPerformed
 
-    private void txtIDinsumoEditCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtIDinsumoEditCaretUpdate
+    private void btnBuscarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarInsumoActionPerformed
         String id = this.txtIDinsumoEdit.getText();
         insu.cargarInsEdicionMasivaBD(id, txtNombreInsuEdit, cbTipoInsuEdit, txtaDescripInsuEdit, txtUnitInsuEdit, txtTotalInsuEdit, txtaComentInsuEdit);
-        
-    }//GEN-LAST:event_txtIDinsumoEditCaretUpdate
+
+    }//GEN-LAST:event_btnBuscarInsumoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,6 +314,7 @@ public class Edicion_insumos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarInsumo;
     public rojeru_san.complementos.RSButtonHover btnUpdateInsuEditDerecho;
     public rojeru_san.complementos.RSButtonHover btnUpdateInsumoIzquierda;
     public javax.swing.JComboBox<String> cbTipoInsuEdit;

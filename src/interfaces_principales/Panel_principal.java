@@ -1761,40 +1761,73 @@ public class Panel_principal extends javax.swing.JFrame {
                 Date fecha1 = this.dateSolicitud_requi.getDate();
                 DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
                 String fecha = formato.format(fecha1);
+                Connection con = conexion.obConexion2();
                 Map parametros = new HashMap();
                 parametros.put("fechaSolicitud", fecha);
                 switch (indexArea) {
                     case 1:
                         String direccion1 = "src\\reportes_requisiciones\\Requisicion_servicio.jasper";
-                        generarReportesSinParams(direccion1);
+                        JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile(direccion1);
+                        JasperPrint jp = JasperFillManager.fillReport(jr, parametros, con);
+                        JasperViewer view = new JasperViewer(jp, false);
+                        view.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 2:
                         String direccion2 = "src\\reportes_requisiciones\\Requisicion_restaurante.jasper";
-                        generarReportesSinParams(direccion2);
+                        JasperReport jr2 = (JasperReport) JRLoader.loadObjectFromFile(direccion2);
+                        JasperPrint jp2 = JasperFillManager.fillReport(jr2, parametros, con);
+                        JasperViewer view2 = new JasperViewer(jp2, false);
+                        view2.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 3:
                         String direccion3 = "src\\reportes_requisiciones\\Requisicion_personal.jasper";
-                        generarReportesSinParams(direccion3);
+                        JasperReport jr3 = (JasperReport) JRLoader.loadObjectFromFile(direccion3);
+                        JasperPrint jp3 = JasperFillManager.fillReport(jr3, parametros, con);
+                        JasperViewer view3 = new JasperViewer(jp3, false);
+                        view3.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 4:
                         String direccion4 = "src\\reportes_requisiciones\\Requisicion_bar.jasper";
-                        generarReportesSinParams(direccion4);
+                        JasperReport jr4 = (JasperReport) JRLoader.loadObjectFromFile(direccion4);
+                        JasperPrint jp4 = JasperFillManager.fillReport(jr4, parametros, con);
+                        JasperViewer view4 = new JasperViewer(jp4, false);
+                        view4.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 5:
                         String direccion5 = "src\\reportes_requisiciones\\Requisicion_habitaciones.jasper";
-                        generarReportesSinParams(direccion5);
+                        JasperReport jr5 = (JasperReport) JRLoader.loadObjectFromFile(direccion5);
+                        JasperPrint jp5 = JasperFillManager.fillReport(jr5, parametros, con);
+                        JasperViewer view5 = new JasperViewer(jp5, false);
+                        view5.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 6:
                         String direccion6 = "src\\reportes_requisiciones\\Requisicion_mantenimiento.jasper";
-                        generarReportesSinParams(direccion6);
+                        JasperReport jr6 = (JasperReport) JRLoader.loadObjectFromFile(direccion6);
+                        JasperPrint jp6 = JasperFillManager.fillReport(jr6, parametros, con);
+                        JasperViewer view6 = new JasperViewer(jp6, false);
+                        view6.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 7:
                         String direccion7 = "src\\reportes_requisiciones\\Requisicion_recepcion.jasper";
-                        generarReportesSinParams(direccion7);
+                        JasperReport jr7 = (JasperReport) JRLoader.loadObjectFromFile(direccion7);
+                        JasperPrint jp7 = JasperFillManager.fillReport(jr7, parametros, con);
+                        JasperViewer view7 = new JasperViewer(jp7, false);
+                        view7.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                     case 8:
                         String direccion8 = "src\\reportes_requisiciones\\Requisicion_otros.jasper";
-                        generarReportesSinParams(direccion8);
+                        JasperReport jr8 = (JasperReport) JRLoader.loadObjectFromFile(direccion8);
+                        JasperPrint jp8 = JasperFillManager.fillReport(jr8, parametros, con);
+                        JasperViewer view8 = new JasperViewer(jp8, false);
+                        view8.setVisible(true);
+                        conexion.cerrarConexion2();
                         break;
                 }
             }
