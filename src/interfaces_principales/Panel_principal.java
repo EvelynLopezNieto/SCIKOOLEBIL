@@ -248,6 +248,11 @@ public class Panel_principal extends javax.swing.JFrame {
         pmTbl_requi.add(mipmEditarRequi);
 
         mipmEliminarRequi.setText("Eliminar");
+        mipmEliminarRequi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mipmEliminarRequiActionPerformed(evt);
+            }
+        });
         pmTbl_requi.add(mipmEliminarRequi);
 
         mipmEditarInsumo.setText("Editar");
@@ -2877,6 +2882,51 @@ public class Panel_principal extends javax.swing.JFrame {
         salidas.cargaRegInsu(IDinsu, area, inicialA, tblExistActual);
         salidas.cargaIDunidad(IDinsu, area, inicialA, tblUnidadSalidas);
     }//GEN-LAST:event_btnBuscarIDSalidaActionPerformed
+
+    private void mipmEliminarRequiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mipmEliminarRequiActionPerformed
+        int area = this.cbAreaRequi.getSelectedIndex();
+        String inicialA = null;
+        String nomArea = null;
+        
+        switch(area) {
+            case 1:
+                inicialA = "S";
+                nomArea = "servicio";
+                break;
+            case 2:
+                inicialA = "R";
+                nomArea = "restaurante";
+                break;
+            case 3:
+                inicialA = "P";
+                nomArea = "personal";
+                break;
+            case 4:
+                inicialA = "B";
+                nomArea = "bar";
+                break;
+            case 5:
+                inicialA = "H";
+                nomArea = "habitaciones";
+                break;
+            case 6:
+                inicialA = "M";
+                nomArea = "mantenimiento";
+                break;
+            case 7:
+                inicialA = "Re";
+                nomArea = "recepcion";
+                break;
+            case 8:
+                inicialA = "O";
+                nomArea = "otros";
+                break;
+        }
+        int fila = this.tbl_requisiciones.getSelectedRow();
+        String idI = this.tbl_requisiciones.getValueAt(fila, 1).toString();
+        
+        requi.eliminarRequiArea(nomArea, inicialA, idI);
+    }//GEN-LAST:event_mipmEliminarRequiActionPerformed
 
     /**
      * @param args the command line arguments

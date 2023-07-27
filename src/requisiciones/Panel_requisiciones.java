@@ -190,7 +190,7 @@ public class Panel_requisiciones {
 
     public void registrarRequiMantenimiento(String idInsumo, Double cantidadSoli, int IDunidad, int IDperson, String fechaSolicitud) {
         try {
-            String sentencia = "INSERT INTO tbl_requisiciones_servicio VALUES(NULL,'" + idInsumo + "'," + cantidadSoli + "," + IDunidad + ","
+            String sentencia = "INSERT INTO tbl_requisiciones_mantenimiento VALUES(NULL,'" + idInsumo + "'," + cantidadSoli + "," + IDunidad + ","
                    + "" + IDperson + ",'" + fechaSolicitud + "')";
 
             Connection con = conexion.obConexion();
@@ -248,6 +248,20 @@ public class Panel_requisiciones {
             JOptionPane.showMessageDialog(null, "Requisición actualizada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un problema al actualizar la requisición..." + e, "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void eliminarRequiArea(String area, String iniArea, String idInsumo) {
+        try {
+
+            String sentencia = "DELETE FROM tbl_requisiciones_"+area+" WHERE ID_insumoR"+iniArea+" = '" + idInsumo+"'";
+            Connection con = conexion.obConexion();
+            Statement eliminar = conexion.crearSentencia();
+            eliminar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+            JOptionPane.showMessageDialog(null, "Requisición eliminada correctamente", "Mensaje del sistema", JOptionPane.PLAIN_MESSAGE);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un problema con el sistema..." + e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
     

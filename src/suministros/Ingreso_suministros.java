@@ -321,7 +321,7 @@ public class Ingreso_suministros extends javax.swing.JDialog {
         jPanel1.add(btnIngresarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 550, 130, -1));
 
         cbTipoInsumo.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
-        cbTipoInsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vegetal", "animal", "procesado", "bebida procesada", "vinos y licores", "cuidado personal", "jarciería", "detergente", "papelería", "mantenimiento" }));
+        cbTipoInsumo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "vegetal", "animal", "procesado", "bebida procesada", "vinos y licores", "cuidado personal", "jarciería", "detergente", "papelería", "mantenimiento", "utensilio", "electronico", "quimico", "plasticos" }));
         jPanel1.add(cbTipoInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 160, 30));
 
         cbIDunidadM.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N

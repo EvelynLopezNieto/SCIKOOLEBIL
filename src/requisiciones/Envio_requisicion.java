@@ -18,8 +18,8 @@ package requisiciones;
 
 import java.io.File;
 import java.util.Properties;
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
+//import javax.activation.DataHandler;
+//import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -231,7 +231,7 @@ public class Envio_requisicion extends javax.swing.JDialog {
                     String pathEditado = archivo.replace("\\", "/");
                     File file = new File(archivo);
                     file.getAbsolutePath();
-                    adjunto.setDataHandler(new DataHandler(new FileDataSource(pathEditado)));
+                    //adjunto.setDataHandler(new DataHandler(new FileDataSource(pathEditado)));
                     adjunto.setFileName(file.getName());
 
                     MimeMultipart multiparte = new MimeMultipart();
